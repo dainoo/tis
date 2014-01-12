@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Students Admitted
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Students &#926;   Students Admitted</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/students-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row">
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <h:form id="departmentRecords" prependId="false" style="#{departmentsController.pageCommonInputs.showDataRecordsPanel}">
+                        <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+                            <div class="three end columns">
+                                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="twelve columns">
+                                <p:panel header="Department Details">
+                                    <div class="row">
+                                        <div class="three columns mobile-four">
+                                            <h:outputLabel value="Search By" for="searchParameter" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="searchParameter" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="searchParameter" value="#{departmentsController.searchInputs.searchParameter}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItem itemLabel="-- Please Select --" />
+                                                <f:selectItem itemLabel="Department Name" itemValue="departmentName"/>
+                                                <f:selectItem itemLabel="Department Contact" itemValue="departmentContact"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="three columns mobile-four ">
+                                            <h:outputLabel value="Search Text" for="searchValue" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="searchValue" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="searchValue" value="#{departmentsController.searchInputs.searchValue}"
+                                                          required="true" requiredMessage=" required " validatorMessage=" Not accepted" >
+                                                <f:validateRegex pattern="[0-9a-zA-Z. ']+" for="searchValue"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="two columns mobile-four" style="margin-top: 40px;#{userAccessPageController.readDepartment}">
+                                            <h:commandLink action="#{departmentsController.searchButton()}">
+                                                <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Search"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two  columns mobile-four" style="margin-top: 40px;margin-left: -60px;#{userAccessPageController.readDepartment}">
+                                            <h:commandLink immediate="true"  action="#{departmentsController.viewAllButton()}">
+                                                <img  src="../resources/images/toolbar/icon-32-preview.png" width="32" height="64" alt="icon-32-new"/>
+                                                <h:outputLabel value="View All"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two  columns mobile-four" style="margin-top: 40px;margin-left: -60px;#{userAccessPageController.readDepartment}">
+                                            <h:commandLink immediate="true"  action="#{departmentsController.viewAllButton()}">
+                                                <img  src="../resources/images/toolbar/icon-32-print.png" width="32" height="64" alt="icon-32-print"/>
+                                                <h:outputLabel value="Print"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="twelve columns">
+                                <!--<p:scrollPanel  style="height: 250px;width:100%">-->
+                                <div style="overflow: scroll;height: 230px;">
+                                    <p:dataTable  var="dept" value="#{departmentsController.departmentsDataModel}"
+                                                  id="deptsRecords" >
+                                        <f:facet name="header">
+                                            <h:outputText style="color: #0000CC;font-family: sans-serif;font-weight: bold;float: left;" value="Total Count #{departmentsController.listOfDepartments.size()}"/>
+                                            List    of      Student Addresses
+                                        </f:facet>
+
+                                        <p:column >
+                                            <f:facet name="header">SN</f:facet>
+                                            <h:outputLabel value="#{departmentsController.departmentsDataModel.rowIndex+1}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet  name="header">Dept Name</f:facet>
+                                            <h:outputLabel value="#{dept.departmentName}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Dept Contact</f:facet>
+                                            <h:outputLabel value="#{dept.departmentContact}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Dept Category</f:facet>
+                                            <h:outputLabel value="#{dept.departmentCategory}"/>
+                                        </p:column>
+                                        <ui:remove>
+                                            
+                                        <p:column >
+                                            <f:facet name="header">Created By</f:facet>
+                                            <h:outputLabel value="#{dept.createdBy}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Created Date</f:facet>
+                                            <h:outputLabel value="#{dept.createdDate}">
+                                                <f:convertDateTime dateStyle="medium"/>
+                                            </h:outputLabel>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Edited By</f:facet>
+                                            <h:outputLabel value="#{dept.editedBy}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Edited Date</f:facet>
+                                            <h:outputLabel value="#{dept.editedDate}">
+                                                <f:convertDateTime dateStyle="medium"/>
+                                            </h:outputLabel>
+                                        </p:column>
+                                        </ui:remove>
+                                        <p:column >
+                                            <f:facet name="header">Edit</f:facet>
+                                            <h:commandLink immediate="true"  action="#{departmentsController.selectButton()}"  style="font-style: italic;font-family: cursive;font-size: small;display:#{userAccessPageController.writeDepartment}" value="select" />
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </div>
+
+                                <!--</p:scrollPanel>-->
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

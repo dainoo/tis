@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="refresh" content="30" />
+        <title>Login</title>
+        <link href="resources/css/login-css.css" type="text/css" rel="stylesheet"/>
+        <h:outputStylesheet library="css" name="login-css.css"/>
+    </h:head>
+    <h:body style="background: #438eb9;">
+        <h:form id="login">
+            <h1>Log In</h1>
+            <span ><p:messages globalOnly="true"/></span>
+            <fieldset id="inputs">
+                <h:outputLabel value="Username" for="username"> 
+                    <h:message for="username" style="color: red;margin-left: 10px;"/>
+                </h:outputLabel>
+                <h:inputText id="username" required="true" value="#{loginController.pageCommonInputs.username}" requiredMessage=" required"/>
+                <h:outputLabel value="Password" for="password">
+                    <h:message for="password" style="color: red;margin-left: 10px;"/>
+                </h:outputLabel>
+                <h:inputSecret id="password" required="true" value="#{loginController.pageCommonInputs.password}" requiredMessage=" required" />
+            </fieldset>
+            <fieldset id="actions">
+                <h:commandButton class="submit" value="Enter"  action="#{loginController.checkUserAccessRight()}"/>
+            </fieldset>
+        </h:form>
+
+    </h:body>
+</html>

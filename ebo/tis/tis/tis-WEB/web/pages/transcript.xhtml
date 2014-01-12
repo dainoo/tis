@@ -1,0 +1,205 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+                Transcript
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Examinations &#926; Transcript</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/students-bread-crumbs.xhtml"/>
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" >
+                        <div class="six end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin: 15px;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+                    <h:form>
+
+                        <div class="row">
+                            <div class="four columns">
+                                <p:panel header="STUDENT TRANSCRIPT" >
+                                    <div class="row" style="margin-top: 15px;">
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Index Number" for="indexNumber" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="indexNumber" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="indexNumber" value="#{transcriptController.searchInputs.searchParameter}"
+                                                             required="true"  requiredMessage=" required "  >
+                                                <f:selectItem itemValue="studentIndexNumber" itemLabel="Index Number"/>
+                                                <f:selectItem itemValue="studentId" itemLabel="Student ID"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="six columns" style="display:#{userAccessPageController.writeProgram};margin-top: 15px;">
+                                            <h:inputText id="searchValue" required="true" requiredMessage="* required" 
+                                                         value="#{transcriptController.searchInputs.searchValue}">
+
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="four columns" style="display:#{userAccessPageController.writeProgram};">
+                                            <h:commandLink  action="#{transcriptController.loadStudentTrancript()}">
+                                                <img style="margin-left:30px; " src="../resources/images/toolbar/icon-32-contact.png" width="32" height="32" alt="icon-32-save"/>
+                                                <h:outputLabel value="Load Trancript"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="four  columns" style="#{userAccessPageController.readProgram}">
+                                            <h:commandLink  immediate="true" action="#{transcriptController.printTranscript()}">
+                                                <img src="../resources/images/toolbar/icon-32-print.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Print" />
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="four columns end" style="display:#{userAccessPageController.writeProgram};">
+                                            <h:commandLink  action="#{transcriptController.resetTranscript()}" >
+                                                <img src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Clear Screen" style="margin-left: -20px;"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+
+                                </p:panel>
+                                <p:panel header="STUDENT DETAILS" style="margin-top: 10px;">
+
+                                    <div class="row" >
+                                        <div class="nine columns">
+                                            <div class="row">
+                                                <div class="four mobile-one columns">
+                                                    <label class="right inline">Name</label>
+                                                </div>
+                                                <div class="eight mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: small;" class="twelve"  disabled="true" id="studentName" value="#{transcriptController.student.surname} #{transcriptController.student.otherNames}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="four mobile-one columns">
+                                                    <label class="right inline">Student ID</label>
+                                                </div>
+                                                <div class="eight mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: small;" class="twelve"  disabled="true" id="studentId" value=" #{transcriptController.student.studentId}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="four mobile-one columns">
+                                                    <label class="right inline">Index No</label>
+                                                </div>
+                                                <div class="eight mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: small;" class="twelve"  disabled="true" id="studentIndexNumber" value="#{transcriptController.student.studentIndexNumber}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="four mobile-one columns">
+                                                    <label class="right inline">Department</label>
+                                                </div>
+                                                <div class="eight mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: small;" class="twelve" disabled="true" id="studentDepartment" immediate="true" value="#{transcriptController.student.department.departmentName}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="four mobile-one columns">
+                                                    <label class="right inline">Program</label>
+                                                </div>
+                                                <div class="eight mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: small;" class="twelve" disabled="true" id="studentProgram" immediate="true" value="#{transcriptController.student.program.programName}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="four mobile-one columns">
+                                                    <label class="right inline">Level</label>
+                                                </div>
+                                                <div class="eight   mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: small;" class="ten" id="studentLevel" disabled="true" value="#{transcriptController.student.currentLevel.academicLevelId}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="three columns">
+                                            <a class="th">
+                                                <p:graphicImage  id="studentPicture" value="#{transcriptController.pageCommonInputs.studentPicturePath}#{transcriptController.student.studentPicture}" width="113" height="200"/>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </p:panel>
+
+                            </div>
+                            <div class="eight columns">
+                                <p:panel header="TRANSCRIPT DETAILS"  >
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="twelve columns">
+
+                                            <div style="overflow: scroll;height: 500px;">
+                                                <p:dataTable  value="#{transcriptController.transcriptWrappersDataModel}"
+                                                              var="results" >
+
+
+                                                    <p:column width="100">
+                                                        <h:outputLabel style="font-weight: bold;;font-size: medium;margin:20px 20px;color: #009ceb;" value="#{results.academicYear} SEMESTER #{results.semester} #{results.academicLevel}"/>
+
+                                                        <p:dataTable value="#{transcriptController.transcriptDatasDataModel}" var="semcourse" 
+                                                                     id="selectedCourses" emptyMessage=" ">
+                                                            <p:column>
+                                                                <f:facet name="header"><h:outputLabel value="No" class="datatable-header"/></f:facet>
+                                                                <h:outputText style="font-size: smaller;" value="#{transcriptController.transcriptDatasDataModel.rowIndex+1}"/>
+                                                            </p:column>
+                                                            <p:column >
+                                                                <f:facet name="header"><h:outputLabel value="Course" class="datatable-header"/></f:facet>
+                                                                <h:outputText style="font-size: smaller;" value="#{semcourse.courseCode} #{semcoursecourseName}"/>
+                                                            </p:column>                                                       
+                                                            <p:column width="1">
+                                                                <f:facet name="header"><h:outputLabel value="Credit" class="datatable-header"/></f:facet>
+                                                                <h:outputText style="font-size: smaller;" value="#{semcourse.credit}"/>
+                                                            </p:column>                                                       
+                                                            <p:column >
+                                                                <f:facet name="header"><h:outputLabel value="#{transcriptController.semGpaCwa}" class="datatable-header"/></f:facet>
+                                                                <h:outputText style="font-size: smaller;" value="#{semcourse.mark}"/>
+                                                            </p:column>                                                       
+                                                            <p:column >
+                                                                <f:facet name="header"><h:outputLabel value="Grade" class="datatable-header"/></f:facet>
+                                                                <h:outputText style="font-size: smaller;" value="#{semcourse.grade}"/>
+                                                            </p:column>                                                       
+                                                        </p:dataTable> 
+
+                                                    </p:column>
+                                                </p:dataTable>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                        </div>
+
+                    </h:form>
+
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

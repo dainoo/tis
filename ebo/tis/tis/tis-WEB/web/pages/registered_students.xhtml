@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Registered Students
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Registered Students</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/examinations-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" style="margin-bottom: 15px;margin-top: 10px; ">
+
+                        <div class="three end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 10px;"/>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <div class="row">
+
+                        <div class="five columns">
+                            <h:form id="programSearch">
+                                <p:panel header="PROGRAM SEARCH" styleClass="panel-header">
+                                    <div class="row">
+                                        <div class="twelve  columns mobile-four">
+                                            <h:outputLabel value="Program" for="program" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="program" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="program" value="#{registeredStudentsController.selectedItemHelper.selectedProgram}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems value="#{registeredStudentsController.selectedItemHelper.programSelectItems}"/>
+                                                <p:ajax event="change" update=":examsSignSheet:programCourse" listener="#{registeredStudentsController.programCourseListener()}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="six  columns mobile-four ">
+                                            <h:outputLabel value="Level" for="level" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="level" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="level" value="#{registeredStudentsController.selectedItemHelper.selectedAcademicLevel}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems  value="#{registeredStudentsController.selectedItemHelper.academicLevelSelectItems}"/>
+                                                <p:ajax event="change" update=":examsSignSheet:programCourse" listener="#{registeredStudentsController.programCourseListener()}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="three columns mobile-four" style="margin-top: 10px;">
+                                            <h:commandLink  action="#{registeredStudentsController.viewStudents()}" >
+                                                <img style="margin-left: 25px;" src="../resources/images/toolbar/students.png" width="32" height="48" alt="icon-32-preview-cat"/>
+                                                <h:outputLabel value="View Students"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="three  columns mobile-four" style="#{userAccessPageController.readDepartment};margin-top: 12px;">
+                                            <h:commandLink action="#{registeredStudentsController.refresh}" immediate="true">
+                                                <img style="margin-left: 25px;" src="../resources/images/toolbar/icon-32-refresh.png " width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Clear Screen" style="margin-top: 7px;"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <ui:remove>
+
+                                            <div class="five columns mobile-four ">
+                                                <h:outputLabel value="Semester" for="Semester" style="margin-top: 10px;margin-bottom: 10px;">
+                                                </h:outputLabel>
+                                                <h:selectOneMenu  id="Semester" value="#{registeredStudentsController.selectedItemHelper.selectedSemester}"
+                                                                  >
+                                                    <f:selectItem itemLabel="PLEASE SELECT" />
+                                                    <f:selectItem itemLabel="1" itemValue="1"/>
+                                                    <f:selectItem itemLabel="2" itemValue="2"/>
+                                                    <p:ajax event="change" update=":examsSignSheet:programCourse" listener="#{registeredStudentsController.programCourseListener()}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </ui:remove>
+
+                                    </div>
+
+                                </p:panel>
+                            </h:form>
+                        </div>
+
+
+                        <div class="four columns">
+                            <h:form id="examsSignSheet">
+                                <p:panel header="PRINT OPTIONS" styleClass="panel-header">
+                                    <div class="row">
+                                        <div class="twelve columns">
+                                            <h:outputLabel value="Course" for="programCourse" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="programCourse" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu style="font-size: small;" id="programCourse" value="#{registeredStudentsController.selectedItemHelper.selectedCourse}"
+                                                             required="true" requiredMessage=" required" >
+                                                <f:selectItems value="#{registeredStudentsController.programCourseSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="ten columns" >
+                                            <h:outputLabel value="Related Reports" for="relatedReports" style="margin-top: 10px;margin-bottom: 10px;">
+                                            </h:outputLabel>
+                                            <h:selectOneMenu style="font-size: smaller;" id="relatedReports" value="#{registeredStudentsController.selectedReportOption}"
+                                                             >
+                                                <f:selectItem  itemLabel="STUDENTS REGISTERED SELECTED COURSE" itemValue="STUDENTS_REGISTERED_SELECTED_COURSE"/>
+                                                <f:selectItem itemLabel="STUDENTS REGISTERED COURSES LIST" itemValue="STUDENTS_REGISTERED_COURSES_LIST"/>
+                                                <f:selectItem itemLabel="EXAMS ATTENDANCE SHEET" itemValue="EXAMS_ATTENDANCE_SHEET"/>
+                                                <f:selectItem itemLabel="EXAMS RAW SCORE SHEET" itemValue="EXAMS_RAW_SCORE_SHEET"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="two columns" style="margin-top: 20px;">
+                                            <h:commandLink target="_blank" action="#{registeredStudentsController.printCommonReports()}">
+                                                <img  src="../resources/images/toolbar/icon-32-print.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Print" style="margin-top: -1px;"/>
+                                            </h:commandLink>
+
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </h:form>
+                        </div>
+
+                        <div class="three columns" >
+                            <h:form id="semCourseSearch">
+                                <p:panel header="STUDENT SEARCH"  styleClass="panel-header" >
+                                    <div class="row">
+                                        <div class="six columns mobile-four">
+                                            <h:outputLabel value="Search By" for="searchParameter" style="margin-top: 15px;margin-bottom: 10px;">
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="tw" id="searchParameter" value="#{registeredStudentsController.searchInputs.searchParameter}"
+                                                             required="true" requiredMessage=" required">
+                                                <f:selectItem itemLabel="Index No" itemValue="Index Number"/>
+                                                <f:selectItem itemLabel="Student ID " itemValue="Student ID"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="six columns mobile-four ">
+                                            <h:outputLabel value="Text" for="searchValue" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="searchValue" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="searchValue" value="#{registeredStudentsController.searchInputs.searchValue}"
+                                                          required="true" requiredMessage=" required " validatorMessage=" Not accepted" >
+                                                <f:validateRegex pattern="[0-9a-zA-Z. ']+" for="searchValue"/>
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="four  columns mobile-four" style="#{userAccessPageController.readDepartment};" >
+                                            <h:commandLink action="#{registeredStudentsController.searchButton()}">
+                                                <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Search"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="four end columns">
+                                            <h:commandLink target="_blank" action="#{registeredStudentsController.printSingleStudentRegistration()}">
+                                                <img  src="../resources/images/toolbar/icon-32-print.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Print" style="margin-top: -1px;"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </h:form>
+                        </div>
+
+
+                    </div>
+                    <div class="row">
+                        <h:form id="departmentRecords" prependId="false" >
+
+                            <div class="twelve columns">
+                                <!--<p:scrollPanel  style="height: 250px;width:100%">-->
+                                <p:panel header="Total Count #{registeredStudentsController.listOfRegistrations.size()}">
+
+                                    <div style="overflow: scroll;height: 250px;">
+                                        <p:dataTable  var="semCourse" value="#{registeredStudentsController.registrationDataModel}"
+                                                      id="progsRecords"  scrollHeight="200" draggableColumns="true"
+                                                      style="font-size: medium;" >
+
+                                            <f:facet name="header">
+                                                <h:outputText style="text-spacing: allow-end;" value="  List    Of   Students' Registered Courses"/> 
+                                            </f:facet>
+                                            <p:column >
+                                                <f:facet name="header"><h:outputLabel class="datatable-header" value="SN"/></f:facet>
+                                                <h:outputText value="#{registeredStudentsController.registrationDataModel.rowIndex+1}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Student"/></f:facet>
+                                                <h:outputLabel value="#{semCourse.student.studentId}"/>
+                                                <h:outputText value="#{semCourse.student.surname} #{semCourse.student.otherNames}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Level"/></f:facet>
+                                                <h:outputText value="#{semCourse.academicLevel.academicLevelId}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Academic Year"/></f:facet>
+                                                <h:outputText value="#{semCourse.academicYear.academicYear}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet  name="header"><h:outputLabel class="datatable-header" value="Semester"/></f:facet>
+                                                <h:outputText  value="#{semCourse.academicYear.semester}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Registered Courses"/></f:facet>
+                                                <h:outputText  value="#{semCourse.courses}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Program"/></f:facet>
+                                                <h:outputText  value="#{semCourse.student.program.programName}">
+                                                    <f:convertDateTime dateStyle="medium"/>
+                                                </h:outputText>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+                                </p:panel>
+                                <!--</p:scrollPanel>-->
+                            </div>
+                        </h:form>
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

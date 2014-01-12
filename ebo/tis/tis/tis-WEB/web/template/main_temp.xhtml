@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+
+
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title><ui:insert name="page-title"/></title>
+
+
+        <h:outputStylesheet library="css" name="foundation.css"/>
+        <h:outputStylesheet library="css" name="app.css"/>
+        <h:outputStylesheet library="css" name="user-menus.css"/>
+
+
+        <h:outputScript library="js" name="jquery.js" target="body"/>
+        <!--        <h:outputScript library="js" name="foundation.min.js" target="body"/>
+                <h:outputScript library="js" name="jquery.foundation.navigation.js" target="body"/>
+                <h:outputScript library="js" name="jquery.foundation.reveal.js" target="body"/>
+                <h:outputScript library="js" name="jquery.foundation.topbar.js" target="body"/>
+                <h:outputScript library="js" name="modernizr.foundation.js" target="body"/>-->
+        <h:outputScript library="js" name="menu_jquery.js" target="body"/>
+
+        <link rel="shortcut icon" href="../resources/images/star-golden.png" />
+    </h:head>
+    <h:body >
+        <nav class="top-bar fixed" id="header" style="height: 60px;">
+
+            <div class="row-header" >
+
+                <div class="two columns">Noad Solutions</div>
+                <div class="one columns">
+                    <h:graphicImage library="images" name="star-golden.png" width="90" height="80" style="height: 55px;width: 50px;"/>
+                </div>
+                <div class="six columns">
+                    <h4><span class="church-name-design" style="color: #0000CC;">GOLDEN STAR COLLEGE OF EDUCATION </span></h4>
+                    <!--<h6 class="church-name-design">P O BOX SU 44 - KUMASI</h6>-->
+                </div>
+                <div class="three columns">
+                    <h:form  rendered="#{loginController.userSessionData.canChangeCurrentAcademicYear}">
+                        <div class="row" >
+                            <div class="six end columns" style="">
+                                <h6>ACADEMIC YEARS</h6>
+                                <h:selectOneMenu style="margin-top: -10px;" class="six" value="#{loginController.selectedUserAcademicYear}">
+                                    <f:selectItems value="#{loginController.selectedItemHelper.academicYearSelectItems}"/>
+                                </h:selectOneMenu>
+                            </div>
+                            <div class="row">
+                                <div class="six end columns" >
+                                    <h:commandButton value="Change" action="#{loginController.changeUserCurrentAcademicYear()}" style="font-weight: bold;margin-left: -180px;margin-top: 30px;background: #ffe24f;color: #1237eb;"
+                                                     >
+                                    </h:commandButton>
+                                </div> 
+                            </div>
+
+                        </div>
+                    </h:form>
+                </div>
+
+            </div>
+
+        </nav>
+
+        <div class="row " >
+            <div class="twelve columns " >
+                <nav class="top-bar fixed" style="margin-top:  60px;">
+                    <ul>
+                        <!-- Title Area -->
+                        <li class="name">
+
+                        </li>
+                        <li class="toggle-topbar"><a href="#"></a></li>
+                    </ul>
+                    <h:form style="margin-top: -60px;">
+
+
+                        <!--<section>-->
+                        <!-- Left Nav Section -->
+                        <ul class="left" style="margin-left: -10px;">
+                            <li><a href="#" id="current-user">Username: <span style="font-family: monospace;">#{loginController.userSessionData.staff.userAccount.username}</span> </a></li>
+                            <li style="margin-left: -20px"><a href="#" id="current-user">Role: <span style="font-family: monospace;">#{loginController.userSessionData.staff.userAccount.userRole}</span></a></li>
+                            <li class="current-page-design" style="color: #ff9900;"><ui:insert name="current-page"/></li>
+                        </ul>
+
+
+                        <!-- Right Nav Section -->
+                        <ul class="right">
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar" style="color: #33ff33;">Current Academic Year &rArr; #{loginController.ay.academicYear} Semester: #{loginController.ay.semester}</a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#"><h:commandLink style="margin-top: -45px;" value="User Profile" action="#{userProfileController.viewProfile()}"/> </a></li>
+                            <li><a href="#"><h:commandLink style="margin-top: -45px;" value="Logout" action="#{loginController.logOut()}"/> </a></li>
+                        </ul>
+                        <!--</section>-->
+                    </h:form>
+                </nav>
+            </div>
+        </div>
+        <!-- End Header and Nav -->
+
+        <div class="row" style="margin-top:110px;">
+            <div class="two columns app-menus-design" style="margin-top: -22px;">
+
+                <div class="row" style="margin-bottom: 20px;">
+                    <div class="twelve columns">
+                        <ui:insert name="user-menus"/>
+                    </div>
+                </div>
+            </div>
+            <div class="ten columns " style="margin-left: 190px;">
+                <div class="row">
+                    <ui:insert name="bread-crumb"/>
+                </div>
+                <h:form style="margin-top: 40px;margin-bottom: -20px;position: fixed;z-index: 20;" rendered="#{loginController.userSessionData.changeCurrentAcademicYear}">
+                    <div class="row" style="background-color: red;">
+                        <div class="twelve columns">
+                            <h:outputLabel style="color:white;font-size: medium;text-decoration: blink;font-weight: bolder;" value="YOU ARE NOT IN THE CURRENT ACADEMIC YEAR OF #{loginController.ay.academicYear} SEMESTER #{loginController.ay.semester}"/>
+                        </div>
+                    </div>
+                </h:form>
+                <div class="row" style="margin-top: 50px;">
+                    <ui:insert name="main-content"/>
+                </div>
+                <ui:include src="../includes/footer.xhtml"/>
+            </div>
+        </div>
+
+
+
+
+    </h:body>
+
+</html>
+

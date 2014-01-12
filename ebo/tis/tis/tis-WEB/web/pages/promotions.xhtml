@@ -1,0 +1,225 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Students Promotions
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Students Promotions</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/students-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" style="margin-bottom: 15px;margin-top: 10px; ">
+
+                        <div class="three end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 10px;"/>
+                        </div>
+                    </div>
+                    <div class="row" >
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="six columns">
+                            <h:form id="programSearch">
+                                <p:panel header="MASS STUDENTS PROMOTION" styleClass="panel-header">
+                                    <div class="row">
+                                        <div class="twelve  columns mobile-four">
+                                            <h:outputLabel value="Program" for="program" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="program" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="program" value="#{promotionController.selectedItemHelper.selectedProgram}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems value="#{promotionController.selectedItemHelper.programSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="seven columns mobile-four ">
+                                            <h:outputLabel value="Level" for="level" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="level" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="level" value="#{promotionController.selectedItemHelper.selectedAcademicLevel}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems  value="#{promotionController.selectedItemHelper.academicLevelSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="five columns mobile-four" style="margin-top: 10px;">
+                                            <h:commandLink  action="#{promotionController.massSearch()}" >
+                                                <img style="margin-left: 25px;" src="../resources/images/toolbar/students.png" width="32" height="48" alt="icon-32-preview-cat"/>
+                                                <h:outputLabel value="View Students"/>
+                                            </h:commandLink>
+                                        </div>
+
+                                    </div>
+                                </p:panel>
+
+                            </h:form>
+                            <ui:remove>
+                                <h:form>
+                                    <h:commandButton value="promote" action="#{promotionController.initialStudentLevelLevel()}"/>
+                                </h:form>
+                            </ui:remove>
+                        </div>
+
+                        <div class="five end columns" >
+                            <h:form id="stdsSearch">
+                                <p:panel header="SINGLE STUDENT PROMOTION"  styleClass="panel-header" >
+                                    <div class="row">
+                                        <div class="seven  columns mobile-four">
+                                            <h:outputLabel value="Search By" for="searchParameter" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="searchParameter" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="searchParameter" value="#{promotionController.searchInputs.searchParameter}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItem itemLabel="Student ID " itemValue="Student Id"/>
+                                                <f:selectItem itemLabel="Index Number" itemValue="Index Number"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="five columns mobile-four ">
+                                            <h:outputLabel value="Search Text" for="searchValue" style="margin-top: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="searchValue" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="searchValue" value="#{promotionController.searchInputs.searchValue}"
+                                                          required="true" requiredMessage=" required ">
+                                            </h:inputText>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="four end columns mobile-four" style="#{userAccessPageController.readDepartment};" >
+                                            <h:commandLink action="#{promotionController.singleSearch()}">
+                                                <img src="../resources/images/toolbar/icon-32-contacts-categories.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Search"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </h:form>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <h:form id="departmentRecords" prependId="false">
+                            <div class="eight columns">
+                                <p:panel header="Total Count #{promotionController.listOfStudents.size()}">
+                                    <div style="overflow: scroll;height: 260px;">
+                                        <p:dataTable  var="stds" value="#{promotionController.studentsDataModel}"
+                                                      id="stdRecords" 
+                                                      style="font-size: medium;" >
+
+                                            <p:column width="1">
+                                                <f:facet name="header"><h:outputLabel class="datatable-header" value="SN"/></f:facet>
+                                                <h:outputText value="#{promotionController.studentsDataModel.rowIndex+1}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <center>
+                                                    <f:facet name="header">
+                                                        <h:selectBooleanCheckbox value="#{promotionController.pageCommonInputs.checkAllData}" >
+                                                            <p:ajax event="change" listener="#{promotionController.selectAllListener()}" update="stdRecords"/>
+                                                        </h:selectBooleanCheckbox>
+                                                    </f:facet>
+                                                    <h:selectBooleanCheckbox value="#{stds.selected}" />
+                                                </center> 
+                                            </p:column>
+                                         
+                                            
+                                            <p:column width="10">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Student ID"/></f:facet>
+                                                <h:outputText value="#{stds.studentId}"/>
+                                            </p:column>
+                                            <p:column width="10">
+                                                <f:facet  name="header"><h:outputLabel class="datatable-header" value="Index No"/></f:facet>
+                                                <h:outputText  value="#{stds.studentIndexNumber}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Student"/></f:facet>
+                                                <h:outputText value="#{stds.surname} #{stds.otherNames}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Program"/></f:facet>
+                                                <h:outputText value="#{stds.program.programName}"/>
+                                            </p:column>
+                                            <p:column width="100">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Level"/></f:facet>
+                                                <h:outputText value="#{stds.currentLevel.academicLevelId}"/>
+                                            </p:column>
+
+                                        </p:dataTable>
+                                    </div>
+                                </p:panel>
+                            </div>
+                        </h:form>
+
+                        <div class="four columns" style="margin-top: -20px;">
+                            <p:panel header="PROMOTION / DEMOTION PANEL" >
+                                <div class="row " >
+                                    <div class="twelve columns">
+                                        <h:form>
+                                            <div class="row">
+                                                <div class="eight  columns mobile-four">
+                                                    <h:outputLabel value="Promote/Demote To" for="promote" style="margin-top: 10px;margin-bottom: 10px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="promote" style="color: red;"/>
+
+                                                    </h:outputLabel>
+                                                    <h:selectOneMenu  id="promote" value="#{promotionController.selectedItemHelper.selectedAcademicLevel}"
+                                                                      required="true" requiredMessage=" required">
+                                                        <f:selectItems value="#{promotionController.selectedItemHelper.academicLevelSelectItems}" />
+                                                    </h:selectOneMenu>
+
+                                                </div>
+                                                <div class="four  columns mobile-four" style="margin-top: 25px;color: #00cc00;font-weight: bolder;">
+                                                    <h:outputText value="completed" />
+                                                    <h:selectBooleanCheckbox id="completed" value="#{promotionController.completedStudents}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="four  columns " style="margin-top:15px;">
+                                                    <h:commandLink action="#{promotionController.effectPromotionOrDemotion()}" >
+                                                        <img  src="../resources/images/toolbar/compute.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                        <h:outputLabel value="Effect"/>
+                                                    </h:commandLink>
+                                                </div>
+                                                <div class="six end columns mobile-four" style="#{userAccessPageController.readDepartment};margin-top: 15px;">
+                                                    <h:commandLink action="#{promotionController.resetButton()}" immediate="true">
+                                                        <img style="margin-left: 25px;" src="../resources/images/toolbar/icon-32-refresh.png " width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                        <h:outputLabel value="Clear Screen"/>
+                                                    </h:commandLink>
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+
+                            </p:panel>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

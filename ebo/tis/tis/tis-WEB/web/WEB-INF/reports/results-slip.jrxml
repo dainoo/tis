@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="results-slip" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="cfd03ef9-4a46-49ee-b8df-dce1df2a8089">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="schoolName" class="java.lang.String"/>
+	<parameter name="departmentName" class="java.lang.String"/>
+	<parameter name="academicYear" class="java.lang.String"/>
+	<parameter name="programName" class="java.lang.String"/>
+	<parameter name="reportFooter" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\apple_security\\mac_drivers\\ebo\\tis\\tis\\tis-WEB\\web\\WEB-INF\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="resultSlipSubreport" class="java.io.InputStream"/>
+	<parameter name="markTitle" class="java.lang.String"/>
+	<parameter name="weightedHeader" class="java.lang.String"/>
+	<parameter name="weightedAverageHeader" class="java.lang.String"/>
+	<field name="studentName" class="java.lang.String"/>
+	<field name="indexNumber" class="java.lang.String"/>
+	<field name="studentId" class="java.lang.String"/>
+	<field name="nationality" class="java.lang.String"/>
+	<field name="level" class="java.lang.String"/>
+	<field name="programName" class="java.lang.String"/>
+	<field name="listOfCoursesMarksDetails" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="182" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4e5d54fe-017e-4e5d-9f9e-02d44e799173" x="89" y="0" width="466" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="14" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{schoolName}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="be4250b7-aa27-443d-868d-6d44f3c6ed53" x="0" y="0" width="89" height="60"/>
+				<imageExpression><![CDATA["C:\\glassfish3\\glassfish\\domains\\domain1\\docroot\\tisres\\school-logo.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="f81f4d90-53e0-4507-ac4f-e16a8323aa5a" x="89" y="20" width="466" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="14" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{departmentName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b105fbd1-4b04-4f7b-ab3e-7abeadbd2c9a" mode="Opaque" x="138" y="40" width="124" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESULTS SLIP FOR THE]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c858ecb7-ea94-48ff-b4d6-fb851725a328" mode="Opaque" x="262" y="40" width="136" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Serif" size="14" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{academicYear}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="694fbf26-8369-41b1-8978-c42b1f85afba" mode="Opaque" x="382" y="40" width="100" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ACADEMIC YEAR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9c2b6a19-2e62-4c07-a0e2-a20044ffff67" x="0" y="64" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="50059750-6235-4bc1-a268-b4e3ebf3385e" x="100" y="84" width="100" height="20"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{indexNumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4124db0c-0329-424b-9be7-83787dd44969" x="0" y="84" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Index No :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b95645a0-e93c-4752-af5b-242e09eee8d8" x="100" y="64" width="100" height="20"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bdccb048-c5f9-4a70-9c63-6db59ab018d7" x="100" y="104" width="100" height="20"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentId}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a63b2191-b838-4aa9-b6bf-0b89cc730a45" x="0" y="104" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student ID :  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3e5c09a0-1f2a-4f3a-9312-f5f0865920c1" x="0" y="124" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nationality :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6144f40c-7b9e-45d2-9048-337a7c6571c9" x="100" y="124" width="100" height="20"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nationality}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="daebcb87-6a48-4299-9604-7cb7232025b5" x="269" y="64" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Year :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e707634c-dea4-4386-9d5f-598b32785fc1" x="269" y="84" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Program :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c74c3a34-0bbe-48d1-9c88-247abf996cdb" x="369" y="64" width="140" height="20"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{level}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="907ba80b-1c0f-41df-a380-bd01750cc748" x="269" y="104" width="100" height="20"/>
+				<textElement textAlignment="Right">
+					<font fontName="Serif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date Printed :]]></text>
+			</staticText>
+			<textField pattern="EEE, d MMM yyyy HH:mm:ss Z">
+				<reportElement uuid="622ea4dd-d053-4acf-b751-832615d68ab5" x="369" y="104" width="140" height="20"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="c94735db-9faa-47eb-886a-c6dc41820095" x="0" y="145" width="555" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="8d2195b5-9c7d-4b82-941a-5832dfb74e7a" x="369" y="84" width="140" height="20"/>
+				<textElement>
+					<font fontName="Serif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{programName}]]></textFieldExpression>
+			</textField>
+			<subreport isUsingCache="true">
+				<reportElement uuid="be041b83-040d-485f-a8b8-ab466d57b387" x="0" y="148" width="555" height="32"/>
+				<subreportParameter name="SUBREPORT_DIR">
+					<subreportParameterExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="resultSlipSubreport">
+					<subreportParameterExpression><![CDATA[$P{resultSlipSubreport}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="schoolName">
+					<subreportParameterExpression><![CDATA[$P{schoolName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="weightedAverageHeader">
+					<subreportParameterExpression><![CDATA[$P{weightedAverageHeader}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="markTitle">
+					<subreportParameterExpression><![CDATA[$P{markTitle}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="reportFooter">
+					<subreportParameterExpression><![CDATA[$P{reportFooter}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="weightedHeader">
+					<subreportParameterExpression><![CDATA[$P{weightedHeader}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="departmentName">
+					<subreportParameterExpression><![CDATA[$P{departmentName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="academicYear">
+					<subreportParameterExpression><![CDATA[$P{academicYear}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="programName">
+					<subreportParameterExpression><![CDATA[$P{programName}]]></subreportParameterExpression>
+				</subreportParameter>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{listOfCoursesMarksDetails})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{resultSlipSubreport}]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+</jasperReport>

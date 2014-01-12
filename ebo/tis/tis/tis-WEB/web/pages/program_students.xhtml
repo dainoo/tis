@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Program Students
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Program Students</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/students-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" style="margin-bottom: 15px;margin-top: 10px; ">
+                        <div class="three columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 10px;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;">
+
+                        <div class="five columns" >
+                            <h:form id="programSearch" >
+                                <p:panel header="PROGRAM SEARCH">
+                                    <div class="row">
+                                        <div class="twelve  columns mobile-four">
+                                            <h:outputLabel value="Program" for="program" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="program" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="program" value="#{programStudentsController.selectedItemHelper.selectedProgram}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems value="#{programStudentsController.selectedItemHelper.programSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="six columns mobile-four ">
+                                            <h:outputLabel value="Level" for="level" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="level" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="level" value="#{programStudentsController.selectedItemHelper.selectedAcademicLevel}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems  value="#{programStudentsController.selectedItemHelper.academicLevelSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="six columns mobile-four ">
+                                            <h:outputLabel value="Academic Year" for="year" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="year" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="year" value="#{programStudentsController.selectedItemHelper.selectedAcademicYear}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems  value="#{programStudentsController.selectedItemHelper.distinctAcademicLevelSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="five columns mobile-four" style="margin-top: 10px;">
+                                            <h:commandLink  action="#{programStudentsController.viewStudents()}" >
+                                                <img style="margin-left: 25px;" src="../resources/images/toolbar/students.png" width="32" height="48" alt="icon-32-preview-cat"/>
+                                                <h:outputLabel value="View Students"/>
+                                            </h:commandLink>
+                                        </div>
+                                           <div class="five end columns mobile-four" style="#{userAccessPageController.readDepartment};margin-top: 15px;">
+                                            <h:commandLink action="#{programStudentsController.refresh()}" immediate="true">
+                                                <img style="margin-left: 25px;" src="../resources/images/toolbar/icon-32-refresh.png " width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Clear Screen"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </h:form>
+                        </div>
+                        
+                        <div class="four columns">
+                            <h:form>
+                                <p:panel header="PRINT OPTIONS">
+                                    <div class="row">
+                                        <div class="twelve columns">
+                                            <h:outputLabel value="RELATED REPORTS" for="otherReports" style="margin-top: 10px;margin-bottom: 10px;font-size: smaller; color: #0000CC;">
+                                            </h:outputLabel>
+                                            <h:selectOneMenu style="font-size: smaller;" id="otherReports" value="#{programStudentsController.selectedReportOption}"
+                                                             >
+                                                <f:selectItem itemLabel="STUDENTS' PROGRAM LIST" itemValue="STUDENTS_PROGRAM_LIST"/>
+                                                <f:selectItem itemLabel="STUDENTS' CONTACTS" itemValue="STUDENTS_CONTACTS"/>
+                                                <f:selectItem itemLabel="STUDENTS' DETAILED INFORMATION" itemValue="STUDENTS_DETAILED_INFORMATION"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="three end columns mobile-four" style="#{userAccessPageController.readDepartment};margin-top: 15px;">
+                                            <h:commandLink target="_blank" action="#{programStudentsController.printSelectedOption()}">
+                                                <img src="../resources/images/toolbar/icon-32-print.png " width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Print"/>
+                                            </h:commandLink>
+                                        </div>
+                                     
+                                    </div>
+                                </p:panel>
+                            </h:form>
+                        </div>
+                        
+                        <div class="three columns" >
+                            <h:form id="studentSearch" >
+                                <p:panel header="STUDENT SEARCH">
+                                    <div class="row">
+                                        <div class="twelve  columns mobile-four">
+                                            <h:outputLabel value="Search By" for="searchParameter" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="searchParameter" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="tw" id="searchParameter" value="#{programStudentsController.searchInputs.searchParameter}"
+                                                             required="true" requiredMessage=" required">
+                                                <f:selectItem itemLabel="PLEASE SELECT" />
+                                                <f:selectItem itemLabel="Index Number" itemValue="studentIndexNumber"/>
+                                                <f:selectItem itemLabel="Student Number " itemValue="studentId"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="twelve columns mobile-four ">
+                                            <h:outputLabel value="Search Text" for="searchValue" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="searchValue" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="searchValue" value="#{programStudentsController.searchInputs.searchValue}"
+                                                          required="false" requiredMessage=" required " >
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="three end columns mobile-four" style="#{userAccessPageController.readDepartment};" >
+                                            <h:commandLink action="#{programStudentsController.searchButton()}">
+                                                <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Search"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <ui:remove>
+                                            
+                                        <div class="three end columns mobile-four" style="#{userAccessPageController.readDepartment};" >
+                                            <h:commandLink action="#{programStudentsController.searchButton()}">
+                                                <img src="../resources/images/toolbar/icon-32-print.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Print"/>
+                                            </h:commandLink>
+                                        </div>
+                                        </ui:remove>
+                                    </div>
+                                </p:panel>
+                            </h:form>
+                            <!--</h:form>-->
+                        </div>
+                    </div>
+
+
+
+                    <div class="row">
+                        <h:form id="departmentRecords" prependId="false" >
+                            <div class="twelve columns">
+                                <p:panel header="Total Count #{programStudentsController.listOfStudents.size()}" >
+                                    <div style="overflow: scroll;height: 350px;">
+
+                                        <p:dataTable  var="stdData" value="#{programStudentsController.studentsDataModel}"
+                                                      id="deptsRecords"  style="font-size: smaller;">
+                                            <f:facet name="header">
+                                                List    of    Students' Data
+                                            </f:facet>
+                                            <p:column width="40">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="SN"/></f:facet>
+                                                <h:outputText value="#{programStudentsController.studentsDataModel.rowIndex+1}"/>
+                                            </p:column>
+                                            <p:column width="100">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Student ID"/></f:facet>
+                                                <h:outputText value="#{stdData.studentId}"/>
+                                            </p:column>
+                                            <p:column width="90">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Index No"/></f:facet>
+                                                <h:outputText value="#{stdData.studentIndexNumber}"/>
+                                            </p:column>
+                                            <p:column width="130">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Surname"/></f:facet>
+                                                <h:outputText value="#{stdData.surname}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Other Names"/></f:facet>
+                                                <h:outputText value=" #{stdData.otherNames}"/>
+                                            </p:column>
+                                            <p:column width="80">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Level"/></f:facet>
+                                                <h:outputText value=" #{stdData.currentLevel.academicLevelId}"/>
+                                            </p:column>
+                                            <p:column width="170">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Program"/></f:facet>
+                                                <h:outputText value=" #{stdData.program.programName}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Department"/></f:facet>
+                                                <h:outputText value=" #{stdData.department.departmentName}"/>
+                                            </p:column>
+                                        </p:dataTable>
+
+                                    </div>
+                                </p:panel>
+
+                                <!--</div>-->
+
+                                <!--</p:scrollPanel>-->
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

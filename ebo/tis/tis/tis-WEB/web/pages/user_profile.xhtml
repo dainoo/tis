@@ -1,0 +1,140 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+                My Profile
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : My Profile</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row">
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                        <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-bottom: 10px;"/>
+                    <div class="row">
+                        <div class="two columns">
+                            <p:panel header="Profile Picture">
+                                <div class="row">
+                                    <div class="twelve centered columns ">
+                                        <a href="#" class="th">
+                                            <h:graphicImage id="studentPicture" value="#{studentsController.studentPicture}" style="height: 150px;width: 150px;" />
+                                        </a>
+                                    </div>
+
+                                </div> 
+                                <div class="row">
+                                    <div class="twelve columns"><h6 style="color: #336199;">#{userProfileController.userAccount.staff.surname} #{userProfileController.userAccount.staff.otherNames}</h6></div>
+                                </div>
+                            </p:panel>
+
+                        </div>
+                        <div class="six columns">
+                            <p:panel header="My Profile">
+
+                                <div class="row">
+                                    <div class="three columns" style="background: #edf3f4;">
+                                        <br/>
+                                        <h:outputLabel style="text-align: right;color: #336199;" value="Username"/><hr/>
+                                        <h:outputLabel style="text-align: right;color: #336199;" value="Role"/><hr/>
+                                        <h:outputLabel style="text-align: right;color: #336199;" value="Deparment"/><hr/>
+                                        <h:outputLabel style="text-align: right;color: #336199;" value="Joined"/><hr/>
+                                        <h:outputLabel style="text-align: right;color: #336199;" value="Date Of Birth"/><hr/>
+                                    </div>
+                                    <div class="nine columns">
+                                        <br/>
+                                        <h:outputLabel style="text-align:left;color:#666666;" value="#{userProfileController.userAccount.username}"/><hr/>
+                                        <h:outputLabel style="text-align:left;color: #666666;" value="#{userProfileController.userAccount.userRole}"/><hr/>
+                                        <h:outputLabel style="text-align:left;color: #666666;" value="#{userProfileController.userAccount.staff.department.departmentName}"/><hr/>
+                                        <h:outputLabel style="text-align:left;color: #666666;" value="#{userProfileController.userAccount.staff.dateAppointed}">
+                                            <f:convertDateTime  />
+                                        </h:outputLabel><hr/>
+                                        <h:outputLabel style="text-align:left;color: #666666;" value="#{userProfileController.userAccount.staff.dateOfBirth}">
+                                            <f:convertDateTime />
+                                        </h:outputLabel>
+                                        <hr/>
+                                    </div>
+                                </div>
+                            </p:panel>
+                        </div>
+                        <div class="three end columns">
+                            <h:form>
+                                <p:panel header="Change Password">
+                                    <div class="row">
+                                        <div class="twelve columns mobile-four ">
+                                            <h:outputLabel value="Old Passwod" for="oldPassword" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="oldPassword" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="oldPassword" value="#{userProfileController.oldPassword}"
+                                                          required="true" requiredMessage=" required "  >
+                                                <f:validateRegex pattern="[0-9a-zA-Z. ']+" for="oldPassword"/>
+                                            </h:inputText>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="twelve columns mobile-four ">
+                                            <h:outputLabel value="New Passwod" for="newPassword" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="newPassword" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="newPassword" value="#{userProfileController.newPassword}"
+                                                          required="true" requiredMessage=" required "  >
+                                            </h:inputText>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="twelve columns mobile-four ">
+                                            <h:outputLabel value="Confirmed Passwod" for="confirmedPassword" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="confirmedPassword" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="confirmedPassword" value="#{userProfileController.confirmedPassword}"
+                                                          required="true" requiredMessage=" required "  >
+                                            </h:inputText>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="three end  columns" >
+                                            <h:commandLink  action="#{userProfileController.changePassword()}" >
+                                                &#160; <img src="../resources/images/toolbar/icon-32-edit.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Change"/>
+                                            </h:commandLink>
+                                        </div>
+
+                                    </div>
+                                </p:panel>
+
+                            </h:form>
+
+                        </div>
+                    </div>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

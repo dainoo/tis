@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="students-registered-courses-list" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="schoolName" class="java.lang.String"/>
+	<parameter name="departmentName" class="java.lang.String"/>
+	<parameter name="reportFooter" class="java.lang.String"/>
+	<parameter name="reportitle" class="java.lang.String"/>
+	<parameter name="academicYear" class="java.lang.String"/>
+	<parameter name="programName" class="java.lang.String"/>
+	<field name="indexNumber" class="java.lang.String"/>
+	<field name="studentId" class="java.lang.String"/>
+	<field name="studentName" class="java.lang.String"/>
+	<field name="coursesRegistered" class="java.lang.String"/>
+	<field name="coursesDeferred" class="java.lang.String"/>
+	<field name="totalRegisteredCourses" class="java.lang.Integer"/>
+	<field name="totalDeferredCourses" class="java.lang.Integer"/>
+	<field name="totalCreditRegistetered" class="java.lang.Integer"/>
+	<field name="totalCreditDeferred" class="java.lang.Integer"/>
+	<variable name="counter" class="java.lang.Integer" incrementType="Report" calculation="Count">
+		<variableExpression><![CDATA[$V{counter}+1]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="89" y="0" width="713" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{schoolName}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="0" y="0" width="89" height="60"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\glassfish3\\glassfish\\domains\\domain1\\docroot\\tisres\\school-logo.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="89" y="20" width="713" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{departmentName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="485" y="40" width="138" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{academicYear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="40" width="264" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{programName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="0" width="802" height="20" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{reportitle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="27" y="0" width="77" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[studentId]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="104" y="0" width="81" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[index No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="176" y="0" width="109" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[student]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="0" width="257" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Courses Registered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="534" y="0" width="68" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Total Cre Reg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="602" y="0" width="140" height="20"/>
+				<textElement/>
+				<text><![CDATA[Courses Deferred]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="742" y="0" width="60" height="20"/>
+				<textElement/>
+				<text><![CDATA[Total Cre Df]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="27" height="20"/>
+				<textElement/>
+				<text><![CDATA[SN]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="27" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{counter}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="27" y="0" width="77" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{studentId}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="104" y="0" width="81" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{indexNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="176" y="0" width="109" height="20"/>
+				<textElement>
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{studentName}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="277" y="0" width="249" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{coursesRegistered}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="534" y="0" width="68" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{totalCreditRegistetered}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="602" y="0" width="132" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{coursesDeferred}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="742" y="0" width="60" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{totalCreditDeferred}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="526" y="0" width="8" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{totalRegisteredCourses}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="734" y="0" width="8" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$F{totalDeferredCourses}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

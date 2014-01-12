@@ -1,0 +1,141 @@
+  // <editor-fold defaultstate="collapsed" desc=" Sample CRUD">
+    public String sampleCreate(Sample sample) {
+        try {
+
+           // sample.setSelected(false);
+            sample.setRemoved("NO");
+           
+            em.persist(sample);
+            em.flush();
+            return sample.getSampleId();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            lastActivityExceptionMessage = e.getMessage();
+            lastActivityException = e;
+            return null;
+
+        }
+    }
+
+    public boolean sampleDelete(Sample sample, boolean permanent) {
+        try {
+
+            if (permanent == true) {
+                em.remove(em.merge(sample));
+            } else if (permanent == false) {
+                sample.setRemoved("YES");
+               
+                em.merge(sample);
+            }
+            em.flush();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
+        }
+    }
+
+    public boolean sampleUpdate(Sample sample) {
+        try {
+            //sample.setSelected(false);
+            sample.setRemoved("NO");
+           
+            em.merge(sample);
+            em.flush();
+            return true;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+
+        }
+    }
+
+    public Sample sampleFind(String sampleId) {
+        try {
+
+            Sample sample = em.find(Sample.class, sampleId);
+            return sample;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<Sample> sampleFindByAttribute(String sampleAttribute, Object attributeValue, String fieldType, boolean includeLogicallyDeleted) {
+        List<Sample> listOfProduct = null;
+
+        String qryString = "";
+
+        qryString = "SELECT e FROM Sample e ";
+        qryString += "WHERE e." + sampleAttribute + " =:sampleAttribute ";
+
+        try {
+            if (includeLogicallyDeleted == true) {
+            } else if (includeLogicallyDeleted == false) {
+                qryString += " AND e.removed = 'NO'";
+            }
+
+            if (fieldType.equalsIgnoreCase("NUMBER")) {
+                listOfProduct = (List<Sample>) em.createQuery(qryString).setParameter("sampleAttribute", attributeValue).getResultList();
+            } else if (fieldType.equalsIgnoreCase("STRING")) {
+                qryString = "SELECT e FROM Sample e ";
+                qryString += "WHERE e." + sampleAttribute + " LIKE '%" + attributeValue + "%'";
+                listOfProduct = (List<Sample>) em.createQuery(qryString).getResultList();
+            } else if (fieldType.equalsIgnoreCase("DATE")) {
+                listOfProduct = (List<Sample>) em.createQuery(qryString).setParameter("sampleAttribute", (Date) attributeValue, TemporalType.DATE).getResultList();
+            }
+
+            return listOfProduct;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Sample>();
+    }
+
+    public List<Sample> sampleGetRange(int firstResultIndex, int lastResultIndex, boolean includeLogicallyDeleted) {
+        List<Sample> listOfProduct = null;
+
+        String qryString = "";
+
+        try {
+            if (includeLogicallyDeleted == true) {
+                qryString = "SELECT e FROM Sample e";
+            } else if (includeLogicallyDeleted == false) {
+                qryString = "SELECT e FROM Sample e WHERE e.removed = 'NO'";
+            }
+
+            qryString += "LIMIT " + firstResultIndex + "," + lastResultIndex;
+            listOfProduct = (List<Sample>) em.createQuery(qryString).getResultList();
+
+            return listOfProduct;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Sample>();
+    }
+
+    public List<Sample> sampleGetAll(boolean includeLogicallyDeleted) {
+        List<Sample> listOfProduct = null;
+
+        String qryString = "";
+
+        try {
+            if (includeLogicallyDeleted == true) {
+                qryString = "SELECT e FROM Sample e";
+            } else if (includeLogicallyDeleted == false) {
+                qryString = "SELECT e FROM Sample e WHERE e.removed = 'NO'";
+            }
+
+            listOfProduct = (List<Sample>) em.createQuery(qryString).getResultList();
+
+            return listOfProduct;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<Sample>();
+    }
+
+    // </editor-fold>

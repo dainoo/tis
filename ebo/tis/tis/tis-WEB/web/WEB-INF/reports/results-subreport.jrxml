@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="results-subreport" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="markTitle" class="java.lang.String"/>
+	<parameter name="weightedHeader" class="java.lang.String"/>
+	<parameter name="weightedAverageHeader" class="java.lang.String"/>
+	<field name="courseName" class="java.lang.String"/>
+	<field name="creditHours" class="java.lang.String"/>
+	<field name="grade" class="java.lang.String"/>
+	<field name="marks" class="java.lang.Double"/>
+	<field name="semCrdtReg" class="java.lang.Double"/>
+	<field name="semCrdtObt" class="java.lang.Double"/>
+	<field name="cummCrdtReg" class="java.lang.Double"/>
+	<field name="cummCrdtObt" class="java.lang.Double"/>
+	<field name="semWtdMark" class="java.lang.Double"/>
+	<field name="semAvg" class="java.lang.Double"/>
+	<field name="cummWtdMark" class="java.lang.Double"/>
+	<field name="cummAvg" class="java.lang.Double"/>
+	<field name="markStyle" class="java.lang.String"/>
+	<field name="gradePoint" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="191" height="20" backcolor="#9999FF"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[COURSE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="191" y="0" width="73" height="20" backcolor="#9999FF"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[CREDITS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="447" y="0" width="108" height="20" backcolor="#9999FF"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[GRADE]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="264" y="0" width="183" height="20" backcolor="#9999FF"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{markTitle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="192" y="0" width="73" height="20"/>
+				<box leftPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{creditHours}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="192" height="20"/>
+				<box leftPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{courseName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="265" y="0" width="183" height="20"/>
+				<box leftPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{marks}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="448" y="0" width="107" height="20"/>
+				<box leftPadding="3"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{grade}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="105" splitType="Stretch">
+			<staticText>
+				<reportElement x="377" y="-2" width="86" height="15"/>
+				<box>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[SEMESTER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="29" width="100" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Credits Obtained]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="277" y="14" width="100" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Credits Registered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="463" y="-2" width="86" height="15"/>
+				<box>
+					<bottomPen lineWidth="0.75"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[CUMMULATIVE]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="377" y="14" width="86" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{semCrdtReg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="377" y="29" width="86" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{semCrdtObt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="377" y="44" width="86" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{semWtdMark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="377" y="59" width="86" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{semAvg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="14" width="86" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{cummCrdtReg}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="29" width="86" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{cummCrdtObt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="44" width="86" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{cummWtdMark}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="463" y="59" width="86" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{cummAvg}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="-1" y="103" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="10" y="81" width="113" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="144" y="81" width="133" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="10" y="87" width="113" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student's Signature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="144" y="87" width="133" height="15"/>
+				<textElement textAlignment="Center">
+					<font size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Academic Supervisor's Signature]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="277" y="57" width="100" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{weightedAverageHeader}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="277" y="44" width="100" height="15"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{weightedHeader}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

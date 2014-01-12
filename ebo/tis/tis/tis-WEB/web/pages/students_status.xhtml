@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Students Status
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Students Status</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/students-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" style="margin-bottom: 15px;margin-top: 10px; ">
+                        <div class="three columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 10px;"/>
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <div class="row" style="margin-bottom: 10px;">
+                        <div class="seven columns">
+                            <p:panel header="STUDENTS'S ACADEMIC STATUS">
+                                <h:form id="programSearch"  >
+                                    <div class="row">
+                                        <div class="eight columns mobile-four">
+                                            <h:outputLabel value="Academic Year" for="academicYear" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="academicYear" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="academicYear" value="#{studentsStatusController.selectedItemHelper.selectedAcademicYear}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems value="#{studentsStatusController.selectedItemHelper.distinctAcademicLevelSelectItems}" />
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="four columns mobile-four">
+                                            <h:outputLabel value="Academic Status" for="academicStatus" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="academicStatus" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="academicStatus" value="#{studentsStatusController.selectedItemHelper.selectedAcademicStatus}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems value="#{studentsStatusController.selectedItemHelper.academicStatusSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="eight columns mobile-four">
+                                            <h:outputLabel value="Program" for="program" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="program" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="program" value="#{studentsStatusController.selectedItemHelper.selectedProgram}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems value="#{studentsStatusController.selectedItemHelper.programSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="four columns mobile-four">
+                                            <h:outputLabel value="Level" for="level" style="margin-top: 10px;margin-bottom: 10px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="level" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="level" value="#{studentsStatusController.selectedItemHelper.selectedAcademicLevel}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItems value="#{studentsStatusController.selectedItemHelper.academicLevelSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="four  columns mobile-four" style="margin-top: 10px;">
+                                            <h:commandLink  action="#{studentsStatusController.viewStudents()}" >
+                                                <img style="margin-left: 25px;" src="../resources/images/toolbar/icon-32-preview.png" width="32" height="48" alt="icon-32-preview-cat"/>
+                                                <h:outputLabel value="View Students"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="three end columns mobile-four" style="#{userAccessPageController.readDepartment};margin-top: 15px;">
+                                            <h:commandLink action="#{studentsStatusController.refresh()}" immediate="true">
+                                                <img style="margin-left: 25px;" src="../resources/images/toolbar/icon-32-refresh.png " width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Clear Screen"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </h:form>
+
+                            </p:panel>
+                        </div>
+
+                        <div class="five columns">
+                            <p:panel header="PRINT OPTIONS">
+                                <div class="row">
+                                    <div class="twelve columns">
+                                        <h:form id="otherOptions">
+                                            <div class="row">
+                                                <div class="eight columns">
+                                                    <h:outputLabel value="Related Reports" for="otherReports" style="margin-top: 10px;margin-bottom: 10px;">
+                                                    </h:outputLabel>
+                                                    <h:selectOneMenu id="otherReports" value="#{studentsStatusController.selectedReportOption}"
+                                                                     style="font-size: smaller;">
+                                                        <f:selectItem itemLabel="STUDENTS WITH SELECTED ACADEMIC STATUS" itemValue="STUDENTS_WITH_SELECTED_ACADEMIC_STATUS"/>
+                                                        <f:selectItem itemLabel="STUDENTS READING SELECTED PROGRAM" itemValue="STUDENTS_READING_SELECTED_PROGRAM"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="four columns" style="margin-top: 20px;">
+                                                    <h:commandLink target="_blank"  action="#{studentsStatusController.printSelectedOption()}">
+                                                        <img  src="../resources/images/toolbar/icon-32-print.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                        <h:outputLabel value="Print" style="margin-top: -1px;"/>
+                                                    </h:commandLink>
+                                                </div>
+                                            </div>
+                                        </h:form>
+                                    </div>
+                                </div>
+
+                            </p:panel>
+                        </div>
+                    </div>
+
+
+                    <p:panel header="Total Count #{studentsStatusController.listOfStudents.size()}" >
+                        <div class="row">
+                            <h:form id="departmentRecords" prependId="false" >
+                                <div class="twelve columns">
+                                    <div style="overflow: scroll;height: 350px;">
+
+
+                                        <p:dataTable  var="stdData" value="#{studentsStatusController.studentsDataModel}"
+                                                      id="deptsRecords"   style="font-size: smaller;">
+                                            <f:facet name="header">
+                                                List    of    Students' Data
+                                            </f:facet>
+                                            <p:column width="40">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="SN"/></f:facet>
+                                                <h:outputText value="#{studentsStatusController.studentsDataModel.rowIndex+1}"/>
+                                            </p:column>
+                                            <p:column width="100">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Student ID"/></f:facet>
+                                                <h:outputText value="#{stdData.studentId}"/>
+                                            </p:column>
+                                            <p:column width="90">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Index No"/></f:facet>
+                                                <h:outputText value="#{stdData.studentIndexNumber}"/>
+                                            </p:column>
+                                            <p:column width="130">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Student"/></f:facet>
+                                                <h:outputText value="#{stdData.surname} #{stdData.otherNames}"/>
+                                            </p:column>
+                                            <p:column width="80">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Level"/></f:facet>
+                                                <h:outputText value=" #{stdData.currentLevel.academicLevelId}"/>
+                                            </p:column>
+                                            <p:column width="100">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Status"/></f:facet>
+                                                <h:outputText value=" #{stdData.academicStatus}"/>
+                                            </p:column>
+                                            <p:column width="190">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Program"/></f:facet>
+                                                <h:outputText value=" #{stdData.program.programName}"/>
+                                            </p:column>
+                                            <p:column >
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Department"/></f:facet>
+                                                <h:outputText value=" #{stdData.department.departmentName}"/>
+                                            </p:column>
+                                            <p:column width="100">
+                                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Admission Year"/></f:facet>
+                                                <h:outputText value=" #{stdData.admissionYear}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </div>
+                    </p:panel>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

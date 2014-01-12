@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Department Heads
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Department Heads</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/staffs-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" style="margin-bottom: 15px;margin-top: 10px; ">
+                        <div class="three columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 10px;"/>
+                        </div>
+                        <div class="nine columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <div class="five columns">
+                        <h:form >
+                            <p:panel header="HOD ASSIGNMENTS">
+                                <div class="row">
+                                    <div class="twelve  columns mobile-four">
+                                        <h:outputLabel value="Departments" for="departments" style="margin-top: 10px;margin-bottom: 10px;">
+                                            <span style="color: red;font-size: large">*</span><h:message for="departments" style="color: red;"/>
+                                        </h:outputLabel>
+                                        <h:selectOneMenu  id="departments" value="#{departmentHeadsController.selectedItemHelper.selectedDepartment}"
+                                                          required="true" requiredMessage=" required">
+                                            <f:selectItem itemLabel="PLEASE SELECT"/>
+                                            <f:selectItems value="#{departmentHeadsController.selectedItemHelper.departmentSelectItems}"/>
+                                            <p:ajax event="change" listener="#{departmentHeadsController.departmentMembersListener()}" update="deptMembers"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="twelve columns mobile-four ">
+                                        <h:outputLabel value="Department Members" for="deptMembers" style="margin-top: 10px;margin-bottom: 10px;">
+                                            <span style="color: red;font-size: large">*</span><h:message for="deptMembers" style="color: red;"/>
+                                        </h:outputLabel>
+                                    </div>
+                                    <h:selectOneMenu  id="deptMembers" value="#{departmentHeadsController.selectedItemHelper.selectedStaff}"
+                                                      required="true" requiredMessage=" required">
+                                        <f:selectItems id="GOOD" value="#{departmentHeadsController.memebersOfDepartmentSelectItems}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="row">
+                                    <div class="two end columns mobile-four" >
+                                        <h:commandLink  action="#{departmentHeadsController.assignHOD()}" >
+                                            <img src="../resources/images/toolbar/icon-32-adduser.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                            <h:outputLabel value="Assign HOD"/>
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+
+                            </p:panel>
+                        </h:form>
+                    </div>
+                    <div class="four columns">
+                        <h:form>
+                            <p:panel header="SEARCH HODs">
+                                <div class="row">
+                                    <div class="twelve  columns mobile-four">
+                                        <h:outputLabel value="Search By" for="searchParameter" style="margin-top: 10px;margin-bottom: 10px;">
+                                            <span style="color: red;font-size: large">*</span><h:message for="searchParameter" style="color: red;"/>
+                                        </h:outputLabel>
+                                        <h:selectOneMenu class="tw" id="searchParameter" value="#{departmentHeadsController.searchInputs.searchParameter}"
+                                                         required="true" requiredMessage=" required">
+                                            <f:selectItem itemLabel="-- Please Select --" />
+                                            <f:selectItem itemLabel="Department Name" itemValue="departmentName"/>
+                                            <f:selectItem itemLabel="Head Surname " itemValue="headOfDept.surname"/>
+                                            <f:selectItem itemLabel="Head Gender " itemValue="headOfDept.gender"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="twelve columns mobile-four ">
+                                        <h:outputLabel value="Search Text" for="searchValue" style="margin-top: 10px;margin-bottom: 10px;">
+                                            <span style="color: red;font-size: large">*</span><h:message for="searchValue" style="color: red;"/>
+                                        </h:outputLabel>
+                                        <h:inputText  class="twelve" id="searchValue" value="#{departmentHeadsController.searchInputs.searchValue}"
+                                                      required="true" requiredMessage=" required " validatorMessage=" Not accepted" >
+                                            <f:validateRegex pattern="[0-9a-zA-Z. ']+" for="searchValue"/>
+                                        </h:inputText>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="three  columns mobile-four" style="#{userAccessPageController.readDepartment}">
+                                        <h:commandLink action="#{departmentHeadsController.searchButton()}">
+                                            <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                            <h:outputLabel value="Search"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="three end columns mobile-four" style="#{userAccessPageController.readDepartment}">
+                                        <h:commandLink action="#{departmentHeadsController.refreshButton()}">
+                                            <img src="../resources/images/toolbar/icon-32-refresh.png " width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                            <h:outputLabel value="Refresh"/>
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+
+                            </p:panel>
+                        </h:form>
+                    </div>
+
+                    <div class="three columns">
+                        <p:panel header="Print Options">
+
+                        </p:panel>
+                    </div>
+                    <h:form id="departmentRecords" prependId="false" >
+                        <div class="row">
+                            <div class="twelve columns">
+                                <!--<p:scrollPanel  style="height: 250px;width:100%">-->
+                                <div style="overflow: scroll;height: 230px;">
+                                    <p:dataTable  var="dept" value="#{departmentHeadsController.departmentsDataModel}"
+                                                  id="deptsRecords" >
+                                        <f:facet name="header">
+                                            <h:outputText style="color: #0000CC;font-family: sans-serif;font-weight: bold;float: left;" value="Total Count #{departmentHeadsController.listOfDepartments.size()}"/>
+                                            List    of    HODs
+                                        </f:facet>
+
+                                        <p:column >
+                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="SN"/></f:facet>
+                                            <h:outputFormat  value="#{departmentHeadsController.departmentsDataModel.rowIndex+1}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Departments"/></f:facet>
+                                            <h:outputFormat  value="#{dept.departmentName}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Surname"/></f:facet>
+                                            <h:outputFormat  value=" #{dept.headOfDept.title} #{dept.headOfDept.surname}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Other Names"/></f:facet>
+                                            <h:outputFormat value=" #{dept.headOfDept.otherNames}"/>
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </div>
+
+                                <!--</p:scrollPanel>-->
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

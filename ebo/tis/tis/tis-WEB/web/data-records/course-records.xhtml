@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <h:form id="courseRecords" prependId="false" style="#{coursesController.pageCommonInputs.showDataRecordsPanel}">
+        <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+            <div class="three columns">
+                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+            </div>
+            <div class="offset-by-five four columns">
+                <div class="row">
+                    <div class="three columns" >
+                        <h:commandLink action="#{coursesController.newDataButton()}" immediate="true">
+                            <img src="../resources/images/toolbar/icon-32-new.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                            <h:outputLabel value="New"/>
+                        </h:commandLink>
+                    </div>
+                    <div class="four end columns" style="#{userAccessPageController.readProgram}">
+                        <h:commandLink  action="#{coursesController.resetDataTable()}" immediate="true">
+                            <img style="margin-bottom:5px;margin-left:25px" src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="64" alt="icon-32-new"/>
+                            <h:outputLabel value="Clear Screen" />
+                        </h:commandLink>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="three columns">
+                <p:panel header="COURSE DETAILS" >
+                    <div class="row">
+                        <div class="twelve columns mobile-four">
+                            <h:outputLabel value="Search By" for="searchParameter" style="margin-top: 15px;margin-bottom: 15px;">
+                                <span style="color: red;font-size: large">*</span><h:message for="searchParameter" style="color: red;"/>
+                            </h:outputLabel>
+                            <h:selectOneMenu  id="searchParameter" value="#{coursesController.searchInputs.searchParameter}"
+                                              required="true" requiredMessage=" required">
+                                <f:selectItem itemLabel="-- Please Select --" />
+                                <f:selectItem itemLabel="Initials" itemValue="courseInitials"/>
+                                <f:selectItem itemLabel="Code" itemValue="courseCode"/>
+                                <f:selectItem itemLabel="Course" itemValue="courseName"/>
+                                <f:selectItem itemLabel="Credit" itemValue="creditHours"/>
+                                <f:selectItem itemLabel="Status" itemValue="status"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="row columns">
+                        <div class="twelve columns mobile-four ">
+                            <h:outputLabel value="Search Text" for="searchValue" class="label-style">
+                                <span class="asterisk">*</span><h:message for="searchValue" class="message"/>
+                            </h:outputLabel>
+                            <h:inputText  class="twelve" id="searchValue" value="#{coursesController.searchInputs.searchValue}"
+                                          required="true" requiredMessage=" required " validatorMessage=" Not accepted" >
+                                <f:validateRegex pattern="[0-9a-zA-Z. ']+" for="searchValue"/>
+                            </h:inputText>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="four columns mobile-four">
+                            <h:commandLink action="#{coursesController.searchButton()}">
+                                <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                <h:outputLabel value="Search"/>
+                            </h:commandLink>
+                        </div>
+                        <div class="four columns mobile-four end">
+                            <h:commandLink immediate="true"  action="#{coursesController.viewAllButton()}">
+                                <img style="margin-left: 10px;"  src="../resources/images/toolbar/icon-32-preview.png" width="32" height="64" alt="icon-32-new"/>
+                                <h:outputLabel value="View All"/>
+                            </h:commandLink>
+                        </div>
+                    </div>
+                </p:panel>
+            </div>
+            <div class="nine columns">
+                <p:panel header="Course Records" footer="RECORDS FOUND #{coursesController.listOfCourses.size()}">
+                    <div style="overflow: scroll;height: 400px;">
+                        <p:dataTable  var="course" value="#{coursesController.coursesDataModel}"
+                                      id="progsRecords" >
+                            <f:facet name="header">
+                                <h:outputText style="color: #0000CC;font-family: sans-serif;font-weight: bold;float: left;" value="Total Count #{coursesController.listOfCourses.size()}"/>
+                                List    of    Courses
+                            </f:facet>
+
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="SN"/></f:facet>
+                                <h:outputText value="#{coursesController.coursesDataModel.rowIndex+1}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Initials"/></f:facet>
+                                <h:outputText value="#{course.courseInitials}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Code"/></f:facet>
+                                <h:outputText value="#{course.courseCode}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Course"/></f:facet>
+                                <h:outputText value="#{course.courseName}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Credit"/></f:facet>
+                                <h:outputText value="#{course.creditHours}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Status"/></f:facet>
+                                <h:outputText value="#{course.status}">
+                                    <f:convertDateTime dateStyle="medium"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Edit"/></f:facet>
+                                <h:commandLink immediate="true"  action="#{coursesController.selectButton()}"  style="color:#2BA6CB;font-style: italic;font-family:monospace ;font-size: small;display:#{userAccessPageController.writeProgram}" value="SELECT" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+                </p:panel>
+            </div>
+
+        </div>
+
+    </h:form>
+</html>
+

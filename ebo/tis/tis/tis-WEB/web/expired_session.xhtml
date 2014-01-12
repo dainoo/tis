@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Session Expired</title>
+        <style type="text/css">
+            body {
+                font: 12px 'Lucida Sans Unicode', 'Trebuchet MS', Arial, Helvetica;
+                margin: 0;
+                background-color:#F1F4F9;
+            }
+            #login{
+                background-color: #fff;
+                background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+                background-image: -webkit-linear-gradient(top, #fff, #eee);
+                background-image: -moz-linear-gradient(top, #fff, #eee);
+                background-image: -ms-linear-gradient(top, #fff, #eee);
+                background-image: -o-linear-gradient(top, #fff, #eee);
+                background-image: linear-gradient(top, #fff, #eee);
+                height: 150px;
+                width: 400px;
+                margin: 110px 0 0 -230px;
+                padding: 30px;
+                position: absolute;
+                top: 5%;
+                left: 50%;
+                z-index: 10;
+                -moz-border-radius: 3px;
+                -webkit-border-radius: 3px;
+
+                box-shadow:
+                    0 0 2px rgba(0, 0, 0, 0.2),
+                    0 1px 1px rgba(0, 0, 0, .2),
+                    0 3px 0 #fff,
+                    0 4px 0 rgba(0, 0, 0, .2),
+                    0 6px 0 #fff,
+                    0 7px 0 rgba(0, 0, 0, .2);
+                position: absolute;
+                z-index: 0;
+            }
+            
+
+        </style>
+    </h:head>
+
+    <h:body>
+        <h:form id="login">
+            <span style="text-align: center;color: red;text-decoration: blink;"><h2 style="text-decoration:blink; ">Sorry ! : Your Session Has Expired</h2></span>
+            <span style="margin: 110px;color: black;">
+                <!--<a href="login.xhtml"></a>-->
+                <!--<a href="login.xhtml">RE-LOGIN</a>-->
+                <h:commandLink  style="text-decoration: none;" value="PLEASE CLICK HERE TO RE-LOGIN" action="login.xhtml?faces-redirect=true"/>
+            </span>
+
+        </h:form>
+    </h:body>
+</html>

@@ -1,0 +1,154 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:form id="studentInputs" prependId="false" style="#{studentsController.pageCommonInputs.showDataRecordsPanel};">
+
+        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+            <div class="three columns">
+                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+            </div>
+            <div class="offset-by-five four columns">
+                <div class="row">
+                    <div class="three columns" >
+                        <h:commandLink action="#{studentsController.newDataButton()}" immediate="true">
+                            <img src="../resources/images/toolbar/icon-32-new.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                            <h:outputLabel value="New"/>
+                        </h:commandLink>
+                    </div>
+                    <div class="four end columns" style="#{userAccessPageController.readProgram}">
+                        <h:commandLink  action="#{studentsController.resetDataTable()}" immediate="true">
+                            <img style="margin-bottom:5px;margin-left:20px" src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="64" alt="icon-32-new"/>
+                            <h:outputLabel value="Clear Screen" />
+                        </h:commandLink>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 15px;">
+            <div class="eight end  columns">
+                <p:panel header="STUDENTS' RECORDS">
+                    <div class="row">
+                        <div class="three columns">
+                            <h:outputLabel value="Search By" for="searchParameter" class="label-style">
+                                <span class="asterisk">*</span><h:message for="searchParameter" class="message"/>
+                            </h:outputLabel>
+                            <h:selectOneMenu  id="searchParameter" value="#{studentsController.searchInputs.searchParameter}"
+                                              required="true" requiredMessage=" required">
+                                <f:selectItem itemLabel="PLEASE SELECT" />
+                                <f:selectItem itemLabel="Student ID" itemValue="studentId"/>
+                                <f:selectItem itemLabel="Index Number" itemValue="studentIndexNumber"/>
+                                <f:selectItem itemLabel="Surname" itemValue="surname"/>
+                                <f:selectItem itemLabel="Gender" itemValue="gender"/>
+                                <f:selectItem itemLabel="Department" itemValue="department.departmentName"/>
+                                <f:selectItem itemLabel="Country" itemValue="country"/>
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="three columns">
+                            <h:outputLabel value="Search Text" for="searchValue" class="label-style">
+                                <span class="asterisk">*</span><h:message for="searchValue" class="message"/>
+                            </h:outputLabel>
+                            <h:inputText  class="twelve" id="searchValue" value="#{studentsController.searchInputs.searchValue}"
+                                          required="true" requiredMessage=" required " validatorMessage=" Not accepted" >
+                                <f:validateRegex pattern="[0-9a-zA-Z. ']+" for="searchValue"/>
+                            </h:inputText>
+                        </div>
+                        <div  class="three columns mobile-four" style="#{userAccessPageController.readProgram};margin-top: 25px;">
+                            <h:commandLink action="#{studentsController.searchButton()}">
+                                <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                <h:outputLabel value="Search"/>
+                            </h:commandLink>
+                        </div>
+                        <div class="three  columns mobile-four end" style="#{userAccessPageController.readProgram};margin-left: -20px;margin-top: 25px;">
+                            <h:commandLink immediate="true"  action="#{studentsController.viewAllButton()}">
+                                <img style="margin-left: 10px;" src="../resources/images/toolbar/icon-32-preview.png" width="32" height="64" alt="icon-32-new"/>
+                                <h:outputLabel value="View All"/>
+                            </h:commandLink>
+                        </div>
+                    </div>
+                    <div class="row">
+
+
+                    </div>
+
+                </p:panel>
+
+            </div>
+
+        </div> 
+
+    </h:form>
+
+    <h:form id="studentRecords" prependId="false" style="#{studentsController.pageCommonInputs.showDataRecordsPanel}">
+
+
+        <div class="row">
+            <div class="twelve columns">
+                <p:panel header="Total Count #{studentsController.listOfStudents.size()}">
+                    <div style="overflow: scroll;height: 250px;">
+                        <p:dataTable  var="student" value="#{studentsController.studentsDataModel}"
+                                      id="progsRecords"  scrollHeight="200" draggableColumns="true"
+                                      style="font-size: small;" >
+
+                            <f:facet name="header">
+                                <h:outputText style="text-spacing: allow-end;" value="List    of    Students"/> 
+                            </f:facet>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="SN"/></f:facet>
+                                <h:outputText value="#{studentsController.studentsDataModel.rowIndex+1}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Student ID"/></f:facet>
+                                <h:outputText value="#{student.studentId}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Index No"/></f:facet>
+                                <h:outputText value="#{student.studentIndexNumber}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet  name="header"><h:outputLabel  class="datatable-header" value="Title"/></f:facet>
+                                <h:outputText value="#{student.title}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet  name="header"><h:outputLabel class="datatable-header" value="Surname"/></f:facet>
+                                <h:outputText  value="#{student.surname}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Other Names"/></f:facet>
+                                <h:outputText  value="#{student.otherNames}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Gender"/></f:facet>
+                                <h:outputText  value="#{student.gender}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Program"/></f:facet>
+                                <h:outputText value="#{student.program.programName}" />
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Admission Date"/></f:facet>
+                                <h:outputText  value="#{student.dateOfAdmission}">
+                                    <f:convertDateTime dateStyle="medium"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Academic Year"/></f:facet>
+                                <h:outputText  value="#{student.admissionYear}">
+                                    <f:convertDateTime dateStyle="medium"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Edit"/></f:facet>
+                                <h:commandLink immediate="true"  action="#{studentsController.selectButton()}"  style="color:#2BA6CB;font-style: italic;font-family:monospace ;font-size: small;display:#{userAccessPageController.writeProgram}" value="SELECT" />
+                            </p:column>
+
+                        </p:dataTable>
+                    </div>
+                </p:panel>
+            </div>
+        </div>
+
+    </h:form>
+</html>
+

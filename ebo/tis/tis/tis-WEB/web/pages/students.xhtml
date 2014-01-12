@@ -1,0 +1,450 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+                Student Information
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Students &#926; Student Information</a>
+
+            </ui:define>
+
+            <ui:define name="user-menus">
+                <div style="display: inline;">
+                    <ui:include src="../includes/user-main-menus.xhtml"/>
+
+                </div>
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <div style="display: inline;">
+                    <ui:include src="../includes/students-bread-crumbs.xhtml"/>
+                </div>
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div style="display: inline;">
+                    <div class="twelve columns">
+                        <div class="row">
+                            <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                        </div>
+
+
+                        <h:form id="studentInputData" style="#{studentsController.pageCommonInputs.showDataInputPanel}">
+                            <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                                <div class="three end columns">
+                                    <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+
+                                </div>
+                                <div class="offset-by-three six columns">
+                                    <div class="row">
+                                        <div class="two columns" style="display:#{userAccessPageController.writeProgram}">
+                                            <h:commandLink rendered="#{studentsController.pageCommonInputs.showEditButtons}" action="#{studentsController.saveButton()}">
+                                                &#160;<img src="../resources/images/toolbar/icon-32-save.png" width="32" height="32" alt="icon-32-save"/>
+                                                <h:outputLabel value="Save"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                            <h:commandLink  immediate="true" action="#{studentsController.cancelButton()}">
+                                                &#160; <img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Cancel" />
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two  columns" style="display:#{userAccessPageController.writeProgram}">
+                                            <h:commandLink rendered="#{!studentsController.pageCommonInputs.showEditButtons}" action="#{studentsController.updateButton()}" >
+                                                &#160; <img src="../resources/images/toolbar/icon-32-edit.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Update"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two end columns" style="display:#{userAccessPageController.writeProgram}">
+                                            <h:commandLink rendered="#{!studentsController.pageCommonInputs.showEditButtons}"
+                                                           action="#{studentsController.deleteButton()}"
+                                                           onclick="return confirm('Do You Really Want to Delete #{studentsController.student.surname}');">
+                                                &#160; <img src="../resources/images/toolbar/icon-32-delete.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Delete"/>
+                                            </h:commandLink>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row" >
+
+                                <div class="five columns ">
+                                    <div class="row" style="margin-bottom: 15px;">
+                                        <div class="twelve columns">
+                                            <p:panel header=" 1. STUDENT PERSONAL INFORMATION">
+                                                <div class="row" >
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Surname" for="surname" >
+                                                            <span class="asterisk">*</span><h:message for="surname" class="message"/>
+                                                        </h:outputLabel>
+                                                        <h:inputText  class="twelve" id="surname" value="#{studentsController.student.surname}"
+                                                                      required="true"  requiredMessage=" required " validatorMessage=" Invalid Surname" >
+                                                            <f:validateRegex pattern="[A-Za-z -]+" for="surname"/>
+                                                        </h:inputText>
+                                                    </div>
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Other Names" for="otherNames">
+                                                            <span class="asterisk">*</span><h:message for="otherNames" class="message"/>
+
+                                                        </h:outputLabel>
+                                                        <h:inputText  class="twelve" id="otherNames" value="#{studentsController.student.otherNames}"
+                                                                      required="true"  requiredMessage=" required " validatorMessage=" Invalid Name" >
+                                                            <f:validateRegex pattern="[a-zA-Z -]+" for="otherNames"/>
+                                                        </h:inputText>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Gender" for="gender" >
+                                                            <span class="asterisk">*</span><h:message for="gender" class="message"/>
+                                                        </h:outputLabel>
+                                                        <h:selectOneMenu style="margin-bottom: 10px;" class="twelve" id="gender" value="#{studentsController.student.gender}"
+                                                                         required="true" requiredMessage=" required " >
+                                                            <f:selectItem itemLabel="PLEASE SELECT ONE" />
+                                                            <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                                            <f:selectItem itemLabel="Female" itemValue="Female"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Marital Status" for="maritalStatus">
+                                                            <span class="asterisk">*</span><h:message for="maritalStatus" class="message"/>
+                                                        </h:outputLabel>
+                                                        <h:selectOneMenu  id="maritalStatus" value="#{studentsController.student.maritalStatus}"
+                                                                          required="true" requiredMessage=" required " >
+                                                            <f:selectItems value="#{studentsController.selectedItemHelper.maritalStatusSelectItems}"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Date Of Birth" for="studentdob">
+                                                            <span class="asterisk">*</span><h:message for="studentdob" class="message"/>
+                                                        </h:outputLabel>
+                                                        <p:calendar  yearRange="1970" navigator="true"   id="studentdob" value="#{studentsController.student.dateOfBirth}"
+                                                                     required="true" requiredMessage=" required " />
+                                                    </div>
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Deformities" for="deformities">
+                                                            <span class="asterisk">*</span><h:message for="deformities" class="message"/>
+                                                        </h:outputLabel>
+                                                        <h:inputText  class="twelve" id="deformities" value="#{studentsController.student.deformities}"
+                                                                      required="true"  requiredMessage=" required " validatorMessage=" Invalid " >
+                                                            <f:validateRegex pattern="[0-9a-zA-Z -]+" for="deformities"/>
+                                                        </h:inputText>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Language(s) Spoken and Written" for="languages">
+                                                            <span class="asterisk">*</span><h:message for="languages" class="message"/>
+                                                        </h:outputLabel>
+                                                        <h:inputTextarea id="languages" value="#{studentsController.student.languageSpoken}"
+                                                                         required="true" requiredMessage=" required " />
+                                                    </div>
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Ghanaian Language and Culture" for="culture">
+                                                            <span class="asterisk">*</span><h:message for="culture" class="message"/>
+                                                        </h:outputLabel>
+                                                        <h:inputTextarea id="culture" value="#{studentsController.student.culture}"
+                                                                         required="true" requiredMessage=" required " />
+                                                    </div>
+
+                                                </div>
+                                            </p:panel>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="five columns">
+                                    <div class="row">
+                                        <div class="twelve columns">
+                                            <p:panel header=" 2. ADMISSION INFORMATION">
+                                                <div class="row">
+                                                    <div class="six end columns" >
+                                                        <h:outputLabel value="Department" for="department" >
+                                                            <span class="asterisk">*</span><h:message for="department" style="color: red;"/>
+                                                        </h:outputLabel>
+                                                        <h:selectOneMenu style="margin-bottom: 10px;" class="twelve" id="department" value="#{studentsController.selectedItemHelper.selectedDepartment}"
+                                                                         required="true" requiredMessage=" required " >
+                                                            <f:selectItem itemLabel="PLEASE SELECT ONE"/>
+                                                            <f:selectItems value="#{studentsController.selectedItemHelper.departmentSelectItems}"/>
+                                                            <p:ajax event="change" listener="#{studentsController.departmentProgramsListener()}" update="program"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="twelve columns" >
+                                                        <h:outputLabel value="Program" for="program" >
+                                                            <span class="asterisk">*</span><h:message for="program" style="color: red;"/>
+                                                        </h:outputLabel>
+                                                        <h:selectOneMenu style="margin-bottom: 10px;" class="twelve" id="program" value="#{studentsController.selectedItemHelper.selectedProgram}"
+                                                                         required="true" requiredMessage=" required " >
+                                                            <f:selectItems value="#{studentsController.programSelectItems}"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="seven columns" >
+                                                        <h:outputLabel value="Admission Date" for="doa" >
+                                                            <span class="asterisk">*</span><h:message for="doa" style="color: red;"/>
+                                                        </h:outputLabel>
+                                                        <p:calendar id="doa" value="#{studentsController.student.dateOfAdmission}"
+                                                                    required="true" requiredMessage=" required " />
+                                                    </div>
+                                                    <div class="five columns" >
+                                                        <h:outputLabel value="Level" for="Level" >
+                                                            <span class="asterisk">*</span><h:message for="Level" style="color: red;"/>
+                                                        </h:outputLabel>
+                                                        <h:selectOneMenu style="margin-bottom: 10px;" id="Level" value="#{studentsController.selectedItemHelper.selectedAcademicLevel}"
+                                                                         required="true" requiredMessage=" required " >
+                                                            <f:selectItems value="#{studentsController.selectedItemHelper.academicLevelSelectItems}"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Academic Status" for="academicStatus" >
+                                                            <span class="asterisk">*</span><h:message for="academicStatus" style="color: red;"/>
+                                                        </h:outputLabel>
+                                                        <h:selectOneMenu style="margin-bottom: 10px;" id="academicStatus" value="#{studentsController.student.academicStatus}"
+                                                                         required="true" requiredMessage=" required " >
+                                                            <f:selectItems value="#{academicYearsController.selectedItemHelper.academicStatusSelectItems}"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                    <div class="six columns" >
+                                                        <h:outputLabel value="Academic Year" for="academicYear" >
+                                                            <span class="asterisk">*</span><h:message for="academicYear" style="color: red;"/>
+                                                        </h:outputLabel>
+                                                        <h:selectOneMenu style="margin-bottom: 10px;" id="academicYear" value="#{studentsController.selectedItemHelper.selectedAcademicYear}"
+                                                                         required="true" requiredMessage=" required " >
+                                                            <f:selectItems value="#{academicYearsController.selectedItemHelper.distinctAcademicLevelSelectItems}"/>
+                                                        </h:selectOneMenu>
+                                                    </div>
+                                                </div> 
+                                            </p:panel>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="two columns">
+                                    <div class="row" style="margin-bottom: 15px;">
+                                        <div class="twelve columns">
+                                            <p:panel header="3.PICTURE">
+                                                <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+
+                                                    <div class="twelve columns">
+                                                        <a href="#" class="th" style="margin-bottom: 15px;">
+                                                            <h:graphicImage id="studentPicture" value="#{studentsController.studentPicture}" style="height: 150px;"/>
+                                                        </a>
+                                                        <h:commandLink style="margin-left: 10px;color: white;" class="button custom-button radius small"  value="Browse Picture"
+                                                                       onclick="javascript:void window.open('/tis-WEB/faces/includes/student-picture.xhtml', '', 'width=700,height=500,toolbar=0,menubar=0,location=1,status=1,scrollbars=1,resizable=1,left=0,top=0');
+                                                                   return false;">
+                                                        </h:commandLink>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="row">
+                                                    <div class="twelve columns">
+                                                        <h:commandLink immediate="true" class="button radio secondary small" value="Show Uploaded Picture" action="pages/students.xhtml?faces-redirect=true" />
+                                                    </div>
+                                                </div>
+                                            </p:panel>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="row" style="margin-bottom: 15px;">
+                                <div class="four columns">
+                                    <p:panel header="4. STUDENT ADDRESS">
+                                        <div class="row">
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Telephone No" for="tel">
+                                                    <span class="asterisk">*</span><h:message for="tel" class="message"/>
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="tel" value="#{studentsController.student.contact}"
+                                                              required="true"  requiredMessage=" required " validatorMessage=" Invalid Tel" >
+                                                    <f:validateRegex pattern="[0-9 /]+" for="tel"/>
+                                                </h:inputText>
+                                            </div>
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Place Of Birth" for="placeOfBirth">
+                                                    <span class="asterisk">*</span><h:message for="studentdob" class="message"/>
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="placeOfBirth" value="#{studentsController.student.placeOfBirth}"
+                                                              required="true"  requiredMessage=" required " validatorMessage=" Invalid Name" >
+                                                    <f:validateRegex pattern="[0-9a-zA-Z -]+" for="otherNames"/>
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Hometown" for="homeTown">
+                                                    <span class="asterisk">*</span><h:message for="homeTown" class="message"/>
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="homeTown" value="#{studentsController.student.homeTown}"
+                                                              required="true"  requiredMessage=" required " validatorMessage=" Invalid Name" >
+                                                    <f:validateRegex pattern="[0-9a-zA-Z -]+" for="otherNames"/>
+                                                </h:inputText>
+                                            </div>
+                                            <div class="six columns" >
+                                                <h:outputLabel value="District" for="district">
+                                                    <span class="asterisk">*</span><h:message for="district" class="message"/>
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="district" value="#{studentsController.student.district}"
+                                                              required="true"  requiredMessage=" required " validatorMessage=" Invalid Name" >
+                                                    <f:validateRegex pattern="[0-9a-zA-Z -]+" for="otherNames"/>
+                                                </h:inputText>
+                                            </div>
+                                        </div>
+                                        <div class="row" >
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Region" for="region">
+                                                    <span class="asterisk">*</span><h:message for="region" class="message"/>
+                                                </h:outputLabel>
+                                                <h:selectOneMenu  class="twelve" id="region" value="#{studentsController.student.region}"
+                                                                  required="true"  requiredMessage=" required " validatorMessage=" Invalid Name" >
+                                                    <f:selectItems value="#{studentsController.selectedItemHelper.regionSelectItems}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Nationality" for="nationality">
+                                                    <span class="asterisk">*</span><h:message for="nationality" class="message"/>
+                                                </h:outputLabel>
+                                                <h:selectOneMenu  class="twelve" id="nationality" value="#{studentsController.student.country}"
+                                                                  required="true"  requiredMessage=" required " validatorMessage=" Invalid Name" >
+                                                    <f:selectItem itemLabel="Ghana" itemValue="Ghana"/>
+                                                    <f:selectItems value="#{studentsController.selectedItemHelper.countrySelectItems}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Contact" for="contactAddress">
+                                                    <span class="asterisk">*</span><h:message for="contactAddress" class="message"/>
+                                                </h:outputLabel>
+                                                <h:inputTextarea id="contactAddress" value="#{studentsController.student.postalAddress}"
+                                                                 required="true" requiredMessage=" required " />
+                                            </div>
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Email" for="mailAddress">
+                                                    <span class="asterisk">*</span><h:message for="mailAddress" class="message"/>
+                                                </h:outputLabel>
+                                                <h:inputTextarea id="mailAddress" value="#{studentsController.student.emailAddress}"
+                                                                 required="true" requiredMessage=" required " />
+                                            </div>
+
+                                        </div>
+                                    </p:panel>
+                                </div>
+                                <div class="four columns">
+                                    <p:panel header=" 5. PARENT'S / GUARDIAN'S PARTICULARS">
+                                        <div class="row" >
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Name" for="name" >
+                                                    <span class="asterisk">*</span><h:message for="name" class="message"/>
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="name" value="#{studentsController.guardiance.name}"
+                                                              required="true"  requiredMessage=" required " validatorMessage=" Invalid Surname" >
+                                                    <f:validateRegex pattern="[A-Za-z -]+" for="surname"/>
+                                                </h:inputText>
+                                            </div>
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Address" for="address">
+                                                    <span class="asterisk">*</span><h:message for="address" class="message"/>
+
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="address" value="#{studentsController.guardiance.postalAddress}"
+                                                              required="true"  requiredMessage=" required "  >
+
+                                                </h:inputText>
+                                            </div>
+
+                                        </div>
+                                        <div class="row" >
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Relationship" for="relationship" >
+                                                    <span class="asterisk">*</span><h:message for="name" class="message"/>
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="relationship" value="#{studentsController.guardiance.relationship}"
+                                                              required="true"  requiredMessage=" required " validatorMessage=" Invalid Surname" >
+                                                    <f:validateRegex pattern="[A-Za-z -]+" for="surname"/>
+                                                </h:inputText>
+                                            </div>
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Occupation" for="occupation">
+                                                    <span class="asterisk">*</span><h:message for="occupation" class="message"/>
+
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="occupation" value="#{studentsController.guardiance.occupation}"
+                                                              required="true"  requiredMessage=" required " validatorMessage=" Invalid Name" >
+                                                    <f:validateRegex pattern="[a-zA-Z -]+" for="occupation"/>
+                                                </h:inputText>
+                                            </div>
+
+                                        </div>
+                                        <div class="row" >
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Tel No(s)" for="guardContact" >
+                                                    <span class="asterisk">*</span><h:message for="guardContact" class="message"/>
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="guardContact" value="#{studentsController.guardiance.contact}"
+                                                              required="true"  requiredMessage=" required " validatorMessage=" Invalid Contact" >
+                                                    <f:validateRegex pattern="[0-9 /]+" for="guardContact"/>
+                                                </h:inputText>
+                                            </div>
+                                            <div class="six columns" >
+                                                <h:outputLabel value="Email" for="email">
+                                                    <span class="asterisk">*</span><h:message for="email" class="message"/>
+
+                                                </h:outputLabel>
+                                                <h:inputText  class="twelve" id="email" value="#{studentsController.guardiance.emailAddress}"
+                                                              required="true"  requiredMessage=" required "  >
+                                                </h:inputText>
+                                            </div>
+
+                                        </div>
+                                    </p:panel>
+                                </div>
+                                <div class="four columns">
+
+                                </div>
+                            </div> 
+
+                        </h:form>
+
+                        <!--STUDENTS RECORDS DATATABLE-->
+                        <ui:include src="../data-records/student-records.xhtml"/>
+
+
+                    </div>
+                </div>
+                <div style="display: none;">
+                    <h:outputLabel style="margin: 100px;font-size: xx-large ;margin-left: 350px;text-decoration: blink;" value="YOU HAVE NO RIGHT TO THIS PAGE"/>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

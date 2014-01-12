@@ -1,0 +1,423 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Staff Members
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Staff Members</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/staffs-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+                    <h:form id="staffInputs" prependId="false" style="#{staffMemebersController.pageCommonInputs.showDataInputPanel}">
+                        <div class="row">
+                            <div class="three columns">
+                                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                            </div>
+                            <div class="offset-by-three six columns">
+                                <div class="row">
+                                    <div class="two columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{staffMemebersController.pageCommonInputs.showEditButtons}" action="#{staffMemebersController.saveButton()}">
+                                            &#160;<img src="../resources/images/toolbar/icon-32-save.png" width="32" height="32" alt="icon-32-save"/>
+                                            <h:outputLabel value="Save"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                        <h:commandLink  immediate="true" action="#{staffMemebersController.cancelButton()}">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Cancel" />
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!staffMemebersController.pageCommonInputs.showEditButtons}" action="#{staffMemebersController.updateButton()}" >
+                                            &#160; <img src="../resources/images/toolbar/icon-32-edit.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Update"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two end columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!staffMemebersController.pageCommonInputs.showEditButtons}"
+                                                       action="#{staffMemebersController.deleteButton()}"
+                                                       onclick="confirm('Do You Really Want to Delete #{staffMemebersController.staff.surname}');">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-delete.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Delete"/>
+
+                                        </h:commandLink>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!--STAFF DETAILS-->
+                            <div class="four columns">
+                                <!--PERSONAL DETAILS-->
+                                <!--<div class="row">-->
+                                <p:panel header="PERSONAL  DETAILS"   >
+                                    <div class="row">
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Title" for="title" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="title" class="message"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="title" value="#{staffMemebersController.staff.title}"
+                                                              required="true" requiredMessage=" required ">
+                                                <f:selectItems value="#{staffMemebersController.selectedItemHelper.titleSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Surname" for="surname" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="surname" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="surname" value="#{staffMemebersController.staff.surname}"
+                                                          required="true" maxlength="5" requiredMessage=" required " validatorMessage=" Invalid Surname" >
+                                                <f:validateRegex pattern="[A-Za-z ]+" for="surname"/>
+                                            </h:inputText>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="seven columns" >
+                                            <h:outputLabel value="Other Names" for="otherNames" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="otherNames" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="otherNames" value="#{staffMemebersController.staff.otherNames}"
+                                                          required="true"  requiredMessage=" required " validatorMessage=" Invalid Name" >
+                                                <f:validateRegex pattern="[a-zA-Z ]+" for="otherNames"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="five columns" >
+                                            <h:outputLabel value="Gender" for="gender" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="gender" class="message"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="gender" value="#{staffMemebersController.staff.gender}"
+                                                              required="true" requiredMessage=" required " >
+                                                <f:selectItem itemLabel="SELECT ONE" />
+                                                <f:selectItem itemLabel="Male" itemValue="Male"/>
+                                                <f:selectItem itemLabel="Female" itemValue="Female"/>
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="seven columns" >
+                                            <h:outputLabel value="Department" for="dept" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="dept" class="message"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="dept" value="#{staffMemebersController.selectedItemHelper.selectedDepartment}"
+                                                              required="true" requiredMessage=" required ">
+                                                <f:selectItem itemLabel="PLEASE SELECT"/>
+                                                <f:selectItems value="#{staffMemebersController.selectedItemHelper.departmentSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="five columns" >
+                                            <h:outputLabel value="Birth Date" for="dob" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="dob" class="message"/>
+                                            </h:outputLabel>
+                                            <p:calendar   id="dob" value="#{staffMemebersController.staff.dateOfBirth}"
+                                                          required="true" requiredMessage=" required " />
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="five columns" >
+                                            <h:outputLabel value="Date appointed" for="doa" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="doa" class="message"/>
+                                            </h:outputLabel>
+                                            <p:calendar id="doa" value="#{staffMemebersController.staff.dateAppointed}"
+                                                        required="true" requiredMessage=" required " />
+                                        </div>
+                                        <div class="five end columns" >
+                                            <h:outputLabel value="Marital Status" for="marital" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="marital" class="message"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="marital" value="#{staffMemebersController.staff.maritalStatus}"
+                                                              required="true" requiredMessage=" required " >
+                                                <f:selectItem itemLabel="-- PLEASE SELECT --"/>
+                                                <f:selectItem itemLabel="Married" itemValue="Married"/>
+                                                <f:selectItem itemLabel="Single"  itemValue="Single"/>
+                                                <f:selectItem itemLabel="Separated" itemValue="Separated"/>
+                                                <f:selectItem itemLabel="Divorce" itemValue="Divorce"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                                <!--</div>-->
+                                <!--END OF PERSONAL DETAILS-->
+
+
+                            </div>
+                            <!-- END OF STAFF DETAILS-->
+
+                            <!--STAFF QUALIFICATION TABLE-->
+                            <div class="four  columns">
+                                <!--STAFF ADDRESS-->
+                                <p:panel header="ADDRESS"   >
+                                    <div class="row">
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Contact" for="contact" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="contact" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="contact" value="#{staffMemebersController.staff.contact}"
+                                                          required="true"  requiredMessage=" required " >
+                                            </h:inputText>
+                                        </div>
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Residence" for="residence" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="residence" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText class="twelve" id="residence" value="#{staffMemebersController.staff.residence}"
+                                                         required="true" requiredMessage=" required " >
+
+                                            </h:inputText>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Postal Address" for="postalAddress" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="postalAddress" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText class="twelve" id="postalAddress" value="#{staffMemebersController.staff.postalAddress}"
+                                                         required="true" requiredMessage=" required " >
+                                            </h:inputText>
+                                        </div>
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Email" for="email" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="email" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="email" value="#{staffMemebersController.staff.emailAddress}"
+                                                          required="true"  requiredMessage=" required " >
+                                            </h:inputText>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Nationality" for="country" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="country" class="message"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="country" value="#{staffMemebersController.staff.country}"
+                                                             required="true" requiredMessage=" required " >
+                                                <f:selectItem itemLabel="Ghana" itemValue="Ghana"/>
+                                                <f:selectItems value="#{staffMemebersController.selectedItemHelper.countrySelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                    </div>
+                                </p:panel>
+                                <!--END OF STAFF ADDRESS-->
+
+                            </div>
+                            <div class="four columns">
+                                <p:panel header="STAFF  QUALICATIONS" >
+
+                                    <div class="row">
+                                        <div class="seven columns" >
+                                            <h:outputLabel value="Certicate" for="cert" class="label-style">
+                                                <h:message id="c" for="cert" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  id="cert" value="#{staffMemebersController.qualification}"
+                                                          >
+                                            </h:inputText>
+                                        </div>
+                                        <div class="three columns" >
+                                            <h:outputLabel value="Date" for="dateAcquired" class="label-style">
+                                                <h:message id="d" for="dateAcquired" class="message"/>
+                                            </h:outputLabel>
+                                            <p:calendar required="false" requiredMessage=" required" yearRange="1970" navigator="true"  id="dateAcquired" value="#{staffMemebersController.dateAquired}" />
+                                        </div>
+                                        <div class="two columns" >
+                                            <h:commandLink action="#{staffMemebersController.addQualification()}">
+                                                <img style="margin-top: 30px;" src="../resources/images/toolbar/icon-32-article-add-edited.png" width="32" height="48" alt="icon-32-article-add.png"/>
+                                                <h:outputLabel value="Add"/>
+                                                <p:ajax update="certificatesTable"/>
+                                            </h:commandLink>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div style="overflow: scroll;height: 200px;">
+                                            <div class="twelve columns">
+                                                <p:dataTable id="certificatesTable" value="#{staffMemebersController.staffQualificationsDataModel}"
+                                                             var="qualificate">
+                                                    <p:column headerText="Certificate">
+                                                        <h:outputLabel value="#{qualificate.qualification}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Date Acquired">
+                                                        <h:outputLabel value="#{qualificate.dateAcquired}">
+                                                            <f:convertDateTime dateStyle="medium"/>
+                                                        </h:outputLabel>
+                                                    </p:column>
+                                                    <p:column headerText="Remove">
+                                                        <center>
+                                                            <h:commandLink title="remove" action="#{staffMemebersController.removeQualification()}" immediate="true">
+                                                                <img  src="../resources/images/toolbar/icon-32-cancel.png" width="16" height="16" alt="icon-32-article-add.png"/>
+                                                                <p:ajax update="certificatesTable"/>
+                                                            </h:commandLink>
+                                                        </center>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </p:panel>
+                            </div>
+                            <!--END OF STAFF QUALIFICATION TABLE-->
+
+
+                        </div>
+                    </h:form>
+                    <h:form style="#{staffMemebersController.pageCommonInputs.showDataInputPanel}">
+
+
+                    </h:form>
+                    <h:form id="staffRecords" prependId="false" style="#{staffMemebersController.pageCommonInputs.showDataRecordsPanel}">
+                        <div class="row " >
+                            <div class="three columns">
+                                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                            </div>
+                            <div class="offset-by-five four columns">
+                                <div class="row">
+                                    <div class="three columns" >
+                                        <h:commandLink action="#{staffMemebersController.newDataButton()}" immediate="true">
+                                            <img src="../resources/images/toolbar/icon-32-new.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                            <h:outputLabel value="New"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="three end columns" style="#{userAccessPageController.readProgram}">
+                                        <h:commandLink  action="#{staffMemebersController.resetDataTable()}" immediate="true">
+                                            <img style="margin-bottom:5px;" src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="64" alt="icon-32-new"/>
+                                            <h:outputLabel value="Refresh" />
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="twelve columns">
+                                <p:panel header="Program Details"  >
+                                    <div class="row">
+                                        <div class="three columns mobile-four">
+                                            <h:outputLabel value="Search By" for="searchParameter" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="searchParameter" class="message"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="searchParameter" value="#{staffMemebersController.searchInputs.searchParameter}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItem itemLabel="-- Please Select --" />
+                                                <f:selectItem itemLabel="Title" itemValue="title"/>
+                                                <f:selectItem itemLabel="Surname" itemValue="surname"/>
+                                                <f:selectItem itemLabel="Gender" itemValue="gender"/>
+                                                <f:selectItem itemLabel="Department" itemValue="department.departmentName"/>
+                                                <f:selectItem itemLabel="Country" itemValue="country"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="three columns mobile-four ">
+                                            <h:outputLabel value="Search Text" for="searchValue" class="label-style">
+                                                <span class="asterisk">*</span><h:message for="searchValue" class="message"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="searchValue" value="#{staffMemebersController.searchInputs.searchValue}"
+                                                          required="true" requiredMessage=" required " validatorMessage=" Not accepted" >
+                                                <f:validateRegex pattern="[0-9a-zA-Z. ']+" for="searchValue"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="two columns mobile-four" style="margin-top: 40px;#{userAccessPageController.readProgram}">
+                                            <h:commandLink action="#{staffMemebersController.searchButton()}">
+                                                <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Search"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two  columns mobile-four end" style="margin-top: 40px;margin-left: -60px;#{userAccessPageController.readProgram}">
+                                            <h:commandLink immediate="true"  action="#{staffMemebersController.viewAllButton()}">
+                                                <img  src="../resources/images/toolbar/icon-32-preview.png" width="32" height="64" alt="icon-32-new"/>
+                                                <h:outputLabel value="View All"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="twelve columns">
+                                <!--<p:scrollPanel  style="height: 250px;width:100%">-->
+                                <div style="overflow: scroll;height: 250px;">
+                                    <p:dataTable  var="staff" value="#{staffMemebersController.staffsDataModel}"
+                                                  id="progsRecords" >
+                                        <f:facet name="header">
+                                            <h:outputText style="color: #0000CC;font-family: sans-serif;font-weight: bold;float: left;" value="Total Count #{staffMemebersController.listOfStaffs.size()}"/>
+                                            List    of    Staff Members
+                                        </f:facet>
+
+                                        <p:column >
+                                            <f:facet name="header">SN</f:facet>
+                                            <h:outputLabel value="#{staffMemebersController.staffsDataModel.rowIndex+1}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet  name="header">Title</f:facet>
+                                            <h:outputLabel value="#{staff.title}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet  name="header">Surname</f:facet>
+                                            <h:outputLabel value="#{staff.surname}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Other Names</f:facet>
+                                            <h:outputLabel value="#{staff.otherNames}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Gender</f:facet>
+                                            <h:outputLabel value="#{staff.gender}"/>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Department</f:facet>
+                                            <h:outputLabel value="#{staff.department.departmentName}">
+                                            </h:outputLabel>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Date Appointed</f:facet>
+                                            <h:outputLabel value="#{staff.dateAppointed}">
+                                                <f:convertDateTime dateStyle="medium"/>
+                                            </h:outputLabel>
+                                        </p:column>
+                                        <p:column >
+                                            <f:facet name="header">Edit</f:facet>
+                                            <h:commandLink immediate="true"  action="#{staffMemebersController.selectButton()}"  style="font-style: italic;font-family: cursive;font-size: small;display:#{userAccessPageController.writeProgram}" value="select" />
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </div>
+
+                                <!--</p:scrollPanel>-->
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<div  xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+<!--
+    <div id='cssmenu'>
+        <ul>
+            <li><a href='#'><span>Home</span></a></li>
+            <li><a href='#'><span>Products</span></a>
+                <ul>
+                    <li><a href='../pages/department.xhtml'><span>Widgets</span></a></li>
+                    <li><a href='#'><span>Menus</span></a></li>
+                    <li><a href='#'><span>Products</span></a></li>
+                </ul>
+            </li>
+            <li><a href='#'><span>Company</span></a>
+                <ul>
+                    <li><a href='#'><span>About</span></a></li>
+                    <li><a href='#'><span>Location</span></a></li>
+                </ul>
+            </li>
+            <li><a href='#'><span>Contact</span></a></li>
+        </ul>
+    </div>-->
+
+        <div id="cssmenu">
+           
+            <ul>
+                <ui:repeat value="#{loginController.listOfPagesRightses}" var="menu">
+                    <li><a href='#'><span>#{menu.menuName}</span></a>
+                        <ul>
+                            <ui:repeat value="#{menu.listOfUserPageses}" var="submenu" >
+                                <li><a href="#{submenu.page}"><span>#{submenu.subMenu}</span></a></li>
+                            </ui:repeat>
+                        </ul>
+                    </li>
+                </ui:repeat>
+            </ul>
+            <!--</h:form>-->
+        </div>
+</div>

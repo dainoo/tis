@@ -1,0 +1,123 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <!--<h:outputLabel value="Noad Solutions"/>-->
+    <h:form>
+        <div id='cssmenu'>
+            <ul>
+                <li><a href='#'><span>Settings</span></a>
+                    <ul>
+                        <li><a href='../pages/school_setup.xhtml'><span>School Information</span></a></li>
+                        <li><a href='../pages/departments.xhtml'><span>Departments</span></a></li>
+                        <li><h:commandLink value="Programs" action="../pages/programs.xhtml?faces-redirect=true"/></li>
+                        <li><a href='../pages/courses.xhtml'><span>Courses</span></a></li>
+                        <li><a href='../pages/program_courses.xhtml'><span>Program Courses</span></a></li>
+                        <li><a href='../pages/academic_years.xhtml'><span>Academic Years</span></a></li>
+                    </ul>
+                </li>
+                <li><a href='#'><span>Staffs</span></a>
+                    <ul>
+                        <li><a href='../pages/staff_members.xhtml'><span>Staff Members</span></a></li>
+                        <li><a href='../pages/department_heads.xhtml'><span>Department Heads</span></a></li>
+                        <li><a href='../pages/general_user_accounts.xhtml'><span>General User Accounts</span></a></li>
+                        <li><a href='../pages/user_accounts.xhtml'><span>User Accounts</span></a></li>
+                    </ul>
+                </li>
+                <li><a href='#'><span>Students</span></a>
+                    <ul>
+                        <li><a href='../pages/students.xhtml'><span>Student Information</span></a></li>
+                        <li><a href='../pages/program_students.xhtml'><span>Program Students</span></a></li>
+                        <li><a href='../pages/students_status.xhtml'><span>Student Academic Status</span></a></li>
+                        <li><a href='../pages/promotions.xhtml'><span>Promotions</span></a></li>
+                        <li><a href='../pages/transcript.xhtml'><span>Transcript</span></a></li>
+                    </ul>
+                </li>
+                <li><a href='#'><span>Examinations</span></a>
+                    <ul>
+                        <li><a href='../pages/lecturer_courses.xhtml'><span>Lecturers' Courses</span></a></li>
+                        <li><a href='../pages/course_registration.xhtml'><span>Course Registrations</span></a></li>
+                        <li><a href='../pages/registered_students.xhtml'><span>Registered Students</span></a></li>
+                        <li><a href='../pages/marks_upload.xhtml'><span>Marks Upload</span></a></li>
+                        <li><a href='../pages/uploaded_marks.xhtml'><span>Uploaded Marks</span></a></li>
+                        <li><a href='../pages/marks_amendments.xhtml'><span>Marks Amendments</span></a></li>
+                        <li><a href='../pages/course_statistics.xhtml'><span>Results Analysis</span></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </h:form>
+
+    <ui:remove>
+        <p:accordionPanel >
+            <p:tab title="Settings">
+                <h:form>
+                    <h:commandLink value="School Setup" action="../pages/school_setup.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Departments" action="../pages/departments.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Programs" action="../pages/programs.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Courses" action="../pages/courses.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Program Courses" action="../pages/program_courses.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Academic Years" action="../pages/academic_years.xhtml?faces-redirect=true"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="Staffs">
+                <h:form>
+                    <h:commandLink value="Staff Members" action="../pages/staff_members.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Department Heads" action="../pages/department_heads.xhtml"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="User Accounts" action="../pages/user_accounts.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Lecturers' Courses" action="../pages/lecturer_courses.xhtml?faces-redirect=true"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="Students">
+                <h:form>
+                    <h:commandLink value="Student Information" action="../pages/students.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Student Details" action="../pages/student_details.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Program Students" action="../pages/program_students.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Students' Status" action="../pages/students_status.xhtml?faces-redirect=true"/>
+                </h:form>
+            </p:tab>
+            <p:tab title="Examinations">
+                <h:form>
+                    <h:commandLink value="Course Registrations" action="../pages/course_registration.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Mass Registrations" action="../pages/mass_registration.xhtml?faces-redirect=true"/>
+                </h:form>
+                <h:form>
+                    <h:commandLink value="Registered Students" action="../pages/registered_students.xhtml?faces-redirect=true"/>
+                </h:form>
+
+            </p:tab>
+            <p:tab title="Finances">
+            </p:tab>
+        </p:accordionPanel>
+    </ui:remove>
+
+
+</html>
+

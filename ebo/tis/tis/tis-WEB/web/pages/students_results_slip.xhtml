@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+                Results Slip
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Examinations &#926; Results Slip</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/examinations-bread-crumbs.xhtml"/>
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" >
+                        <div class="six end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin: 15px;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+                    <h:form id="form">  
+                        <ui:include src="../includes/results-analysis-submenu.xhtml"/>
+                        <div class="row">
+                            <div class="twelve columns">
+                                <p:panel header="STUDENTS RESULTS SLIP MARKS" >
+                                    <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+                                        <div class="three columns" >
+                                            <h:outputLabel value="Program" for="program" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="program" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="program" value="#{studentsResultsSlipController.selectedItemHelper.selectedProgram}"
+                                                             required="true"  requiredMessage=" required "  >
+                                                <f:selectItems value="#{studentsResultsSlipController.selectedItemHelper.programSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="two columns" >
+                                            <h:outputLabel value="Level" for="level" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="level" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="level" value="#{studentsResultsSlipController.selectedItemHelper.selectedAcademicLevel}"
+                                                             required="true"  requiredMessage=" required "  >
+                                                <f:selectItems value="#{studentsResultsSlipController.selectedItemHelper.academicLevelSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="two columns" >
+                                            <h:outputLabel value="Index Number" for="indexNumber" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="indexNumber" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText class="twelve" id="indexNumber" value="#{studentsResultsSlipController.selectedItemHelper.selectedStudent}"
+                                                         >
+                                            </h:inputText>
+                                        </div>
+                                        <div class="two columns" style="display:#{userAccessPageController.writeProgram};">
+                                            <h:commandLink  action="#{studentsResultsSlipController.prepareSingleExamsResults()}">
+                                                <img style="margin-left:25px; " src="../resources/images/toolbar/icon-32-contacts-categories.png" width="32" height="32" alt="icon-32-save"/>
+                                                <h:outputLabel value="Single Student"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="one  columns" style="#{userAccessPageController.readProgram}">
+                                            <h:commandLink target="_blank"  immediate="true" action="#{studentsResultsSlipController.printSingleExamsResults()}">
+                                                <img  src="../resources/images/toolbar/icon-32-print.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Print" />
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two columns" style="display:#{userAccessPageController.writeProgram};">
+                                            <h:commandLink target="_blank"  action="#{studentsResultsSlipController.printMassStudents()}">
+                                                <img style="margin-left:25px; " src="../resources/images/toolbar/students.png" width="32" height="32" alt="icon-32-save"/>
+                                                <h:outputLabel value="Mass Students"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+
+                                </p:panel>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="seven columns">
+
+                                <p:panel header="#{studentsResultsSlipController.student.surname} #{studentsResultsSlipController.student.otherNames} RESULTS "  >
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="twelve columns">
+
+                                            <p:dataTable value="#{studentsResultsSlipController.resultsSlipCommonsesDataModel}" var="results" 
+                                                         id="selectedCourses" emptyMessage="No Courses Selected Yet">
+                                                <p:column>
+                                                    <f:facet name="header"><h:outputLabel value="SN" class="datatable-header"/></f:facet>
+                                                    <h:outputText style="font-size: small;" value="#{studentsResultsSlipController.resultsSlipCommonsesDataModel.rowIndex+1}" />
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel value="Course" class="datatable-header"/></f:facet>
+                                                    <h:outputText style="font-size: small;" value="#{results.courseName}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel value="Credits" class="datatable-header"/></f:facet>
+                                                    <h:outputText style="font-size: small;" value="#{results.creditHours}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel value="#{studentsResultsSlipController.markTitle}" class="datatable-header"/></f:facet>
+                                                    <h:outputText  style="font-size: small;" value="#{results.marks}"/>
+                                                </p:column>
+                                                <ui:remove>
+                                                <p:column  rendered="#{studentsResultsSlipController.pageCommonInputs.showGradingType}">
+                                                    <f:facet name="header"><h:outputLabel value="Grade Point" class="datatable-header"/></f:facet>
+                                                    <h:outputText style="font-size: small;" value="#{results.gradePoint}" />
+                                                </p:column>
+                                                </ui:remove>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel value="Grade" class="datatable-header"/></f:facet>
+                                                    <h:outputText style="font-size: small;#{results.markStyle}" value="#{results.grade}"/>
+                                                </p:column>
+                                            </p:dataTable>
+
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                            <div class="five columns">
+                                <p:panel header="RESULTS SUMMARY">
+                                    <div class="row" style="margin-top: 10px;">
+                                        <ui:remove>
+                                            <div class="twelve columns">
+                                                <p:dataTable value="#{studentsResultsSlipController.summaryResultseList}" var="resultsSummary" 
+                                                             id="resultsSummary" >
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Break Down" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel style="font-size: small;" value="#{resultsSummary.breadDown}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Semester" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel style="font-size: small;" value="#{resultsSummary.semesterSummary}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Cummulative" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel  style="font-size: small;" value="#{resultsSummary.cummulativeSummary}"/>
+                                                    </p:column>
+
+                                                </p:dataTable>
+
+                                            </div> 
+                                        </ui:remove>
+                                        <div class="twelve columns">
+
+                                            <h:panelGrid columns="3" style="width: 100%;">
+                                                <h:outputLabel value="BREAK DOWN" style="font-size: smaller;" />
+                                                <h:outputLabel value="SEMESTER" style="font-size: smaller;"/>
+                                                <h:outputLabel value="CUMMULATIVE" style="font-size: smaller;"/>
+                                                <h:outputLabel value="Credit Registered" style="font-size: smaller;" />
+                                                <h:outputLabel value="#{studentsResultsSlipController.semCrdtReg}" style="font-size: smaller;" />
+                                                <h:outputLabel value="#{studentsResultsSlipController.cummCrdtReg}" style="font-size: smaller;"/>
+                                                <h:outputLabel value="Credit Obtained" style="font-size: smaller;"/>
+                                                <h:outputLabel value="#{studentsResultsSlipController.semCrdtObt}" style="font-size: smaller;" />
+                                                <h:outputLabel value="#{studentsResultsSlipController.cummCrdtObt}" style="font-size: smaller;"/>
+                                                <h:outputLabel value="Weighted Marks" style="font-size: smaller;"/>
+                                                <h:outputLabel value="#{studentsResultsSlipController.semWtdMark}" style="font-size: smaller;" />
+                                                <h:outputLabel value="#{studentsResultsSlipController.cummWtdMark}" style="font-size: smaller;"/>
+                                                <h:outputLabel value="Weighted Average" style="font-size: smaller;"/>
+                                                <h:outputLabel value="#{studentsResultsSlipController.semAvg}" style="font-size: smaller;" />
+                                                <h:outputLabel value="#{studentsResultsSlipController.cummAvg}" style="font-size: smaller;"/>
+                                            </h:panelGrid>
+                                        </div>
+                                    </div>
+
+
+                                </p:panel>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,160 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+                Weighted Average
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Examinations &#926; Weighted Average</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/examinations-bread-crumbs.xhtml"/>
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" >
+                        <div class="six end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin: 15px;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+                    
+                    <ui:remove>
+                        <h:form>
+                            <h:commandButton value="Transfer Failed" action="#{weightedAverageController.transferFailed()}"/>
+                        </h:form>
+                    </ui:remove>
+                    
+                    <h:form id="form">  
+                        <ui:include src="../includes/results-analysis-submenu.xhtml"/>
+                        <div class="row">
+                            <div class="twelve columns">
+                                <p:panel header="STUDENTS WEIGHTED AVERAGE " >
+                                    <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+                                        <div class="three columns" >
+                                            <h:outputLabel value="Program" for="program" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="program" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="program" value="#{weightedAverageController.selectedItemHelper.selectedProgram}"
+                                                             required="true"  requiredMessage=" required "  >
+                                                <f:selectItems value="#{weightedAverageController.selectedItemHelper.programSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="two columns" >
+                                            <h:outputLabel value="Level" for="level" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="level" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="level" value="#{weightedAverageController.selectedItemHelper.selectedAcademicLevel}"
+                                                             required="true"  requiredMessage=" required "  >
+                                                <f:selectItems value="#{weightedAverageController.selectedItemHelper.academicLevelSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <ui:remove>
+
+                                        <div class="two columns" >
+                                            <h:outputLabel value="Index Number" for="indexNumber" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="indexNumber" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText class="twelve" id="indexNumber" value="#{examinationResultsController.selectedItemHelper.selectedStudent}"
+                                                         >
+                                            </h:inputText>
+                                        </div>
+                                        </ui:remove>
+                                        <div class="two columns" style="display:#{userAccessPageController.writeProgram};">
+                                            <h:commandLink  action="#{weightedAverageController.generateWeightedAverage()}">
+                                                <img style="margin-left:15px; " src="../resources/images/toolbar/compute.png" width="32" height="32" alt="icon-32-save"/>
+                                                <h:outputLabel value="Compute"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two end columns" style="#{userAccessPageController.readProgram}">
+                                            <h:commandLink target="_blank"  immediate="true" action="#{weightedAverageController.printWeightedAverage()}">
+                                                <img  src="../resources/images/toolbar/icon-32-print.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Print" />
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+
+                        </div>
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="twelve columns">
+
+                                <p:panel header=" WEIGHTED AVERAGE "  >
+                                    <div style="overflow: scroll;height: 300px;" >
+
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="twelve columns">
+
+                                                <p:dataTable value="#{weightedAverageController.weightedAverageCommonsesDataModel}" var="results" 
+                                                             id="selectedCourses" emptyMessage="No Courses Selected Yet" summary="Passed Students"
+                                                             >
+                                                    <p:column>
+                                                        <f:facet name="header"><h:outputLabel value="SN" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{results.counter}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Index Number" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{results.indexNumber}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Student" class="datatable-header"/></f:facet>
+                                                        <h:outputText  style="font-size: small;" value="#{results.studentName}"/>
+                                                    </p:column>
+                                                    <p:column  >
+                                                        <f:facet name="header"><h:outputLabel value="#{weightedAverageController.weightedAverageHeader}" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{results.weightedAverage}" />
+                                                    </p:column>
+                                                    <p:column width="2">
+                                                        <f:facet name="header"><h:outputLabel value="No Of Passes" class="datatable-header"/></f:facet>
+                                                        <h:outputText  style="font-size: small;" value="#{results.numberOfPasses}"/>
+                                                    </p:column>
+                                                    <p:column width="2">
+                                                        <f:facet name="header"><h:outputLabel value="No Of Trails" class="datatable-header"/></f:facet>
+                                                        <h:outputText  style="font-size: small;" value="#{results.numberOfTrails}"/>
+                                                    </p:column>
+                                                      <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Incomplete Courses" class="datatable-header"/></f:facet>
+                                                        <h:outputText  style="font-size: small;" value="#{results.incompleteCourses}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </p:panel>
+                            </div>
+
+                        </div>
+                    </h:form>
+                </div>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

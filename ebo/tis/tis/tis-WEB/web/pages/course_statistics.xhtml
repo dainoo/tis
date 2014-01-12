@@ -1,0 +1,190 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+                Results Analysis
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Examinations &#926; Course Statistic</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                              <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/examinations-bread-crumbs.xhtml"/>
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" >
+                        <div class="six end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin: 15px;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+                    <h:form id="form">  
+                        <ui:include src="../includes/results-analysis-submenu.xhtml"/>
+                        <div class="row">
+                            <div class="eleven end columns">
+                                <p:panel header="COURSE STATISTICS" >
+                                    <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+                                        <div class="five columns" >
+                                            <h:outputLabel value="Program" for="program" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="program" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="program" value="#{courseStatisticController.selectedItemHelper.selectedProgram}"
+                                                             required="true"  requiredMessage=" required "  >
+                                                <f:selectItems value="#{courseStatisticController.selectedItemHelper.programSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="three columns" >
+                                            <h:outputLabel value="Level" for="level" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="progralevelm" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="level" value="#{courseStatisticController.selectedItemHelper.selectedAcademicLevel}"
+                                                             required="true"  requiredMessage=" required "  >
+                                                <f:selectItems value="#{courseStatisticController.selectedItemHelper.academicLevelSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="two columns" style="display:#{userAccessPageController.writeProgram};">
+                                            <h:commandLink  action="#{courseStatisticController.computeCourseStatistics()}">
+                                                <img style="margin-left:15px; " src="../resources/images/toolbar/compute.png" width="32" height="32" alt="icon-32-save"/>
+                                                <h:outputLabel value="Compute"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                            <h:commandLink target="_blank" immediate="true" action="#{courseStatisticController.printCourseStatistics()}">
+                                                <img src="../resources/images/toolbar/icon-32-print.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Print" />
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+
+                                </p:panel>
+                            </div>
+                            <div class="six columns">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="twelve columns">
+                                <p:panel header="COURSE BROADSHEET "  >
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="twelve columns">
+
+                                            <div style="overflow: scroll;height: 300px;">
+                                                <p:dataTable value="#{courseStatisticController.courseStatisticsCommonsesDataModel}" var="semcourse" 
+                                                             id="selectedCourses" emptyMessage="No Courses Selected Yet">
+                                                    <p:column>
+                                                        <f:facet name="header"><h:outputLabel value="SN" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.counter}"/>
+                                                    </p:column>
+                                                    <p:column width="300" footerText="Total">
+                                                        <f:facet name="header"><h:outputLabel value="Course" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.courseName}"/>
+                                                    </p:column>
+                                                    <p:column width="1" >
+                                                        <f:facet name="header"><h:outputLabel value="Credit" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.credit}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalCoursesAs}">
+                                                        <f:facet name="header"><h:outputLabel value="A" class="datatable-header"/></f:facet>
+                                                        <h:outputText  style="font-size: small;" value="#{semcourse.numberOfAs}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalCoursesBPlus}" rendered="#{courseStatisticController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="B+" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.numberOfBPlus}" />
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalCourseBs}">
+                                                        <f:facet name="header"><h:outputLabel value="B" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.numberOfBs}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalCourseCPlus}" rendered="#{courseStatisticController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="C+" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.numberOfCPlus}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalCoursesCs}">
+                                                        <f:facet name="header"><h:outputLabel value="C" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.numberOfCs}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalCoursesDPlus}" rendered="#{courseStatisticController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="D+" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.numberOfDPlus}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalCoursesDs}">
+                                                        <f:facet name="header"><h:outputLabel value="D" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.numberOfDs}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalCoursesEs}" rendered="#{courseStatisticController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="E" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.numberOfEs}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalCoursesFs}" rendered="#{!courseStatisticController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="F" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.numberOfFs}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalMedical}">
+                                                        <f:facet name="header"><h:outputLabel value="|" class="datatable-header"/><sup>*</sup></f:facet>
+                                                        <h:outputLabel style="font-size: small;" value="#{semcourse.numberOfMedicalCases}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalMarksNotAvailable}">
+                                                        <f:facet name="header"><h:outputLabel value="|" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel style="font-size: small;" value="#{semcourse.numberOfMarksNotAvailable}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalDefers}">
+                                                        <f:facet name="header"><h:outputLabel value="Df" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel style="font-size: small;" value="#{semcourse.numberOfDeferres}"/>
+                                                    </p:column>
+                                                    <p:column width="1" >
+                                                        <f:facet name="header"><h:outputLabel value="Max" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.max}"/>
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="Min" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.min}"/>
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="AVG" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.max}"/>
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="STD" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.std}"/>
+                                                    </p:column>
+                                                    <p:column width="1" footerText="#{courseStatisticController.totalOverAllFailed}">
+                                                        <f:facet name="header"><h:outputLabel value="Failed" class="datatable-header"/><sup>**</sup></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.numberOfFailed}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+
+                        </div>
+                    </h:form>
+                </div>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

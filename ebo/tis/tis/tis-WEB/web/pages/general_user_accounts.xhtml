@@ -1,0 +1,337 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                User Accounts
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; User Accounts</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/staffs-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row">
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <h:form id="programInputs" style="#{userAccountController.pageCommonInputs.showDataInputPanel}">
+                        <div class="row">
+                            <div class="three columns">
+                                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                            </div>
+                            <div class="offset-by-three six columns">
+                                <div class="row">
+                                    <div class="two columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{userAccountController.pageCommonInputs.showEditButtons}" action="#{userAccountController.saveButton()}">
+                                            &#160;<img src="../resources/images/toolbar/icon-32-save.png" width="32" height="32" alt="icon-32-save"/>
+                                            <h:outputLabel value="Save"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                        <h:commandLink  immediate="true" action="#{userAccountController.cancelButton()}">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Cancel" />
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!userAccountController.pageCommonInputs.showEditButtons}" action="#{userAccountController.updateButton()}" >
+                                            &#160; <img src="../resources/images/toolbar/icon-32-edit.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Update"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two end columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!userAccountController.pageCommonInputs.showEditButtons}"
+                                                       action="#{userAccountController.deleteButton()}"
+                                                       onclick="return confirm('Do You Really Want to Delete #{userAccountController.userAccount.staff.surname}');">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-delete.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Delete"/>
+
+                                        </h:commandLink>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="two columns">
+                                <p:panel header="Access Details">
+                                    <div class="row">
+                                        <div class="twelve  mobile-four columns">
+                                            <h:outputLabel value="User Role " for="acccessLevel" style="margin-top: 10px;margin-bottom: 20px;">
+                                                <span style="color: red;font-size: large">*</span> <h:message for="acccessLevel" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu value="#{userAccountController.pageCommonInputs.userRole}" id="acccessLevel"
+                                                             required="true" requiredMessage=" required">
+                                                <f:selectItem itemLabel="PLEASE SELECT" />
+                                                <f:selectItem itemLabel="Admin" itemValue="Admin"/>
+                                                <f:selectItem itemLabel="Examiner" itemValue="Examiner"/>
+                                                <f:selectItem itemLabel="Lecturer" itemValue="Lecturer"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="twelve mobile-four end columns">
+                                            <h:outputLabel value="Status " for="status" style="margin-top: 10px;margin-bottom: 20px;">
+                                                <span style="color: red;font-size: large">*</span> <h:message for="status" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneRadio value="#{userAccountController.pageCommonInputs.status}" id="status" style="border:none;margin-top: -20px;"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItem itemLabel="Active" itemValue="active"/>
+                                                <f:selectItem itemLabel="In-Active" itemValue="inactive"/>
+                                            </h:selectOneRadio>
+                                        </div>
+
+                                    </div>
+                                </p:panel>
+                            </div>
+                            <div class="ten columns">
+                                <p:panel header="User Access Pages " >
+                                    <h:outputText value="User Account For #{userAccountController.staff.surname} #{userAccountController.staff.otherNames}"/>
+                                    <div style="overflow: scroll;height: 460px;">
+                                        <div class="row">
+                                            <div class="six columns" style="margin-top: 10px;">
+                                                <p:dataTable value="#{userAccountController.settingsDataModel}" var="set" id="settings">
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header">
+                                                                <h:selectBooleanCheckbox value="#{userAccountController.allSettings}">
+                                                                    <p:ajax event="change" listener="#{userAccountController.allSettingsListener()}" update="settings"/>
+                                                                </h:selectBooleanCheckbox> 
+                                                            </f:facet>
+                                                            <h:selectBooleanCheckbox value="#{set.selected}" />
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header" ><h:outputLabel value="Settings" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{set.submenuName}" />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Read" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{set.readLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Write" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{set.writeLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Print" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{set.printLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                            <div class="six columns" style="margin-top: 10px;">
+
+                                                <p:dataTable value="#{userAccountController.staffDataModel}" var="stf" id="staff">
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header">
+                                                                <h:selectBooleanCheckbox value="#{userAccountController.allStaffs}">
+                                                                    <p:ajax event="change" listener="#{userAccountController.allStaffsListener()}" update="staff"/>
+                                                                </h:selectBooleanCheckbox> 
+                                                            </f:facet>
+                                                            <h:selectBooleanCheckbox value="#{stf.selected}" />
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header" ><h:outputLabel value="Staffs" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{stf.submenuName}" />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Read" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{stf.readLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Write" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{stf.writeLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                      <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Print" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{stf.printLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                </p:dataTable>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="six columns" style="margin-top: 20px;">
+                                                <p:dataTable value="#{userAccountController.studentsDataModel}" var="students" id="students">
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header">
+                                                                <h:selectBooleanCheckbox value="#{userAccountController.allStudents}" >
+                                                                    <p:ajax event="change" listener="#{userAccountController.allStudentsListener()}" update="students"/>
+                                                                </h:selectBooleanCheckbox> 
+                                                            </f:facet>
+                                                            <h:selectBooleanCheckbox value="#{students.selected}" />
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header" ><h:outputLabel value="Students" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{students.submenuName}" />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Read" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{students.readLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Write" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{students.writeLevel}"/>
+                                                        </center>
+                                                    </p:column> 
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Print" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{students.printLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                            <div class="four six columns" style="margin-top: 20px;">
+                                                <p:dataTable value="#{userAccountController.examinationsDataModel}" var="exams" id="exams">
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header">
+                                                                <h:selectBooleanCheckbox value="#{userAccountController.allExams}" >
+                                                                    <p:ajax event="change" listener="#{userAccountController.allExaminationsListener()}" update="exams"/>
+                                                                </h:selectBooleanCheckbox> 
+                                                            </f:facet>
+                                                            <h:selectBooleanCheckbox value="#{exams.selected}" />
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header" ><h:outputLabel value="Examinations" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel value="#{exams.submenuName}" />
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Read" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{exams.readLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Write" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{exams.writeLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header" ><h:outputLabel value="Print" class="datatable-header"/></f:facet>
+                                                            <h:selectBooleanCheckbox value="#{exams.printLevel}"/>
+                                                        </center>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                        <ui:remove>
+                                            <div class="row">
+                                                <div class="six  columns" style="margin-top: 20px;">
+                                                    <p:dataTable value="#{userAccountController.financiesDataModel}" var="Finance" id="finance">
+                                                        <p:column>
+                                                            <center>
+                                                                <f:facet name="header">
+                                                                    <h:selectBooleanCheckbox value="#{userAccountController.allFinacies}" >
+                                                                        <p:ajax event="change" listener="#{userAccountController.allFinanciesListener()}" update="finance"/>
+                                                                    </h:selectBooleanCheckbox> 
+                                                                </f:facet>
+                                                                <h:selectBooleanCheckbox value="#{finance.selected}" />
+                                                            </center>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <f:facet name="header" ><h:outputLabel value="Financies" class="datatable-header"/></f:facet>
+                                                            <h:outputLabel value="#{finance.submenuName}" />
+                                                        </p:column>
+                                                        <p:column>
+                                                            <center>
+                                                                <f:facet name="header" ><h:outputLabel value="Read" class="datatable-header"/></f:facet>
+                                                                <h:selectBooleanCheckbox value="#{finance.readRight}"/>
+                                                            </center>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <center>
+                                                                <f:facet name="header" ><h:outputLabel value="Write" class="datatable-header"/></f:facet>
+                                                                <h:selectBooleanCheckbox value="#{finance.writeLevel}"/>
+                                                            </center>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <center>
+                                                                <f:facet name="header" ><h:outputLabel value="Print" class="datatable-header"/></f:facet>
+                                                                <h:selectBooleanCheckbox value="#{finance.printLevel}"/>
+                                                            </center>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                                <div class="six columns" style="margin-top: 20px;">
+                                                    <p:dataTable value="#{userAccountController.dataSecuritiesDataModel}" var="dataSecurity" id="dataSecurity">
+                                                        <p:column>
+                                                            <center>
+                                                                <f:facet name="header">
+                                                                    <h:selectBooleanCheckbox value="#{userAccountController.allDataSecurities}" >
+                                                                        <p:ajax event="change" listener="#{userAccountController.allDataSecuritiesListener()}" update="dataSecurity"/>
+                                                                    </h:selectBooleanCheckbox> 
+                                                                </f:facet>
+                                                                <h:selectBooleanCheckbox value="#{dataSecurity.selected}" />
+                                                            </center>
+                                                        </p:column>
+                                                        <p:column>
+                                                            <f:facet name="header" ><h:outputLabel value="Data Security" class="datatable-header"/></f:facet>
+                                                            <h:outputLabel value="#{dataSecurity.submenuName}" />
+                                                        </p:column>
+                                                        <p:column>
+                                                            <center>
+                                                                <f:facet name="header" ><h:outputLabel value="Write" class="datatable-header"/></f:facet>
+                                                                <h:selectBooleanCheckbox value="#{dataSecurity.writeLevel}"/>
+                                                            </center>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                        </ui:remove>
+
+
+                                    </div>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </h:form>
+                    <ui:include src="../data-records/general-user-account-records.xhtml"/>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

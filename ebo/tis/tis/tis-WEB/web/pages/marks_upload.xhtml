@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+                Marks Upload
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Examinations &#926;Marks Upload</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                               <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/examinations-bread-crumbs.xhtml"/>
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" >
+                        <div class="six end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin: 15px;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+                    <h:form>
+
+                        <div class="row">
+                            <div class="nine columns">
+                                <div class="row">
+                                    <div class="twelve columns">
+                                        <p:panel header="UPLOADING STUDENTS' MARKS" >
+                                            <div class="row">
+                                                <div class="five  columns" >
+                                                    <h:outputLabel value="Program" for="courseInitials" style="margin-top: 15px;margin-bottom: 15px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="courseInitials" style="color: red;"/>
+                                                    </h:outputLabel>
+                                                    <h:selectOneMenu class="twelve" id="courseInitials" value="#{marksUploadController.selectedItemHelper.selectedProgram}"
+                                                                     required="true"  requiredMessage=" required "  >
+                                                        <f:selectItems value="#{marksUploadController.departmentProgramsSelectItems}"/>
+                                                        <p:ajax event="change"  listener="#{marksUploadController.loadLecutreAssignedCourses()}" update="assignedCourses"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="five columns" >
+                                                    <h:outputLabel value="Assigned Courses" for="assignedCourses" style="margin-top: 15px;margin-bottom: 15px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="assignedCourses" style="color: red;"/>
+                                                    </h:outputLabel>
+                                                    <h:selectOneMenu  class="twelve" id="assignedCourses" value="#{marksUploadController.selectedItemHelper.selectedCourse}"
+                                                                      required="true" requiredMessage=" required ">
+                                                        <f:selectItems value="#{marksUploadController.lectureAssignedCoursesSelectItems}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="two columns" style="display:#{userAccessPageController.writeProgram};margin-top: 25px;">
+                                                    <h:commandLink  action="#{marksUploadController.loadStudents()}">
+                                                        <img style="margin-left:25px; " src="../resources/images/toolbar/icon-32-contact.png" width="32" height="32" alt="icon-32-save"/>
+                                                        <h:outputLabel value="Load Students"/>
+                                                    </h:commandLink>
+                                                </div>
+                                            </div>
+                                        </p:panel>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="three columns">
+                                <div class="row">
+                                    <div class="three columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{marksUploadController.pageCommonInputs.showEditButtons}" action="#{marksUploadController.uploadMarks()}">
+                                            &#160;<img src="../resources/images/general/icon-32-upload.png" width="32" height="32" alt="icon-32-save"/>
+                                            <h:outputLabel value="Upload"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <ui:remove>
+                                        
+                                    <div class="three  columns" style="#{userAccessPageController.readProgram}">
+                                        <h:commandLink  immediate="true" action="#{marksUploadController.printButton()}">
+                                            <img src="../resources/images/toolbar/icon-32-print.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Print" />
+                                        </h:commandLink>
+                                    </div>
+                                    </ui:remove>
+                                    <div class="five end columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink  action="#{marksUploadController.clearScreen()}" >
+                                            &#160;&#160; &#160;  <img src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Clear Screen"/>
+                                        </h:commandLink>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="twelve columns">
+                                <p:panel header="STUDENTS' MARKS FOR COURSE NAME HERE"  >
+                                    <div class="row" style="margin-top: 20px;">
+                                        <div class="twelve columns">
+
+                                            <div style="overflow: scroll;height: 250px;">
+                                                <p:dataTable value="#{marksUploadController.studentMarksDataModel}" var="semcourse" 
+                                                             id="selectedCourses" emptyMessage="No Courses Selected Yet" rendered="#{marksUploadController.listOfStudentMark.size()>0}">
+                                                    <p:column>
+                                                        <f:facet name="header"><h:outputLabel value="SN" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: smaller;" value="#{marksUploadController.studentMarksDataModel.rowIndex+1}" />
+                                                    </p:column>
+
+                                                    <p:column width="300">
+                                                        <f:facet name="header"><h:outputLabel value="Student" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel value="#{semcourse.student.studentIndexNumber}"/>
+                                                        <h:outputText style="font-size: smaller;margin-top: -5px;" value="#{semcourse.student.surname} #{semcourse.student.otherNames}"/>
+                                                    </p:column >
+                                                    <p:column width="300">
+                                                        <f:facet name="header"><h:outputLabel value="Program" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.student.program.programName}"/>
+                                                    </p:column>
+                                                    <p:column width="2" rendered="#{marksUploadController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="Class Work One" class="datatable-header"/></f:facet>
+                                                        <h:inputText style="font-size: small;" value="#{semcourse.classWorkOne}"/>
+                                                    </p:column>
+                                                    <p:column width="5" rendered="#{marksUploadController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="Class Work Two" class="datatable-header"/></f:facet>
+                                                        <h:inputText style="font-size: small;" value="#{semcourse.classWorkTwo}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Mid Sem Mark" class="datatable-header"/></f:facet>
+                                                        <h:inputText style="font-size: small;" value="#{semcourse.midSemMark}" />
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Exams Mark" class="datatable-header"/></f:facet>
+                                                        <h:inputText style="font-size: small;" value="#{semcourse.examMark}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Total Mark" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel style="font-size: small;" value="#{semcourse.totalMark}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Grade" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;#{semcourse.markStyle}" value="#{semcourse.grade}"/>
+                                                    </p:column>
+                                                    <p:column rendered="#{marksUploadController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="Grade Point" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.gradePoint}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Grading" class="datatable-header"/></f:facet>
+                                                        <h:commandLink action="#{marksUploadController.okMark()}" >
+                                                            &#160;<img src="../resources/images/toolbar/icon-16-apply.png" width="14" height="14" alt="icon-32-cancel"/>
+                                                            <h:outputLabel value="OK" style="font-size: small;"/>
+                                                        </h:commandLink>
+                                                    </p:column>
+
+                                                </p:dataTable>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+
+                        </div>
+                    </h:form>
+
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

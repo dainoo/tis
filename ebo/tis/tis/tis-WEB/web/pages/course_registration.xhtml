@@ -1,0 +1,299 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Course  Registration
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Examinations &#926;Course  Registration</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/examinations-bread-crumbs.xhtml"/>
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" >
+                        <div class="six end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin: 15px;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+                    <div class="row">
+                        <div class="six columns">
+                            <h:form id="studentRegistration" >
+                                <!--<div class="row">-->
+                                <p:panel header=" 1. STUDENT DETAILS" style="margin-bottom: 15px;">
+                                    <div class="row">
+                                        <div class="six columns offset-by-two" style="margin-right:-40px;">
+                                            <h:outputLabel value="Index Number" for="searchValue" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="searchValue" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText class="nine" maxlength="8" value="#{courseRegistrationController.studentIndexNumber}">
+                                                <p:ajax event="blur" listener="#{courseRegistrationController.searchStudendIndexNumberListener()}"
+                                                        update="incompletCourse studentName studentProgram studentLevel studentPicture :pageGlobalMessages :registrationDetails:program"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="four columns">
+                                            <div class="twelve columns">
+                                                <a class="th">
+                                                    <p:graphicImage  id="studentPicture" value="#{courseRegistrationController.pageCommonInputs.studentPicturePath}#{courseRegistrationController.student.studentPicture}" width="113" height="115"/>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-right: 40px;">
+                                        <div class="nine columns">
+                                            <div class="row">
+                                                <div class="three mobile-one columns">
+                                                    <label class="right inline">Name :</label>
+                                                </div>
+                                                <div class="nine mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: medium;" class="twelve"  disabled="#{courseRegistrationController.disableStudentDetails}" id="studentName" value="#{courseRegistrationController.student.surname} #{courseRegistrationController.student.otherNames}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="three mobile-one columns">
+                                                    <label class="right inline">Program :</label>
+                                                </div>
+                                                <div class="nine mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: medium;" class="twelve" disabled="#{courseRegistrationController.disableStudentDetails}" id="studentProgram" immediate="true" value="#{courseRegistrationController.student.program.programName}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+
+                                                <div class="three mobile-one columns">
+                                                    <label class="right inline">Level :</label>
+                                                </div>
+                                                <div class="six end  mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: medium;" class="ten" id="studentLevel" disabled="#{courseRegistrationController.disableStudentDetails}" value="#{courseRegistrationController.student.currentLevel.academicLevelId}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </p:panel>
+                                <!--</div>-->
+                                <p:panel header=" 4. COURSES TO REGISTER" style="margin-bottom: 15px;">
+                                    <div class="row">
+                                        <div class="eight offset-by-five columns">
+                                            <div class="three  mobile-three columns">
+                                                <h:commandLink action="#{courseRegistrationController.saveButton()}">
+                                                    &#160;<img src="../resources/images/toolbar/register.png" width="32" height="32" alt="icon-32-save"/>
+                                                    <h:outputLabel value="Register"/>
+                                                </h:commandLink>
+                                            </div>
+                                            <div class="two  mobile-three columns">
+                                                <h:commandLink target="_blank" action="#{courseRegistrationController.printButton()}">
+                                                    <img src="../resources/images/toolbar/icon-32-print.png" width="32" height="64" alt="icon-32-new"/><br/>
+                                                    <h:outputLabel value="Print" />
+                                                </h:commandLink>
+                                            </div>
+                                            <div class="two  mobile-three columns">
+                                                <h:commandLink action="#{courseRegistrationController.cancelButton()}" immediate="true">
+                                                    &#160;<img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                    <h:outputLabel value="Cancel" style="margin-top: -3px;"/>
+                                                </h:commandLink>
+                                            </div>
+                                            <div class="five  mobile-three columns">
+                                                <h:commandLink action="#{courseRegistrationController.resetButton()}" >
+                                                    <img style="margin-left: 25px;" src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="64" alt="icon-32-cancel"/>
+                                                    <h:outputLabel value="Clear Screen" style="margin-top: 3px;"/>
+                                                </h:commandLink>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="twelve columns">
+                                            <p:dataTable value="#{courseRegistrationController.courseToRegisterDataModel}" var="reg"
+                                                         id="semesterCourses" summary="sfaf">
+                                                <p:column>
+                                                    <f:facet name="header">Course</f:facet>
+                                                    <h:commandLink style="cursor:default"  value="#{reg.courseInitials} #{reg.courseCode} #{reg.courseName}" />
+                                                    <f:facet name="footer" >
+                                                        <h:outputLabel value="Credits Registered"/>
+                                                        <h:outputLabel value="No of Courses" rendered="#{courseRegistrationController.courseToRegisterDataModel.rowCount>0}"/>
+
+                                                    </f:facet>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">Credit</f:facet>
+                                                    <h:commandLink style="cursor:default"  value="#{reg.creditHours}"/>
+                                                    <f:facet name="footer" >
+                                                        <span style="color: #0197D7;font-weight: bolder;"><h:outputLabel value="#{courseRegistrationController.creditRegistered}"/></span>
+                                                        <span style="color: #0197D7;font-weight: bolder;"><h:outputLabel rendered="#{courseRegistrationController.courseToRegisterDataModel.rowCount>0}" value="#{courseRegistrationController.courseToRegisterDataModel.rowCount}"/></span>
+                                                    </f:facet>
+                                                </p:column>
+                                                <p:column>
+                                                    <center>
+                                                        <f:facet name="header">Remove</f:facet>
+                                                        <h:commandLink title="Cancel" action="#{courseRegistrationController.removeCourse()}" immediate="true">
+                                                            <img src="../resources/images/toolbar/icon-32-cancel.png" width="16" height="16" alt="icon-32-cancel"/>
+                                                            <f:ajax execute="@this" render="semesterCourses"/>
+                                                        </h:commandLink>
+                                                        <f:facet name="footer" >
+                                                            <h:commandLink rendered="#{courseRegistrationController.showRemoveAll}" title="Cancel All" action="#{courseRegistrationController.removeAllSelectedCourses()}" style="margin-left:  10px;font-weight: bolder;cursor: pointer" >
+                                                                <img src="../resources/images/toolbar/icon-32-cancel.png" width="20" height="20" alt="icon-32-cancel"/>
+                                                                <f:ajax execute="@this" render="semesterCourses"/>
+                                                            </h:commandLink>
+                                                        </f:facet>
+                                                    </center>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+
+                                    </div>
+                                </p:panel>
+
+                                <p:panel header=" 5. INCOMPLETE COURSES" >
+                                    <div class="row">
+                                        <div class="twelve columns">
+                                            <p:dataTable value="#{courseRegistrationController.incompleteCoursesDataModel}" var="cos"
+                                                         id="incompletCourse" >
+                                                <p:column>
+                                                    <f:facet name="header">No</f:facet>
+                                                    <h:outputLabel value="#{courseRegistrationController.incompleteCoursesDataModel.rowIndex+1}"/>
+                                                </p:column>
+                                                <p:column>
+                                                    <f:facet name="header">
+                                                    </f:facet>
+                                                    <h:selectBooleanCheckbox value="#{cos.course.selected}"></h:selectBooleanCheckbox>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">Courses</f:facet>
+                                                    <h:commandLink  action="#{courseRegistrationController.addSelectedIncompleteCourse()}" value="#{cos.course.courseInitials} #{cos.course.courseCode} #{cos.course.courseName}">
+                                                        <f:ajax execute="@this" render=":studentRegistration:semesterCourses"/>
+                                                    </h:commandLink>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">Credit</f:facet>
+                                                    <h:commandLink  action="#{courseRegistrationController.addSelectedIncompleteCourse()}" value="#{cos.course.creditHours}">
+                                                        <f:ajax execute="@this" render=":studentRegistration:semesterCourses"/>
+                                                    </h:commandLink>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"></f:facet>
+                                                    <h:commandLink  value="#{cos.incompleteType}" >
+                                                        <f:ajax execute="@this" render=":studentRegistration:semesterCourses"/>
+                                                    </h:commandLink>
+                                                </p:column>
+                                            </p:dataTable>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </h:form>
+                        </div>
+                        <div class="six columns">
+                            <h:form id="registrationDetails" >
+
+                                <div class="row">
+                                    <p:panel header=" 2. REGISTRATION DETAILS" style="margin-bottom: 15px;">
+                                        <div class="row" style="margin-bottom: 20px;">
+                                            <div class="twelve columns">
+                                                <h:outputLabel class="mobile-four label-style" value="Program " for="program">
+                                                    <span style="color:red;font-weight: bolder;font-size: larger">*</span><h:message for="program" style="color: red;"/></h:outputLabel>
+                                                <h:selectOneMenu class="mobile-four twelve"  id="program"  value="#{courseRegistrationController.selectedItemHelper.selectedProgram}"
+                                                                 required="true" requiredMessage="required ">
+                                                    <f:selectItems value="#{courseRegistrationController.programSelectItems}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row" style="margin-top: 10px;margin-bottom:30px;">
+                                            <div class="five columns">
+                                                <h:outputLabel class="label-style" value="Academic Level" for="acaLevel">
+                                                    <span style="color:red;"> *</span><h:message for="acaLevel" style="color: red;"/></h:outputLabel>
+                                                <h:selectOneMenu  id="acaLevel" class="twelve"  value="#{courseRegistrationController.selectedItemHelper.selectedAcademicLevel}"
+                                                                  required="true" requiredMessage="required">
+                                                    <f:selectItems value="#{courseRegistrationController.selectedItemHelper.academicLevelSelectItems}"/>
+                                                </h:selectOneMenu>
+                                            </div>
+                                            <div class="two end columns">
+                                                <h:commandLink action="#{courseRegistrationController.searchProgramCourses()}">
+                                                    <img  class="label-style" src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                    <h:outputLabel value="Search"/>
+                                                </h:commandLink>
+                                            </div>
+                                        </div>
+                                    </p:panel>
+
+                                </div>
+
+                                <div class="row">
+                                    <p:panel header=" 3. SEMESTER COURSES">
+                                        <div class="row" style="margin-top: 20px;">
+                                            <div class="two end mobile-three columns">
+                                                <h:commandButton  value="Add Ticked" class="button small radius custom-button" action="#{courseRegistrationController.addBulkCourses()}">
+                                                    <f:ajax execute="semesterCourses" render=":studentRegistration:semesterCourses :pageGlobalMessages"/>
+                                                </h:commandButton>
+                                                <br/><br/>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="twelve columns">
+                                                <p:dataTable value="#{courseRegistrationController.coursesDataModel}" var="semcourse" 
+                                                             id="semesterCourses">
+                                                    <p:column>
+                                                        <f:facet name="header">No</f:facet>
+                                                        <h:outputLabel value="#{courseRegistrationController.coursesDataModel.rowIndex+1}" />
+                                                    </p:column>
+                                                    <p:column >
+                                                        <center>
+                                                            <f:facet name="header">
+                                                                <h:selectBooleanCheckbox  value="#{courseRegistrationController.pageCommonInputs.checkAllData}" >
+                                                                    <p:ajax event="change" update="semesterCourses" listener="#{courseRegistrationController.selectAllListener()}"/>
+                                                                </h:selectBooleanCheckbox>
+                                                            </f:facet>
+                                                            <h:selectBooleanCheckbox title="tick to add" value="#{semcourse.selected}" />
+                                                        </center>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header">Courses</f:facet>
+                                                        <h:commandLink title="click to add" action="#{courseRegistrationController.addSelectedCourse()}" value="#{semcourse.courseInitials} #{semcourse.courseCode} #{semcourse.courseName}">
+                                                            <f:ajax execute="semesterCourses" render=":studentRegistration:semesterCourses :pageGlobalMessages"/>
+                                                        </h:commandLink>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header">Credit</f:facet>
+                                                        <h:commandLink title="click to add" action="#{courseRegistrationController.addSelectedCourse()}" value="#{semcourse.creditHours}">
+
+                                                        </h:commandLink>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </p:panel>
+                                </div>
+
+                            </h:form>
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

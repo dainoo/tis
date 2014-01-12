@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:form id="academicYearRecords" prependId="false" style="#{academicYearsController.pageCommonInputs.showDataRecordsPanel}">
+        <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+            <div class="three columns">
+                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+            </div>
+            <div class="offset-by-five four columns">
+                <div class="row">
+                    <div class="three columns" >
+                        <h:commandLink action="#{academicYearsController.newDataButton()}" immediate="true">
+                            <img src="../resources/images/toolbar/icon-32-new.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                            <h:outputLabel value="New"/>
+                        </h:commandLink>
+                    </div>
+                    <div class="three end columns" style="#{userAccessPageController.readProgram}">
+                        <h:commandLink  action="#{academicYearsController.resetDataTable()}" immediate="true">
+                            <img style="margin-bottom:5px;" src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="64" alt="icon-32-new"/>
+                            <h:outputLabel value="Refresh" />
+                        </h:commandLink>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="margin-bottom: 20px;">
+            <div class="three columns">
+                <p:panel header="ACADEMIC YEARS DETAILS"  >
+                    <div class="row">
+                        <div class="twelve columns mobile-four">
+                            <h:outputLabel value="Search By" for="searchParameter" style="margin-top: 15px;margin-bottom: 15px;">
+                                <span style="color: red;font-size: large">*</span><h:message for="searchParameter" style="color: red;"/>
+                            </h:outputLabel>
+                            <h:selectOneMenu  id="searchParameter" value="#{academicYearsController.searchInputs.searchParameter}"
+                                              required="true" requiredMessage=" required">
+                                <f:selectItem itemLabel="-- Please Select --" />
+                                <f:selectItem itemLabel="Academic Year" itemValue="academicYear"/>
+                                <f:selectItem itemLabel="Semester" itemValue="semester"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns mobile-four ">
+                            <h:outputLabel value="Search Text" for="searchValue"  class="label-style">
+                                <span class="asterisk">*</span><h:message for="searchValue" style="color: red;"/>
+                            </h:outputLabel>
+                            <h:inputText  class="twelve" id="searchValue" value="#{academicYearsController.searchInputs.searchValue}"
+                                          required="true" requiredMessage=" required " validatorMessage=" Not accepted" >
+                                <f:validateRegex pattern="[0-9a-zA-Z. ' /]+" for="searchValue"/>
+                            </h:inputText>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="five columns mobile-four">
+                            <h:commandLink action="#{academicYearsController.searchButton()}">
+                                <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                <h:outputLabel value="Search"/>
+                            </h:commandLink>
+                        </div>
+                        <div class="five end  columns mobile-four">
+                            <h:commandLink immediate="true"  action="#{academicYearsController.viewAllButton()}">
+                                <img  src="../resources/images/toolbar/icon-32-preview.png" width="32" height="64" alt="icon-32-new"/>
+                                <h:outputLabel value="View All"/>
+                            </h:commandLink>
+                        </div>
+                    </div>
+
+
+                </p:panel>
+            </div>
+            <div class="nine columns">
+                <!--<p:scrollPanel  style="height: 250px;width:100%">-->
+                <p:panel header="Total Count #{academicYearsController.listOfAcademicYears.size()}">
+
+                    <div style="overflow: scroll;height: 400px;">
+                        <p:dataTable  var="academicYear" value="#{academicYearsController.academicYearsDataModel}"
+                                      id="progsRecords" >
+                            <f:facet name="header">
+                                List    of    Academic Years
+                            </f:facet>
+
+                            <p:column >
+                                <f:facet name="header">SN</f:facet>
+                                <h:outputLabel value="#{academicYearsController.academicYearsDataModel.rowIndex+1}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Academic Year"/></f:facet>
+                                <h:outputText value="#{academicYear.academicYear}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Semester"/></f:facet>
+                                <h:outputText value="#{academicYear.semester}"/>
+                            </p:column>
+                            <p:column >
+                                <center>
+                                    <f:facet name="header"><h:outputLabel class="datatable-header" title="Set As Current Semester" value="Current Semester"/></f:facet>
+                                    <h:outputText value="#{academicYear.currentSemester}"/>
+                                    <h:commandLink title="set as current semester"  immediate="true" style="font-weight: bolder;color:#339900 ;font-family: monospace ;" value="  SET CURRENT" action="#{academicYearsController.makeCurrentSemester()}"/>
+                                </center>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Start Date"/></f:facet>
+                                <h:outputText value="#{academicYear.startDate}">
+                                    <f:convertDateTime dateStyle="medium"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="End Date"/></f:facet>
+                                <h:outputText value="#{academicYear.endDate}">
+                                    <f:convertDateTime dateStyle="medium"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Edit"/></f:facet>
+                                <h:commandLink immediate="true"  action="#{academicYearsController.selectButton()}"  style="color:#2BA6CB;font-style: italic;font-family:monospace ;font-size: small;display:#{userAccessPageController.writeProgram}" value="SELECT" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </p:panel>
+                <!--</p:scrollPanel>-->
+            </div>
+        </div>
+
+    </h:form>
+
+</html>
+

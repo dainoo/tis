@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+        <title>Login</title>
+        <h:outputStylesheet library="css" name="foundation.css"/>
+        <h:outputStylesheet library="css" name="login_css.css"/>
+        <h:outputStylesheet library="css" name="app.css"/>
+        <h:outputScript library="js" name="jquery.foundation.buttons.js"/>
+        <h:outputScript library="js" name="jquery.foundation.forms.js"/>
+        <h:outputScript library="js" name="jquery.foundation.navigation.js"/>
+        <h:outputScript library="js" name="jquery.foundation.reveal.js"/>
+        <h:outputScript library="js" name="jquery.foundation.topbar.js"/>
+        <h:outputScript library="js" name="modernizr.foundation.js"/>
+        <h:outputScript library="js" name="jquery.js"/>
+        <h:outputScript library="js" name="foundation.min.js"/>
+        <h:outputScript library="js" name="app.js"/>
+        <link rel="shortcut icon" href="../resources/images/uenr_logo.png" />
+
+    </h:head>
+    <h:body >
+
+        <!-- Header and Nav -->
+        <nav class="nav-bar" id="header" style="height: 70px;">
+
+            <div class="row">
+                <div class="three columns">
+                    <img src="../resources/images/biz-park.jpg" style="margin-top: -30px;" width="100" height="50" alt="1005-BizSpark-261x230"/>
+                </div>
+                <div class=" offset-by-one seven columns">
+                    <h2><span class="church-name-design">Ramzeer Assemblies of God </span></h2>
+                    <h:messages  class="message-design" globalOnly="true" />
+                </div>
+                <div class="two columns">
+                </div>
+
+            </div>
+
+        </nav>
+
+        <div class="row " >
+            <div class="twelve columns " >
+                <nav class="top-bar fixed" style="margin-top:  70px;">
+                    <ul>
+                        <!-- Title Area -->
+                        <li class="name">
+                            <h1>
+                                <a href="#">
+                                    <!--<label class="app-name"><img src="../resources/images/1005-BizSpark-261x230.jpg" width="50" height="50" alt="1005-BizSpark-261x230"/>-->
+                                    <!--</label>-->
+                                </a>
+                            </h1>
+                        </li>
+                        <li class="toggle-topbar"><a href="#"></a></li>
+                    </ul>
+
+                    <section>
+                        <!-- Left Nav Section -->
+                        <ul class="left">
+
+                            <li><a href="#"><label class="app-name">SFCs,noad solutions Ltd</label></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"></a></li>
+                        </ul>
+
+                        <!-- Right Nav Section -->
+                        <ul class="right">
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar">Date :  </a></li>
+
+                            <li><a href="#" class="app-menu-bar">Time : </a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                        </ul>
+                    </section>
+                </nav>
+            </div>
+        </div>
+        <!-- End Header and Nav -->
+
+        <!-- Main Grid Section -->
+
+        <div class="row" >
+            <!--            <div class="four columns">
+
+                        </div>-->
+            <div class="four columns offset-by-four end">
+
+            </div>
+            <!--<div class="four columns"></div>-->
+
+
+
+        </div>
+
+        <!-- Footer -->
+        <ui:include src="includes/footer.xhtml"/>
+        <h:form id="login">
+            <h1>Log In</h1>
+            <fieldset id="inputs">
+                <!--<input id="username" type="text" placeholder="Username"  autofocus="true" required="true" />-->
+                <h:inputText id="username" required="true" />
+                <h:inputText id="password" required="true" />
+                <!--<h:inputSecret id="password" required="true" />-->
+                <!--<input id="password" type="password" placeholder="Password" autofocus="true" required="true" />-->
+            </fieldset>
+            <fieldset id="actions">
+                <input type="submit" id="submit" value="Log in" />
+                <a href="">Forgot your password?</a><a href="">Register</a>
+            </fieldset>
+        </h:form>
+    </h:body>
+</html>
+

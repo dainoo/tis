@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Courses
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Courses</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/settings-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row">
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <h:form id="courseInputs" prependId="false" style="#{coursesController.pageCommonInputs.showDataInputPanel}">
+                        <div class="row">
+                            <div class="three columns">
+                                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                            </div>
+                            <div class="offset-by-three six columns">
+                                <div class="row">
+                                    <div class="two columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{coursesController.pageCommonInputs.showEditButtons}" action="#{coursesController.saveButton()}">
+                                            &#160;<img src="../resources/images/toolbar/icon-32-save.png" width="32" height="32" alt="icon-32-save"/>
+                                            <h:outputLabel value="Save"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                        <h:commandLink  immediate="true" action="#{coursesController.cancelButton()}">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Cancel" />
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!coursesController.pageCommonInputs.showEditButtons}" action="#{coursesController.updateButton()}" >
+                                            &#160; <img src="../resources/images/toolbar/icon-32-edit.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Update"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two end columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!coursesController.pageCommonInputs.showEditButtons}"
+                                                       action="#{coursesController.deleteButton()}"
+                                                       onclick="confirm('Do You Really Want to Delete #{coursesController.course.courseName}');">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-delete.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Delete"/>
+
+                                        </h:commandLink>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="ten end  columns">
+                                <p:panel header="PROGRAM DETAILS" >
+                                    <div class="row">
+                                        <div class="two columns" >
+                                            <h:outputLabel value="Initials" for="courseInitials" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="courseInitials" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="courseInitials" value="#{coursesController.course.courseInitials}"
+                                                          required="true" maxlength="5" requiredMessage=" required " validatorMessage=" Invalid Initials" >
+                                                <f:validateRegex pattern="[A-Z]+" for="courseInitials"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="two columns" >
+                                            <h:outputLabel value="Code" for="courseCode" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="courseCode" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="progCode" value="#{coursesController.course.courseCode}"
+                                                          required="true" maxlength="2" requiredMessage=" required " validatorMessage=" Invalid Code" >
+                                                <f:validateRegex pattern="[0-9]+" for="courseCode"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="eight columns" >
+                                            <h:outputLabel value="Course" for="courseName" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="courseName" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="progName" value="#{coursesController.course.courseName}"
+                                                          required="true" requiredMessage=" required " validatorMessage=" Invalid Course" >
+                                                <f:validateRegex pattern="[a-zA-Z. ']+" for="courseName"/>
+                                            </h:inputText>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="three columns" >
+                                            <h:outputLabel value="Credit Hours" for="creditHours" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="creditHours" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="grading" value="#{coursesController.course.creditHours}"
+                                                              required="true" requiredMessage=" required ">
+                                                <f:selectItem itemLabel="PLEASE SELECT ONE" />
+                                                <f:selectItem itemLabel="1" itemValue="1"/>
+                                                <f:selectItem itemLabel="2" itemValue="2"/>
+                                                <f:selectItem itemLabel="3" itemValue="3"/>
+                                                <f:selectItem itemLabel="4" itemValue="4"/>
+                                                <f:selectItem itemLabel="5" itemValue="5"/>
+                                                <f:selectItem itemLabel="6" itemValue="6"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="three columns end">
+                                            <h:outputLabel value="Status" for="status" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="status" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="status" value="#{coursesController.course.status}"
+                                                              required="true" requiredMessage=" required ">
+                                                <f:selectItem itemLabel="PLEASE SELECT ONE" />
+                                                <f:selectItem itemLabel="Active" itemValue="Active"/>
+                                                <f:selectItem itemLabel="Abandoned" itemValue="Abandoned"/>
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                    </div>
+                                </p:panel>
+                                <ui:remove>
+
+                                    <div class="row">
+                                        <div class="six columns radius">
+                                            <div class="panel">
+                                                <h5 style="background: #0000CC;color:#FFFFFF">This is a regular panel.</h5>
+                                                <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                                            </div>
+                                        </div>
+                                        <div class="six columns">
+                                            <div class="panel callout radius">
+                                                <h5>This is a callout panel.</h5>
+                                                <p>Content...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </ui:remove>
+
+                            </div>
+
+
+                        </div>
+                    </h:form>
+
+
+                <ui:include src="../data-records/course-records.xhtml"/>
+
+
+                </div>
+                
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

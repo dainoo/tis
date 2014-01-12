@@ -1,0 +1,216 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+                Exams Results
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Examinations &#926; Exams Results</a>
+
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/examinations-bread-crumbs.xhtml"/>
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" >
+                        <div class="six end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin: 15px;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+                    <h:form id="form">  
+                        <ui:include src="../includes/results-analysis-submenu.xhtml"/>
+
+                        <div class="row">
+                            <div class="eleven end columns">
+                                <p:panel header="AMENDING STUDENT's MARKS" >
+                                    <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+                                        <div class="five columns" >
+                                            <h:outputLabel value="Program" for="program" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="program" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="program" value="#{examinationResultsController.selectedItemHelper.selectedProgram}"
+                                                             required="true"  requiredMessage=" required "  >
+                                                <f:selectItems value="#{examinationResultsController.selectedItemHelper.programSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="three columns" >
+                                            <h:outputLabel value="Level" for="level" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="level" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu class="twelve" id="level" value="#{examinationResultsController.selectedItemHelper.selectedAcademicLevel}"
+                                                             required="true"  requiredMessage=" required "  >
+                                                <f:selectItems value="#{examinationResultsController.selectedItemHelper.academicLevelSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="two columns" style="display:#{userAccessPageController.writeProgram};">
+                                            <h:commandLink  action="#{examinationResultsController.computeExamsResults()}">
+                                                <img style="margin-left:15px; " src="../resources/images/toolbar/compute.png" width="32" height="32" alt="icon-32-save"/>
+                                                <h:outputLabel value="Compute"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                            <h:commandLink target="_blank"  immediate="true" action="#{examinationResultsController.printExamsResults()}">
+                                                <img src="../resources/images/toolbar/icon-32-print.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Print" />
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+
+                                </p:panel>
+                            </div>
+                            <div class="six columns">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="twelve columns">
+                                <p:panel header="AMENDING STUDENT's MARKS "  >
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="twelve columns">
+
+                                            <div style="overflow: scroll;height: 300px;">
+                                                <p:dataTable value="#{examinationResultsController.listOfExamsResultsCommonses}"
+                                                             var="results" >
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="SN" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.counter}" style="font-size: smaller;"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Student" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel value="#{results.indexNumber}"/>
+                                                        <h:outputText value="#{results.studentName}" style="font-size: smaller;"/>
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(0)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course0}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(1)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course1}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(2)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course2}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(3)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course3}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(4)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course4}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(5)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course5}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1" rendered="#{!examinationResultsController.subjectColumnHeaders.get(11)==''} ">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(6)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course6}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1" rendered="#{!examinationResultsController.subjectColumnHeaders.get(11)==''} ">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(7)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course7}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1" rendered="#{!examinationResultsController.subjectColumnHeaders.get(11)==''} ">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(8)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course8}" style="font-size: smaller;" />
+                                                    </p:column>
+
+                                                    <p:column width="1" rendered="#{!examinationResultsController.subjectColumnHeaders.get(11)==''} ">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(9)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course9}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1" rendered="#{!examinationResultsController.subjectColumnHeaders.get(11)==''} ">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(10)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course10}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column width="1" rendered="#{!examinationResultsController.subjectColumnHeaders.get(11)==''} ">
+                                                        <f:facet name="header"><h:outputLabel value="#{examinationResultsController.subjectColumnHeaders.get(11)}" class="datatable-header"/></f:facet>
+                                                        <h:outputText value="#{results.course11}" style="font-size: smaller;" />
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header">
+                                                            <h:outputLabel style="margin-left: 100px;margin-right: 100px;" value="SEMESTER" class="datatable-header"/>  
+                                                            <br/>
+                                                        </f:facet>
+                                                        <f:facet name="header">
+                                                            <h:panelGrid columns="4" style="float: left;margin-bottom: -3px;margin-top: 10px;">
+                                                                <h:outputText value="CRE REG" class="datatable-header"/>
+                                                                <h:outputText value="CRE OBT" class="datatable-header"/>
+                                                                <h:outputText value="WTD GP" class="datatable-header"/>
+                                                                <h:outputText value="SGPA" class="datatable-header"/>
+                                                            </h:panelGrid>
+                                                        </f:facet>
+                                                        <h:panelGrid columns="4" style="margin-bottom:5px;">
+                                                            <h:outputText value="#{results.semCrdtReg}" style="font-size: smaller;"/>
+                                                            <h:outputText value="#{results.semCrdtObt}" style="font-size: smaller;"/>
+                                                            <h:outputText value="#{results.semWtdMark}" style="font-size: smaller;"/>
+                                                            <h:outputText value="#{results.semAvg}" style="font-size: smaller;"/>
+                                                        </h:panelGrid>
+                                                    </p:column>
+                                                    <p:column >
+
+                                                        <f:facet name="header">
+                                                            <h:outputLabel style="margin-left: 100px;margin-right: 100px;" value="CUMMULATIVE" class="datatable-header"/>  
+                                                            <br/>
+                                                        </f:facet>
+                                                        <f:facet name="header">
+                                                            <h:panelGrid columns="4" style="float: left;margin-bottom: -3px;margin-top: 10px;">
+                                                                <h:outputText value="CRE REG" />
+                                                                <h:outputText value="CRE OBT" />
+                                                                <h:outputText value="WTD GP" />
+                                                                <h:outputText value="GPA" />
+                                                            </h:panelGrid>
+                                                        </f:facet>
+                                                        <h:panelGrid columns="4" style="margin-bottom:5px;">
+                                                            <h:outputText value="#{results.cummCrdtReg}" style="font-size: smaller;" class="datatable-header" />
+                                                            <h:outputText value="#{results.cummCrdtObt}" style="font-size: smaller;" class="datatable-header"/>
+                                                            <h:outputText value="#{results.cummWtdMark}" style="font-size: smaller;" class="datatable-header"/>
+                                                            <h:outputText value="#{results.cummAvg}" style="font-size: smaller;" class="datatable-header"/>
+                                                        </h:panelGrid>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header"><h:outputLabel value="Remarks" style="text-align: center;font-weight: bolder"/></f:facet>
+                                                        <h:outputText value="#{results.remarks}" style="font-size: smaller;"/>
+<!--                                                        <h:outputText value="#{results.numberOfTrails}" style="font-size: smaller;"/>
+                                                        <h:outputText value="#{results.coursesTrailed}" style="font-size: smaller;"/>-->
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+
+                        </div>
+                    </h:form>
+                </div>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

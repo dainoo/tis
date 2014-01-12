@@ -1,0 +1,169 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Academic Years
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Academic Years</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                <ui:include src="../includes/user-main-menus.xhtml"/>
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/settings-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row">
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <h:form id="academicYearInputs" prependId="false" style="#{academicYearsController.pageCommonInputs.showDataInputPanel}">
+                        <div class="row" style="margin-bottom:15px;margin-top: 15px;">
+                            <div class="three columns">
+                                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                            </div>
+                            <div class="offset-by-three six columns">
+                                <div class="row">
+                                    <div class="two columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{academicYearsController.pageCommonInputs.showEditButtons}" action="#{academicYearsController.saveButton()}">
+                                            &#160;<img src="../resources/images/toolbar/icon-32-save.png" width="32" height="32" alt="icon-32-save"/>
+                                            <h:outputLabel value="Save"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                        <h:commandLink  immediate="true" action="#{academicYearsController.cancelButton()}">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Cancel" />
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!academicYearsController.pageCommonInputs.showEditButtons}" action="#{academicYearsController.updateButton()}" >
+                                            &#160; <img src="../resources/images/toolbar/icon-32-edit.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Update"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two end columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!academicYearsController.pageCommonInputs.showEditButtons}"
+                                                       action="#{academicYearsController.deleteButton()}"
+                                                       onclick="confirm('Do You Really Want to Delete #{academicYearsController.academicYear.academicYearId}');">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-delete.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Delete"/>
+
+                                        </h:commandLink>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="four end  columns">
+                                <p:panel header="ACADEMIC YEARS DETAILS"   >
+                                    <div class="row">
+                                        <div class="twelve columns">
+                                            <div class="row">
+                                                <div class="twelve columns" >
+                                                    <div class="row" >
+                                                        <div class="six columns">
+                                                            <h:outputLabel value="Set As Current Semester " for="currentSemester" style="margin-bottom: 15px;display: inline;font-weight: bolder;color: #4075c2;font-style: oblique;"/>
+                                                        </div>
+                                                        <div class="one end columns">
+                                                            <h:selectBooleanCheckbox style="margin-left: -10px;"  id="progName" value="#{academicYearsController.setAsCurrentAcademicYear}"
+                                                                                     />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="six columns" >
+                                                    <h:outputLabel value="Academic Year" for="academicYear" style="margin-top: 15px;margin-bottom: 15px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="academicYear" style="color: red;"/>
+                                                    </h:outputLabel>
+                                                    <h:inputText  class="twelve" id="academicYear" value="#{academicYearsController.academicYear.academicYear}"
+                                                                  required="true" maxlength="9" requiredMessage=" required " validatorMessage=" Invalid Initials" >
+                                                        <f:validateRegex pattern="[0-9/]+" for="academicYear"/>
+                                                    </h:inputText>
+                                                </div>
+                                                <div class="six columns" >
+                                                    <h:outputLabel value="Semester" for="semester" style="margin-top: 15px;margin-bottom: 15px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="semester" style="color: red;"/>
+                                                    </h:outputLabel>
+                                                    <h:selectOneMenu  class="twelve" id="grading" value="#{academicYearsController.academicYear.semester}"
+                                                                      required="true" requiredMessage=" required ">
+                                                        <f:selectItem itemLabel="PLEASE SELECT" />
+                                                        <f:selectItem itemLabel="1" itemValue="SEM1"/>
+                                                        <f:selectItem itemLabel="2" itemValue="SEM2"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="six columns" >
+                                                    <h:outputLabel value="Start Date" for="startDate" style="margin-top: 15px;margin-bottom: 15px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="startDate" style="color: red;"/>
+                                                    </h:outputLabel>
+                                                    <p:calendar  id="startDate" value="#{academicYearsController.academicYear.startDate}"
+                                                                 required="true" requiredMessage=" required ">
+
+                                                    </p:calendar>
+                                                </div>
+                                                <div class="six columns" >
+                                                    <h:outputLabel value="End Date" for="endDate" style="margin-top: 15px;margin-bottom: 15px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="endDate" style="color: red;"/>
+                                                    </h:outputLabel>
+                                                    <p:calendar  id="endDate" value="#{academicYearsController.academicYear.endDate}"
+                                                                 required="true" requiredMessage=" required ">
+
+                                                    </p:calendar>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </p:panel>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <ui:remove>
+
+                        <div class="row">
+                            <div class="six columns radius">
+                                <div class="panel">
+                                    <h5 style="background: #0000CC;color:#FFFFFF">This is a regular panel.</h5>
+                                    <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                                </div>
+                            </div>
+                            <div class="six columns">
+                                <div class="panel callout radius">
+                                    <h5>This is a callout panel.</h5>
+                                    <p>Content...</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </ui:remove>
+
+
+                    <ui:include src="../data-records/academic-year-records.xhtml"/>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

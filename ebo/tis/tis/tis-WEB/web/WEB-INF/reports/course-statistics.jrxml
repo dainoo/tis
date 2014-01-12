@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="course-statistics" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="schoolName" class="java.lang.String"/>
+	<parameter name="departmentName" class="java.lang.String"/>
+	<parameter name="academicYear" class="java.lang.String"/>
+	<parameter name="programName" class="java.lang.String"/>
+	<parameter name="totalCoursesAs" class="java.lang.String"/>
+	<parameter name="totalCoursesBPlus" class="java.lang.String"/>
+	<parameter name="totalCourseBs" class="java.lang.String"/>
+	<parameter name="totalCourseCPlus" class="java.lang.String"/>
+	<parameter name="totalCoursesCs" class="java.lang.String"/>
+	<parameter name="totalCoursesDPlus" class="java.lang.String"/>
+	<parameter name="totalCoursesDs" class="java.lang.String"/>
+	<parameter name="totalCoursesEs" class="java.lang.String"/>
+	<parameter name="totalOverAllFailed" class="java.lang.String"/>
+	<parameter name="totalDefers" class="java.lang.String"/>
+	<parameter name="totalMedical" class="java.lang.String"/>
+	<parameter name="totalMarksNotAvailable" class="java.lang.String"/>
+	<parameter name="reportFooter" class="java.lang.String"/>
+	<field name="counter" class="java.lang.String"/>
+	<field name="courseName" class="java.lang.String"/>
+	<field name="credit" class="java.lang.String"/>
+	<field name="numberOfAs" class="java.lang.String"/>
+	<field name="numberOfBs" class="java.lang.String"/>
+	<field name="numberOfCs" class="java.lang.String"/>
+	<field name="numberOfCPlus" class="java.lang.String"/>
+	<field name="numberOfDs" class="java.lang.String"/>
+	<field name="numberOfBPlus" class="java.lang.String"/>
+	<field name="numberOfDPlus" class="java.lang.String"/>
+	<field name="numberOfEs" class="java.lang.String"/>
+	<field name="numberOfDeferres" class="java.lang.String"/>
+	<field name="numberOfMedicalCases" class="java.lang.String"/>
+	<field name="numberOfMarksNotAvailable" class="java.lang.String"/>
+	<field name="max" class="java.lang.String"/>
+	<field name="min" class="java.lang.String"/>
+	<field name="avg" class="java.lang.String"/>
+	<field name="std" class="java.lang.String"/>
+	<field name="fails" class="java.lang.String"/>
+	<field name="numberOfFailed" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="65" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="1" width="57" height="52"/>
+				<imageExpression class="java.lang.String"><![CDATA["C:\\glassfish3\\glassfish\\domains\\domain1\\docroot\\tisres\\school-logo.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement mode="Opaque" x="57" y="1" width="745" height="34" forecolor="#000000" backcolor="#C0C0C0"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{schoolName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="45" width="578" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{departmentName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement x="332" y="9" width="140" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[COURSE STATISTICS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="109" y="34" width="264" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{programName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="33" width="193" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{academicYear}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement mode="Opaque" x="44" y="25" width="18" height="20" backcolor="#9999FF"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[SN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="62" y="25" width="270" height="20" backcolor="#9999FF"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[COURSE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="332" y="25" width="41" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[CREDIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="373" y="25" width="21" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[A]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="394" y="25" width="21" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[B+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="415" y="25" width="23" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[B]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="438" y="25" width="21" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[C+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="458" y="25" width="21" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="478" y="25" width="21" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[D+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="516" y="25" width="21" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[E]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="536" y="25" width="21" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[|*]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="556" y="25" width="21" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[|]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="576" y="25" width="21" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Df]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="596" y="25" width="31" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[MAX]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="627" y="25" width="31" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[MIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="658" y="25" width="31" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[AVG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="689" y="25" width="31" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[STD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="720" y="25" width="51" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[FAILED **]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="499" y="25" width="17" height="20" backcolor="#9999FF"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[D]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="44" y="0" width="18" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{counter}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="62" y="0" width="270" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{courseName}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="332" y="0" width="41" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{credit}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="373" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfAs}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="438" y="0" width="20" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfCPlus}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="416" y="0" width="22" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfBs}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="458" y="0" width="20" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfCs}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="478" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfDPlus}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="499" y="0" width="17" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfDs}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="516" y="0" width="20" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfEs}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="536" y="0" width="20" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfMarksNotAvailable}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="556" y="0" width="20" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfMedicalCases}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="576" y="0" width="20" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfDeferres}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="596" y="0" width="31" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{max}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="627" y="0" width="31" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{min}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="658" y="0" width="31" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{avg}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="689" y="0" width="31" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{std}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="720" y="0" width="51" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Top"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfFailed}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="394" y="0" width="21" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{numberOfBPlus}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50">
+			<textField>
+				<reportElement x="0" y="28" width="802" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{reportFooter}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="24" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="62" y="18" width="200" height="20"/>
+				<textElement/>
+				<text><![CDATA[|* < = > Mark Not Available]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="38" width="200" height="20"/>
+				<textElement/>
+				<text><![CDATA[|  < = > Medical Case]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="62" y="58" width="200" height="20"/>
+				<textElement/>
+				<text><![CDATA[Df < = > Deferred Case]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Opaque" x="373" y="0" width="21" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalCoursesAs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="394" y="0" width="22" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalCoursesBPlus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="416" y="0" width="22" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalCourseBs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="438" y="0" width="20" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalCourseCPlus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="458" y="0" width="20" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalCoursesCs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="478" y="0" width="21" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalCoursesDPlus}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="499" y="0" width="17" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalCoursesDs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="516" y="0" width="20" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalCoursesEs}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="536" y="0" width="20" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalMarksNotAvailable}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="556" y="0" width="20" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalMedical}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="576" y="0" width="20" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalDefers}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="720" y="0" width="51" height="20" forecolor="#000000" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{totalOverAllFailed}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="332" y="0" width="41" height="20" backcolor="#CCCCFF"/>
+				<textElement textAlignment="Right">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="596" y="0" width="124" height="20" backcolor="#CCCCFF"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

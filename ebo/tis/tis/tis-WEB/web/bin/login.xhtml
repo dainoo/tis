@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <meta http-equiv="refresh" content="30" />
+        <h:outputStylesheet library="css" name="foundation.css"/>
+        <!--<h:outputStylesheet library="css" name="app-functions.css"/>-->
+        <!--<link href="resources/css/app-functions.css" type="text/css" rel="stylesheet"/>-->
+        <!--        <h:outputStylesheet library="css" name="app.css"/>
+                <h:outputStylesheet library="css" name="user-menus.css"/>-->
+
+        <h:outputScript library="js" name="jquery.js" target="body" transient="true"/>
+        <h:outputScript library="js" name="foundation.min.js" target="body"/>
+        <h:outputScript library="js" name="jquery.foundation.forms.js" target="body"/>
+        <h:outputScript library="js" name="modernizr.foundation.js" target="body"/>
+        <h:outputScript library="js" name="app.js" target="body"/>
+
+        <link rel="shortcut icon" href="../resources/images/star-golden.png" />
+        <title>Login</title>
+        <link href="resources/css/login-css.css" type="text/css" rel="stylesheet"/>
+    </h:head>
+    <h:body >
+        <div class="row" style="background: #f2f2f2;">
+            <div class="twelve columns">
+
+                <div class="row" style="background: #438eb9;height: 90px;">
+                    <div class="three columns columns">
+                        <h6>
+                        <img src="resources/images/nhis_logo.png" width="50" height="50" alt="nhis_logo"/>
+                            <h:outputText value="Noad Solutions" style="color: white;"/>
+                        </h6>
+                    </div>
+                    <div class="six columns ">
+                        <h5>
+                            <h:outputText style="color: white;" value="Tertiary Institution Software - TIS"/>
+                        </h5>
+                    </div>
+                    <div class="three columns">
+                        nvfdsfjds
+                    </div>
+                </div>
+                <!-- End Navigation -->
+
+                <div class="row">
+                    <div class="nine mobile-four columns" style="background: #79aa71;height: 350px;">
+                        <div class="row">
+                            <div class="twelve columns mobile-four">
+                                <p:messages globalOnly="true"/>
+                            </div>
+                        </div>
+                        <h3>Header</h3>
+                        <h5
+                            class="subheader">
+
+                            <button class="cn-button" id="cn-button">+</button>
+                            <div class="cn-wrapper" id="cn-wrapper">
+                                <ul>
+                                    <li><a href="#"><span class="icon-picture">Students</span></a></li>
+                                    <li><a href="#"><span class="icon-headphones"></span></a></li>
+                                    <li><a href="#"><span class="icon-home"></span></a></li>
+                                    <li><a href="#"><span class="icon-facetime-video"></span></a></li>
+                                    <li><a href="#"><span class="icon-envelope-alt"></span></a></li>
+                                </ul>
+                            </div>
+                            <div id="cn-overlay" class="cn-overlay"></div>
+
+                        </h5>
+                    </div>
+
+                    <div class="three columns mobile-four" style="background: #f2f2f2;">
+                        <h:form>
+
+                            <div class="row">
+
+                                <div class="row" style="background: #ffcccc;" >
+                                    <div class="twelve mobile-four columns">
+                                        <h:outputLabel style="margin-left: -2px;padding: 10px;font-size: smaller;" value=" Login With Username And Password" for="username"> 
+                                        </h:outputLabel>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="twelve mobile-four columns">
+                                        <h:outputLabel style="margin-left: -2px;" value="Username" for="username"> 
+                                            <span style="color: red;">*</span><h:message for="username" style="color: red;margin-left: 10px;font-size: small;"/>
+                                        </h:outputLabel>
+                                        <h:inputText id="username" required="true" value="#{loginController.pageCommonInputs.username}" requiredMessage=" required"/>
+                                    </div>
+                                </div>
+                                <div class="row"> 
+                                    <div class="twelve mobile-four columns">
+                                        <h:outputLabel style="margin-left: -2px;margin-top: -5px;" value="Password" for="password">
+                                            <span style="color: red;">*</span><h:message for="password" style="color: red;margin-left: 10px;font-size: small;"/>
+                                        </h:outputLabel>
+                                        <h:inputSecret id="password" required="true" value="#{loginController.pageCommonInputs.password}" requiredMessage=" required" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="three end mobile-four columns">
+                                    <h:commandButton value="Login" class="button radius secondary" action="#{loginController.checkUserAccessRight()}"/>
+                                </div>
+                            </div>
+
+                        </h:form>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Footer -->
+
+                <footer class="row">
+                    <div class="twelve columns"><hr />
+                        <div class="row">
+
+                            <div class="six columns">
+                                <p><span style=""></span>Impossibility  is a mirage</p>
+                            </div>
+
+                            <div class="six columns">
+                                <ul class="link-list right">
+                                    <li><a href="#">Contact : 0245 293945</a></li>
+                                    <li><a href="#">Email : noadsolutions@gmail.com</a></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </footer>
+
+                <!-- End Footer -->
+
+            </div>
+        </div>
+        <!--</div>-->
+    </h:body>
+</html>

@@ -1,0 +1,196 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+                School Info sfad
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; School Setup</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/settings-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row">
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <h:form id="schoolSetupInputs" prependId="false" >
+                        <div class="row">
+                            <div class="three columns">
+                                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                            </div>
+                            <div class="offset-by-three six columns">
+                                <div class="row">
+                                    <div class="two columns" >
+                                        <h:commandLink rendered="#{schoolInfoController.pageCommonInputs.showEditButtons}" action="#{schoolInfoController.saveButton()}">
+                                            &#160;<img src="../resources/images/toolbar/icon-32-save.png" width="32" height="32" alt="icon-32-save"/>
+                                            <h:outputLabel value="Save"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{schoolInfoController.pageCommonInputs.showEditButtons}" action="#{schoolInfoController.updateButton()}" >
+                                            &#160; <img src="../resources/images/toolbar/icon-32-edit.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Update"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two end  columns" style="#{userAccessPageController.readProgram}">
+                                        <h:commandLink  immediate="true" action="#{schoolInfoController.cancelButton()}">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Cancel" />
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 10px;margin-bottom: 10px;">
+                            <div class="four columns">
+                                <p:panel header="School Information "   >
+                                    <div class="row">
+                                        <div class="twelve columns" >
+                                            <h:outputLabel value="Institution Name" for="schoolName" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="schoolName" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="schoolName" value="#{schoolInfoController.schoolSetup.schoolName}"
+                                                          required="true"  requiredMessage=" required "  >
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="twelve columns" >
+                                            <h:outputLabel value="Institution Motor" for="schoolMotor" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="schoolMotor" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="schoolMotor" value="#{schoolInfoController.schoolSetup.schoolMotor}"
+                                                          required="true"  requiredMessage=" required ">
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+
+                                </p:panel>
+                            </div>
+                            <div class="five end columns">
+                                <p:panel header="School Address "   >
+                                    <div class="row">
+
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Contact" for="contact" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="contact" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="contact" value="#{schoolInfoController.schoolSetup.contact}"
+                                                          required="true" requiredMessage=" required " validatorMessage=" Invalid Contact" >
+                                                <f:validateRegex pattern="[0-9/]+" for="contact"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Location" for="location" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="location" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="location" value="#{schoolInfoController.schoolSetup.location}"
+                                                          required="true" requiredMessage=" required "  >
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Postal Address" for="postalAddress" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="postalAddress" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="postalAddress" value="#{schoolInfoController.schoolSetup.postalAddress}"
+                                                          required="true" requiredMessage=" required ">
+                                            </h:inputText>
+                                        </div>
+                                        <div class="six columns" >
+                                            <h:outputLabel value="Email Address" for="emailAddress" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="emailAddress" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="emailAddress" value="#{schoolInfoController.schoolSetup.emailAddress}"
+                                                          required="true" requiredMessage=" required ">
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+
+                        </div>
+                        <div class="row" >
+                            <div class="twelve columns">
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="twelve columns">
+                                        <p:panel header="INSTITUTION DETAILS" >
+
+                                            <div class="row">
+                                                <div style="overflow-y: scroll;width: auto;">
+                                                    <p:dataTable  var="sch" value="#{schoolInfoController.schoolSetupsDataModel}"
+                                                                  id="progsRecords" >
+                                                        <f:facet name="header">
+                                                            Institution Information
+                                                        </f:facet>
+                                                        <p:column >
+                                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="School ID"/></f:facet>
+                                                            <h:outputText value="#{sch.schoolSetupId}"/>
+                                                        </p:column>
+                                                        <p:column >
+                                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Name"/></f:facet>
+                                                            <h:outputText value="#{sch.schoolName}"/>
+                                                        </p:column>
+                                                        <p:column >
+                                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Motor"/></f:facet>
+                                                            <h:outputText value="#{sch.schoolMotor}"/>
+                                                        </p:column>
+                                                        <p:column >
+                                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Contact"/></f:facet>
+                                                            <h:outputText value="#{sch.contact}"/>
+                                                        </p:column>
+                                                        <p:column >
+                                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Location"/></f:facet>
+                                                            <h:outputText value="#{sch.location}"/>
+                                                        </p:column>
+                                                        <p:column >
+                                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Address"/></f:facet>
+                                                            <h:outputText value="#{sch.postalAddress}"/>
+                                                        </p:column>
+                                                        <p:column >
+                                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Email"/></f:facet>
+                                                            <h:outputText value="#{sch.emailAddress}"/>
+                                                        </p:column>
+                                                        <p:column >
+                                                            <f:facet name="header"><h:outputLabel class="datatable-header" value="Edit"/></f:facet>
+                                                            <h:commandLink  action="#{schoolInfoController.selectButton()}"  style="color:#2BA6CB;font-style: italic;font-family:monospace ;font-size: small;display:#{userAccessPageController.writeProgram}" value="SELECT" />
+                                                        </p:column>
+
+                                                    </p:dataTable>
+                                                </div>
+
+                                            </div>
+                                        </p:panel>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,304 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Programs
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Programs</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                                <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/settings-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row">
+                        <div class="twelve columns "><p:messages globalOnly="true"/></div>
+                    </div>
+                    <h:form id="programInputs" style="#{programsController.pageCommonInputs.showDataInputPanel}">
+                        <div class="row">
+                            <div class="three columns">
+                                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                            </div>
+                            <div class="offset-by-three six columns">
+                                <div class="row">
+                                    <div class="two columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{programsController.pageCommonInputs.showEditButtons}" action="#{programsController.saveButton()}">
+                                            &#160;<img src="../resources/images/toolbar/icon-32-save.png" width="32" height="32" alt="icon-32-save"/>
+                                            <h:outputLabel value="Save"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                        <h:commandLink  immediate="true" action="#{programsController.cancelButton()}">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Cancel" />
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two  columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!programsController.pageCommonInputs.showEditButtons}" action="#{programsController.updateButton()}" >
+                                            &#160; <img src="../resources/images/toolbar/icon-32-edit.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Update"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="two end columns" style="display:#{userAccessPageController.writeProgram}">
+                                        <h:commandLink rendered="#{!programsController.pageCommonInputs.showEditButtons}"
+                                                       action="#{programsController.deleteButton()}"
+                                                       onclick="confirm('Do You Really Want to Delete #{programsController.program.programName}');">
+                                            &#160; <img src="../resources/images/toolbar/icon-32-delete.png" width="32" height="32" alt="icon-32-cancel"/>
+                                            <h:outputLabel value="Delete"/>
+
+                                        </h:commandLink>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="ten end  columns">
+                                <p:panel header="Program Details">
+                                    <div class="row">
+                                        <div class="two columns" >
+                                            <h:outputLabel value="Code" for="progCode" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="progCode" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="progCode" value="#{programsController.program.prgramCode}"
+                                                          required="true" maxlength="2" requiredMessage=" required " validatorMessage=" Invalid Code" >
+                                                <f:validateRegex pattern="[0-9]+" for="progCode"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="seven columns" >
+                                            <h:outputLabel value="Program Name" for="progName" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="progName" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="progName" value="#{programsController.program.programName}"
+                                                          required="true" requiredMessage=" required " validatorMessage=" Invalid Name" >
+                                                <f:validateRegex pattern="[a-zA-Z. ']+" for="progName"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="three columns" >
+                                            <h:outputLabel value="Grading System" for="grading" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="grading" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="grading" value="#{programsController.program.gradingSystem}"
+                                                              required="true" requiredMessage=" required ">
+                                                <f:selectItem itemLabel="PLEASE SELECT"/>
+                                                <f:selectItem itemLabel="GPA" itemValue="GPA"/>
+                                                <f:selectItem itemLabel="CWA" itemValue="CWA"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="six columns">
+                                            <h:outputLabel value="Department" for="dept" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="dept" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="dept" value="#{programsController.selectedItemHelper.selectedDepartment}"
+                                                              required="true" requiredMessage=" required ">
+                                                <f:selectItems value="#{programsController.selectedItemHelper.departmentSelectItems}"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="three columns end">
+                                            <h:outputLabel value="Duration" for="duration" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="duration" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="duration" value="#{programsController.program.duration}"
+                                                              required="true" requiredMessage=" required ">
+                                                <f:selectItem itemLabel="PLEASE SELECT" />
+                                                <f:selectItem itemLabel="1" itemValue="1"/>
+                                                <f:selectItem itemLabel="2" itemValue="2"/>
+                                                <f:selectItem itemLabel="3" itemValue="3"/>
+                                                <f:selectItem itemLabel="4" itemValue="4"/>
+                                                <f:selectItem itemLabel="5" itemValue="5"/>
+                                                <f:selectItem itemLabel="6" itemValue="6"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="three columns end">
+                                            <h:outputLabel value="Status" for="status" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="status" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  class="twelve" id="status" value="#{programsController.program.status}"
+                                                              required="true" requiredMessage=" required ">
+                                                <f:selectItem itemLabel="PLEASE SELECT" />
+                                                <f:selectItem itemLabel="Active" itemValue="Active"/>
+                                                <f:selectItem itemLabel="Abandoned" itemValue="Abandoned"/>
+                                            </h:selectOneMenu>
+                                        </div>
+
+                                    </div>
+                                </p:panel>
+                                <ui:remove>
+
+                                    <div class="row">
+                                        <div class="six columns radius">
+                                            <div class="panel">
+                                                <h5 style="background: #0000CC;color:#FFFFFF">This is a regular panel.</h5>
+                                                <p>It has an easy to override visual style, and is appropriately subdued.</p>
+                                            </div>
+                                        </div>
+                                        <div class="six columns">
+                                            <div class="panel callout radius">
+                                                <h5>This is a callout panel.</h5>
+                                                <p>Content...</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </ui:remove>
+
+                            </div>
+
+
+                        </div>
+                    </h:form>
+                    <h:form id="programRecords" prependId="false" style="#{programsController.pageCommonInputs.showDataRecordsPanel}">
+                        <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+                            <div class="three columns">
+                                <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                            </div>
+                            <div class="offset-by-five four columns">
+                                <div class="row">
+                                    <div class="three columns" >
+                                        <h:commandLink action="#{programsController.newDataButton()}" immediate="true">
+                                            <img src="../resources/images/toolbar/icon-32-new.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                            <h:outputLabel value="New"/>
+                                        </h:commandLink>
+                                    </div>
+                                    <div class="four end columns" style="#{userAccessPageController.readProgram}">
+                                        <h:commandLink  action="#{programsController.resetDataTable()}" immediate="true">
+                                            <img style="margin-bottom:5px;margin-left: 20px;" src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="64" alt="icon-32-new"/>
+                                            <h:outputLabel value="Clear Screen" />
+                                        </h:commandLink>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="margin-bottom: 20px;">
+                            <div class="three columns">
+                                <p:panel header="PROGRAM DETAILS" >
+                                    <div class="row">
+                                        <div class="twelve columns mobile-four">
+                                            <h:outputLabel value="Search By" for="searchParameter" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="searchParameter" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:selectOneMenu  id="searchParameter" value="#{programsController.searchInputs.searchParameter}"
+                                                              required="true" requiredMessage=" required">
+                                                <f:selectItem itemLabel="-- Please Select --" />
+                                                <f:selectItem itemLabel="Code" itemValue="programCode"/>
+                                                <f:selectItem itemLabel="Program" itemValue="programName"/>
+                                                <f:selectItem itemLabel="Duration" itemValue="duration"/>
+                                                <f:selectItem itemLabel="Grading" itemValue="gradingSystem"/>
+                                                <f:selectItem itemLabel="Department" itemValue="department.departmentName"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="twelve columns mobile-four ">
+                                            <h:outputLabel value="Search Text" for="searchValue" style="margin-top: 15px;margin-bottom: 15px;">
+                                                <span style="color: red;font-size: large">*</span><h:message for="searchValue" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText  class="twelve" id="searchValue" value="#{programsController.searchInputs.searchValue}"
+                                                          required="true" requiredMessage=" required " validatorMessage=" Not accepted" >
+                                                <f:validateRegex pattern="[0-9a-zA-Z. ']+" for="searchValue"/>
+                                            </h:inputText>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="four columns mobile-four" >
+                                            <h:commandLink action="#{programsController.searchButton()}">
+                                                <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                                <h:outputLabel value="Search"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="four  columns mobile-four end" >
+                                            <h:commandLink immediate="true"  action="#{programsController.viewAllButton()}">
+                                                <img  src="../resources/images/toolbar/icon-32-preview.png" width="32" height="64" alt="icon-32-new"/>
+                                                <h:outputLabel value="View All"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                            <div class="nine columns">
+                                <!--<div class="row">-->
+                                <div class="twelve columns">
+                                    <p:panel header="Total Count #{programsController.listOfPrograms.size()}">
+                                        <div style="overflow: scroll;height: 400px;">
+                                            <p:dataTable  var="prog" value="#{programsController.programsDataModel}"
+                                                          id="progsRecords" >
+                                                <f:facet name="header">
+                                                    List    of    Programs
+                                                </f:facet>
+
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel class="datatable-header" value="SN"/></f:facet>
+                                                    <h:outputText value="#{programsController.programsDataModel.rowIndex+1}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel class="datatable-header" value="Code"/></f:facet>
+                                                    <h:outputText value="#{prog.prgramCode}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel class="datatable-header" value="Program"/></f:facet>
+                                                    <h:outputText value="#{prog.programName}" />
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel class="datatable-header" value="Duration"/></f:facet>
+                                                    <h:outputText value="#{prog.duration}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel class="datatable-header" value="Grading"/></f:facet>
+                                                    <h:outputText value="#{prog.gradingSystem}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel class="datatable-header" value="Department"/></f:facet>
+                                                    <h:outputText value="#{prog.department.departmentName}" />
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel class="datatable-header" value="Certificate"/></f:facet>
+                                                    <h:outputText value="#{prog.certificateType}"/>
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header"><h:outputLabel class="datatable-header" value="Status"/></f:facet>
+                                                    <h:outputText value="#{prog.status}" />
+                                                </p:column>
+                                                <p:column >
+                                                    <f:facet name="header">Edit</f:facet>
+                                                    <h:commandLink immediate="true"  action="#{programsController.selectButton()}"  style="color:#2BA6CB;font-style: italic;font-family:monospace ;font-size: small;display:#{userAccessPageController.writeProgram}" value="SELECT" />
+
+                                                </p:column>
+
+                                            </p:dataTable>
+                                        </div>
+                                    </p:panel>
+
+
+                                </div>
+                                <!--</div>--> 
+                            </div>
+                        </div>
+
+                    </h:form>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

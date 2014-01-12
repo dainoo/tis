@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="students_program_list" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="49d70844-b73d-4e7c-8454-3904a2e5386f">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="schoolName" class="java.lang.String"/>
+	<parameter name="departmentName" class="java.lang.String"/>
+	<parameter name="academicYear" class="java.lang.String"/>
+	<parameter name="programName" class="java.lang.String"/>
+	<parameter name="reportFooter" class="java.lang.String"/>
+	<parameter name="reportitle" class="java.lang.String"/>
+	<field name="counter" class="java.lang.String"/>
+	<field name="gender" class="java.lang.String"/>
+	<field name="studentNumber" class="java.lang.String"/>
+	<field name="studentIndexNumber" class="java.lang.String"/>
+	<field name="studentFullNameWithTitle" class="java.lang.String"/>
+	<field name="currentLevel" class="java.lang.String"/>
+	<field name="programName" class="java.lang.String"/>
+	<field name="departmentName" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<textField>
+				<reportElement uuid="48ebfbce-8e13-40a0-a90b-34b6b74f268c" mode="Opaque" x="89" y="0" width="466" height="20" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="12" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{schoolName}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="44ff2879-0cff-4b0b-b6fd-9c2b4bca1d32" x="0" y="0" width="89" height="60"/>
+				<box bottomPadding="0"/>
+				<imageExpression><![CDATA["C:\\glassfish3\\glassfish\\domains\\domain1\\docroot\\tisres\\school-logo.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="7a069b3b-6cbc-4fa3-b36b-d33c06d88049" mode="Opaque" x="204" y="40" width="261" height="20" backcolor="#FFFFFF"/>
+				<box bottomPadding="0"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" isBold="true" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{academicYear}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ef1d6367-f0a3-4897-a4a9-afd489964f93" mode="Opaque" x="89" y="20" width="466" height="20" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" isBold="true" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{departmentName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement uuid="ba560465-6c78-4fdb-a7c1-0891e30252dd" mode="Opaque" x="0" y="1" width="555" height="20" backcolor="#CCCCFF"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{reportitle}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="fa92ae72-a288-4f61-82bb-b297bc289346" mode="Opaque" x="0" y="0" width="25" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Book Antiqua" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8eccedbb-8e33-441a-94d7-8227828f312e" mode="Opaque" x="163" y="0" width="70" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Book Antiqua" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Student No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a121b046-11a6-4a1a-95d1-0feeb47c2828" mode="Opaque" x="25" y="0" width="138" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Book Antiqua" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cb918001-0734-4b21-90a6-60c1f7a30700" mode="Opaque" x="232" y="0" width="70" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Book Antiqua" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Index No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d1130693-6e99-416c-86b3-10d2a1db881f" mode="Opaque" x="302" y="0" width="40" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box rightPadding="2"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Gender]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e32f5c60-5937-4ba3-bc56-3bd338effe90" mode="Opaque" x="342" y="0" width="157" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<textElement>
+					<font fontName="Book Antiqua" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Program]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a29a38a5-e170-4ef3-90a2-55d7b3814093" mode="Opaque" x="499" y="0" width="56" height="20" forecolor="#FFFFFF" backcolor="#000000"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Book Antiqua" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Level]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="35c08bf8-c6e9-471a-8df1-4f7ed00bdcd4" x="0" y="0" width="25" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{counter}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d3ebb871-5ef3-4dff-9fdc-a1bd114b94de" x="163" y="0" width="70" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="26be0156-51d6-4f54-b340-b8ff6b11f44c" x="25" y="0" width="138" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentFullNameWithTitle}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="08c15355-5db2-439a-a95f-2211ece8b6df" x="232" y="0" width="70" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{studentIndexNumber}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8fb0dc6f-d001-47de-bbee-36c9c30e9963" x="302" y="0" width="40" height="20"/>
+				<box rightPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{gender}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="37fd8710-62a7-4f04-ad78-cc75bef20dc8" x="341" y="0" width="158" height="20"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{programName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3da952d7-d517-4daa-8de7-026863f4572d" x="499" y="0" width="56" height="20"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{currentLevel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement uuid="efe91956-7a51-4ff4-a1c4-83a602f08e0a" x="0" y="10" width="555" height="20"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{reportFooter}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

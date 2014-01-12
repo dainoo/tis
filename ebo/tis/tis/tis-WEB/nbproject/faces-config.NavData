@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="includes/breadCrumbs/settings-bread-crumbs.xhtml" x="3184" y="32" zoom="true"/>
+        <Node id="bin/sticky-test.xhtml" x="1547" y="32" zoom="true"/>
+        <Node id="data-records/course-records.xhtml" x="21694" y="32" zoom="true"/>
+        <Node id="pages/students_admitted.xhtml" x="15399" y="32" zoom="true"/>
+        <Node id="pages/course_registration.xhtml" x="21337" y="32" zoom="true"/>
+        <Node id="includes/breadCrumbs/settings-bread-crumbs_1.xhtml" x="6183" y="32" zoom="true"/>
+        <Node id="pages/student_details.xhtml" x="4338" y="32" zoom="true"/>
+        <Node id="pages/courses.xhtml" x="18431" y="32" zoom="true"/>
+        <Node id="includes/settings-bread-crumbs.xhtml" x="10933" y="32" zoom="true"/>
+        <Node id="pages/students_status.xhtml" x="18722" y="32" zoom="true"/>
+        <Node id="pages/exams_results.xhtml" x="4008" y="32" zoom="true"/>
+        <Node id="pages/singlee_registration.xhtml" x="5462" y="32" zoom="true"/>
+        <Node id="pages/mass_registration.xhtml" x="14006" y="32" zoom="true"/>
+        <Node id="pages/program_students.xhtml" x="15750" y="32" zoom="true"/>
+        <Node id="includes/students-bread-crumbs.xhtml" x="16994" y="32" zoom="true"/>
+        <Node id="includes/examinations-bread-crumbs.xhtml" x="1128" y="32" zoom="true"/>
+        <Node id="pages/welcome.xhtml" x="13039" y="32" zoom="true"/>
+        <Node id="pages/department_heads.xhtml" x="9885" y="32" zoom="true"/>
+        <Node id="pages/course_statistics.xhtml" x="17712" y="32" zoom="true"/>
+        <Node id="template/main_temp.xhtml" x="20340" y="32" zoom="true"/>
+        <Node id="pages/course-selector.xhtml" x="12704" y="32" zoom="true"/>
+        <Node id="pages/programs.xhtml" x="8972" y="32" zoom="true"/>
+        <Node id="*" x="39" y="74" zoom="false"/>
+        <Node id="pages/registered_students.xhtml" x="19312" y="32" zoom="true"/>
+        <Node id="includes/user-main-menus.xhtml" x="13648" y="32" zoom="true"/>
+        <Node id="pages/semester_registration.xhtml" x="11653" y="32" zoom="true"/>
+        <Node id="bin/index.xhtml" x="20663" y="32" zoom="true"/>
+        <Node id="pages/staff_members.xhtml" x="11321" y="32" zoom="true"/>
+        <Node id="pages/school_setup.xhtml" x="10237" y="32" zoom="true"/>
+        <Node id="pages/general_user_accounts.xhtml" x="15019" y="32" zoom="true"/>
+        <Node id="includes/pop-out-window.xhtml" x="8624" y="32" zoom="true"/>
+        <Node id="pages/user_profile.xhtml" x="13335" y="32" zoom="true"/>
+        <Node id="pages/academic_years.xhtml" x="12025" y="32" zoom="true"/>
+        <Node id="data-records/student-records.xhtml" x="10558" y="32" zoom="true"/>
+        <Node id="includes/user_menus.xhtml" x="7952" y="32" zoom="true"/>
+        <Node id="template/app-temp.xhtml" x="9572" y="32" zoom="true"/>
+        <Node id="bin/login.xhtml" x="19059" y="32" zoom="true"/>
+        <Node id="pages/weighted_average.xhtml" x="2835" y="32" zoom="true"/>
+        <Node id="template/login.xhtml" x="7322" y="32" zoom="true"/>
+        <Node id="pages/marks_upload.xhtml" x="17386" y="32" zoom="true"/>
+        <Node id="pages/lecturer_courses.xhtml" x="8281" y="32" zoom="true"/>
+        <Node id="template/main_temp_1.xhtml" x="4670" y="32" zoom="true"/>
+        <Node id="pages/marks_amendments.xhtml" x="5820" y="32" zoom="true"/>
+        <Node id="loading.xhtml" x="2258" y="32" zoom="true"/>
+        <Node id="bin/autogeneration.xhtml" x="22066" y="32" zoom="true"/>
+        <Node id="pages/depat.xhtml" x="7046" y="32" zoom="true"/>
+        <Node id="pages/transcript.xhtml" x="9272" y="32" zoom="true"/>
+        <Node id="pages/promotions.xhtml" x="16100" y="32" zoom="true"/>
+        <Node id="data-records/general-user-account-records.xhtml" x="5007" y="32" zoom="true"/>
+        <Node id="includes/staffs-bread-crumbs.xhtml" x="18056" y="32" zoom="true"/>
+        <Node id="resources/images/toolbar/index.html" x="6666" y="32" zoom="true"/>
+        <Node id="login.xhtml" x="527" y="32" zoom="true"/>
+        <Node id="includes/results-analysis-submenu.xhtml" x="19672" y="32" zoom="true"/>
+        <Node id="pages/students_results_slip.xhtml" x="760" y="32" zoom="true"/>
+        <Node id="pages/program_courses.xhtml" x="14355" y="32" zoom="true"/>
+        <Node id="pages/student_addresses.xhtml" x="3653" y="32" zoom="true"/>
+        <Node id="data-records/program-course-records.xhtml" x="1833" y="32" zoom="true"/>
+        <Node id="bin/loginw.xhtml" x="20077" y="32" zoom="true"/>
+        <Node id="pages/uploaded_marks.xhtml" x="12364" y="32" zoom="true"/>
+        <Node id="pages/user_accounts.xhtml" x="2505" y="32" zoom="true"/>
+        <Node id="pages/students.xhtml" x="16700" y="32" zoom="true"/>
+        <Node id="expired_session.xhtml" x="335" y="225" zoom="true"/>
+        <Node id="includes/footer.xhtml" x="16409" y="32" zoom="true"/>
+        <Node id="data-records/academic-year-records.xhtml" x="20920" y="32" zoom="true"/>
+        <Node id="pages/departments.xhtml" x="14702" y="32" zoom="true"/>
+        <Node id="includes/student-picture.xhtml" x="7608" y="32" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

@@ -1,0 +1,229 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+
+            <ui:define name="page-title">
+               Marks Amendments
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Examinations &#926;Marks Amendments</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                               <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/examinations-bread-crumbs.xhtml"/>
+            </ui:define>
+
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row" >
+                        <div class="six end columns">
+                            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin: 15px;"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+                    <h:form>
+
+                        <div class="row">
+                            <div class="six columns">
+                                <p:panel header="AMENDING STUDENT's MARKS" >
+                                    <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+                                        <div class="four columns" >
+                                            <h:outputLabel value="Index Number" for="indexNumber" >
+                                                <span style="color: red;font-size: large">*</span><h:message for="indexNumber" style="color: red;"/>
+                                            </h:outputLabel>
+                                            <h:inputText class="twelve" id="indexNumber" value="#{marksAmendmentsController.student.studentIndexNumber}"
+                                                         required="true"  requiredMessage=" required "  >
+                                            </h:inputText>
+                                        </div>
+                                        <div class="three columns" style="display:#{userAccessPageController.writeProgram};">
+                                            <h:commandLink  action="#{marksAmendmentsController.loadStudentMarks()}">
+                                                <img style="margin-left:25px; " src="../resources/images/toolbar/icon-32-contact.png" width="32" height="32" alt="icon-32-save"/>
+                                                <h:outputLabel value="Load Marks"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <ui:remove>
+                                            
+                                        <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                            <h:commandLink  immediate="true" action="#{marksAmendmentsController.printButton()}">
+                                                <img src="../resources/images/toolbar/icon-32-print.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Print" />
+                                            </h:commandLink>
+                                        </div>
+                                        </ui:remove>
+                                        <div class="three end columns" style="display:#{userAccessPageController.writeProgram};">
+                                            <h:commandLink  action="#{marksAmendmentsController.clearScreen()}" >
+                                                &#160;&#160; &#160;  <img src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Clear Screen"/>
+                                            </h:commandLink>
+                                        </div>
+                                    </div>
+
+                                </p:panel>
+                                <div class="row">
+                                    <div class="two end columns">
+                                        <p:panel style="margin-top:120px;">
+                                            <h:commandLink  action="#{marksAmendmentsController.uploadMarks()}" >
+                                              <img src="../resources/images/toolbar/icon-16-apply.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="DONE"/>
+                                            </h:commandLink>
+                                        </p:panel>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="six columns">
+                                <p:panel header="STUDENT DETAILS">
+
+                                    <div class="row" >
+                                        <div class="nine columns">
+                                            <div class="row">
+                                                <div class="three mobile-one columns">
+                                                    <label class="right inline">Name</label>
+                                                </div>
+                                                <div class="nine mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: medium;" class="twelve"  disabled="true" id="studentName" value="#{marksAmendmentsController.student.surname} #{marksAmendmentsController.student.otherNames}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="three mobile-one columns">
+                                                    <label class="right inline">Student ID</label>
+                                                </div>
+                                                <div class="nine mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: medium;" class="twelve"  disabled="true" id="studentId" value=" #{marksAmendmentsController.student.studentId}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="three mobile-one columns">
+                                                    <label class="right inline">Index No</label>
+                                                </div>
+                                                <div class="nine mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: medium;" class="twelve"  disabled="true" id="studentIndexNumber" value="#{marksAmendmentsController.student.studentIndexNumber}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="three mobile-one columns">
+                                                    <label class="right inline">Department</label>
+                                                </div>
+                                                <div class="nine mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: medium;" class="twelve" disabled="true" id="studentDepartment" immediate="true" value="#{marksAmendmentsController.student.department.departmentName}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="three mobile-one columns">
+                                                    <label class="right inline">Program</label>
+                                                </div>
+                                                <div class="nine mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: medium;" class="twelve" disabled="true" id="studentProgram" immediate="true" value="#{marksAmendmentsController.student.program.programName}"/>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="three mobile-one columns">
+                                                    <label class="right inline">Level</label>
+                                                </div>
+                                                <div class="six end  mobile-three columns">
+                                                    <h:inputText style="font-weight: bolder;font-size: medium;" class="ten" id="studentLevel" disabled="true" value="#{marksAmendmentsController.student.currentLevel.academicLevelId}"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="three columns">
+                                            <a class="th">
+                                                <p:graphicImage  id="studentPicture" value="#{marksAmendmentsController.pageCommonInputs.studentPicturePath}#{marksAmendmentsController.student.studentPicture}" width="113" height="115"/>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 15px;">
+                            <div class="twelve columns">
+                                <p:panel header="STUDENT's MARKS FOR AMENDMENT"  >
+                                    <div class="row" style="margin-top: 10px;">
+                                        <div class="twelve columns">
+
+                                            <div style="overflow: scroll;height: 350px;">
+                                                <p:dataTable value="#{marksAmendmentsController.studentMarksDataModel}" var="semcourse" 
+                                                             id="selectedCourses" emptyMessage="No Courses Selected Yet">
+                                                    <p:column>
+                                                        <f:facet name="header"><h:outputLabel value="SN" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: smaller;" value="#{marksAmendmentsController.studentMarksDataModel.rowIndex+1}" />
+                                                    </p:column>
+
+                                                    <p:column width="300">
+                                                        <f:facet name="header"><h:outputLabel value="Student" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel value="#{semcourse.student.studentIndexNumber}"/>
+                                                        <h:outputText style="font-size: smaller;margin-top: -5px;" value="#{semcourse.student.surname} #{semcourse.student.otherNames}"/>
+                                                    </p:column >
+                                                    <p:column width="250">
+                                                        <f:facet name="header"><h:outputLabel value="Course" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: smaller;" value="#{semcourse.course.courseInitials} #{semcourse.course.courseCode} #{semcourse.course.courseName}"/>
+                                                    </p:column>
+                                                    <p:column width="2" rendered="#{marksAmendmentsController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="Class Work One" class="datatable-header"/></f:facet>
+                                                        <h:inputText style="font-size: small;width: 70%;" value="#{semcourse.classWorkOne}"/>
+                                                    </p:column>
+                                                    <p:column width="5" rendered="#{marksAmendmentsController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="Class Work Two" class="datatable-header"/></f:facet>
+                                                        <h:inputText style="font-size: small;width: 70%;" value="#{semcourse.classWorkTwo}"/>
+                                                    </p:column>
+                                                    <p:column width="1">
+                                                        <f:facet name="header"><h:outputLabel value="Mid Sem Mark" class="datatable-header"/></f:facet>
+                                                        <h:inputText style="font-size: small;" value="#{semcourse.midSemMark}" />
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Exams Mark" class="datatable-header"/></f:facet>
+                                                        <h:inputText style="font-size: small;" value="#{semcourse.examMark}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Total Mark" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.totalMark}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Grade" class="datatable-header"/></f:facet>
+                                                        <h:outputLabel style="font-size: small;#{semcourse.markStyle}" value="#{semcourse.grade}"/>
+                                                    </p:column>
+                                                    <p:column rendered="#{marksAmendmentsController.pageCommonInputs.showGradingType}">
+                                                        <f:facet name="header"><h:outputLabel value="Grade Point" class="datatable-header"/></f:facet>
+                                                        <h:outputText style="font-size: small;" value="#{semcourse.gradePoint}"/>
+                                                    </p:column>
+                                                    <p:column >
+                                                        <f:facet name="header"><h:outputLabel value="Grading" class="datatable-header"/></f:facet>
+                                                        <h:commandLink action="#{marksAmendmentsController.okMark()}" >
+                                                            &#160;<img src="../resources/images/toolbar/icon-16-apply.png" width="14" height="14" alt="icon-32-cancel"/>
+                                                            <h:outputLabel value="OK" style="font-size: smaller;"/>
+                                                        </h:commandLink>
+                                                    </p:column>
+                                                </p:dataTable>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:panel>
+                            </div>
+
+                        </div>
+                    </h:form>
+
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

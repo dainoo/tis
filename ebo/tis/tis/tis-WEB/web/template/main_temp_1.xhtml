@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title><ui:insert name="page-title"/></title>
+
+        <h:outputScript library="js" name="foundation.min.js" target="head"/>
+        <h:outputScript library="js" name="jquery.js" target="head"/>
+        <h:outputStylesheet library="css" name="foundation.css"/>
+        <h:outputStylesheet library="css" name="app.css"/>
+        <h:outputStylesheet library="css" name="user-menus.css"/>
+        <h:outputScript library="js" name="jquery.foundation.forms.js"/>
+        <h:outputScript library="js" name="jquery.foundation.navigation.js"/>
+        <h:outputScript library="js" name="jquery.foundation.reveal.js"/>
+        <h:outputScript library="js" name="jquery.foundation.topbar.js"/>
+        <h:outputScript library="js" name="modernizr.foundation.js"/>
+        <h:outputScript library="js" name="app.js"/>
+        <h:outputScript library="js" name="menu_jquery.js"/>
+        <link rel="shortcut icon" href="../resources/images/nhis_logo.png" />
+    </h:head>
+    <h:body>
+        <nav class="top-bar fixed" id="header" style="height: 70px;">
+
+            <div class="row-header" >
+                <div class="two columns">
+                    <h:graphicImage library="images" name="nhis_logo.png" width="100" height="100" style="height: 70px;width: 70px;"/>
+                </div>
+                <div class="offset-by-two eight columns">
+                    <h2><span class="church-name-design" style="color: #0000CC;">National Health Insurance Scheme </span></h2>
+                </div>
+
+            </div>
+
+        </nav>
+
+        <div class="row " >
+            <div class="twelve columns " >
+                <nav class="top-bar fixed" style="margin-top:  70px;">
+                    <ul>
+                        <!-- Title Area -->
+                        <li class="name">
+
+                        </li>
+                        <li class="toggle-topbar"><a href="#"></a></li>
+                    </ul>
+                    <h:form style="margin-top: -60px;">
+
+
+                        <!--<section>-->
+                        <!-- Left Nav Section -->
+                        <ul class="left" style="margin-left: -10px;">
+                            <li><a href="#" id="current-user"><span style="font-family: cursive;font-size: medium;">Logged In :</span> #{loginController.userAccount.username}</a></li>
+                            <li><a href="#" id="current-user"><span style="font-family: cursive;font-size: medium;">Role :</span>#{loginController.userAccount.accessLevel}</a></li>
+                            <li class="current-page-design" style="color: #ff9900;"><ui:insert name="current-page"/></li>
+                        </ul>
+
+                        <!-- Right Nav Section -->
+                        <ul class="right">
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar">Date :   #{loginController.appDate}</a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#" class="app-menu-bar"></a></li>
+                            <li><a href="#"></a></li>
+                            <li><a href="#"><h:commandLink style="margin-top: -45px;" value="Logout" action="#{loginController.logOut()}"/> </a></li>
+                        </ul>
+                        <!--</section>-->
+                    </h:form>
+                </nav>
+            </div>
+        </div>
+        <!-- End Header and Nav -->
+
+        <div class="row" style="margin-top:120px;">
+            <div class="two columns app-menus-design" >
+                <div class="row" style="margin-bottom: 20px;">
+                    <div class="twelve columns">
+                        <h:form>
+                            <ui:insert name="user-menus"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <div class="ten columns " style="margin-left: 200px;">
+                <ui:insert name="main-content"/>
+                <ui:include src="../includes/footer.xhtml"/>
+            </div>
+        </div>
+    </h:body>
+
+</html>
+

@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <div class="row">
+        <div class="three end columns">
+            <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+        </div>
+    </div>
+    <h:form id="programRecords" prependId="false" style="#{generalUserAccountController.pageCommonInputs.showDataRecordsPanel}">
+        <div class="row" style="margin-bottom: 20px;margin-top: 15px;">
+            <div class="three columns">
+                <p:panel header="GENERAL USER ACCOUNTS "  >
+                    <div class="row">
+                        <div class="twelve columns mobile-four">
+                            <h:outputLabel value="Search By" for="searchParameter" style="margin-top: 15px;margin-bottom: 15px;">
+                                <span style="color: red;font-size: large">*</span><h:message for="searchParameter" style="color: red;"/>
+                            </h:outputLabel>
+                            <h:selectOneMenu  id="searchParameter" value="#{generalUserAccountController.searchInputs.searchParameter}"
+                                              required="true" requiredMessage=" required">
+                                <f:selectItem itemLabel="-- Please Select --" />
+                                <f:selectItem itemLabel="Title" itemValue="staff.title"/>
+                                <f:selectItem itemLabel="Surname" itemValue="staff.surname"/>
+                                <f:selectItem itemLabel="Status" itemValue="status"/>
+                                <f:selectItem itemLabel="Department" itemValue="staff.department.departmentName"/>
+                            </h:selectOneMenu>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="twelve columns mobile-four ">
+                            <h:outputLabel value="Search Text" for="searchValue" style="margin-top: 15px;margin-bottom: 15px;">
+                                <span style="color: red;font-size: large">*</span><h:message for="searchValue" style="color: red;"/>
+                            </h:outputLabel>
+                            <h:inputText  class="twelve" id="searchValue" value="#{generalUserAccountController.searchInputs.searchValue}"
+                                          required="true" requiredMessage=" required " validatorMessage=" Not accepted" >
+                                <f:validateRegex pattern="[0-9a-zA-Z. ']+" for="searchValue"/>
+                            </h:inputText>
+                        </div>
+                    </div>
+                    <div class="row">
+
+                        <div class="three columns mobile-four" style="#{userAccessPageController.readProgram}">
+                            <h:commandLink action="#{generalUserAccountController.searchButton()}">
+                                <img src="../resources/images/toolbar/icon-32-search.png" width="32" height="48" alt="icon-48-newsfeeds-cat"/>
+                                <h:outputLabel value="Search"/>
+                            </h:commandLink>
+                        </div>
+                        <div class="four  columns mobile-four " style="#{userAccessPageController.readProgram}">
+                            <h:commandLink immediate="true"  action="#{generalUserAccountController.viewAllButton()}">
+                                <img style="margin-left:15px;" src="../resources/images/toolbar/icon-32-preview.png" width="32" height="64" alt="icon-32-new"/>
+                                <h:outputLabel value="View All"/>
+                            </h:commandLink>
+                        </div>
+                        <div class="five  columns mobile-four " style="#{userAccessPageController.readProgram}">
+                            <h:commandLink immediate="true"  action="#{generalUserAccountController.resetDataTable()}">
+                                <img style="margin-left: 20px;" src="../resources/images/toolbar/icon-32-refresh.png" width="32" height="64" alt="icon-32-new"/>
+                                <h:outputLabel value="Clear Screen"/>
+                            </h:commandLink>
+                        </div>
+                    </div>
+                </p:panel>
+            </div>
+            <div class="nine columns">
+                <!--<p:scrollPanel  style="height: 250px;width:100%">-->
+                <p:panel header="Total Count #{generalUserAccountController.listOfUserAccounts.size()}">
+                <div style="overflow: scroll;height: 500px;">
+                    <p:dataTable  var="account" value="#{generalUserAccountController.userAccountsDataModel}"
+                                      id="progsRecords" >
+                            <f:facet name="header">
+                                List    of    User Accounts
+                            </f:facet>
+
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="SN"/></f:facet>
+                                <h:outputText value="#{generalUserAccountController.userAccountsDataModel.rowIndex+1}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Staff"/></f:facet>
+                                <h:outputText value="#{account.staff.title} #{account.staff.surname} #{account.staff.otherNames}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Role"/></f:facet>
+                                <h:outputText value="#{account.userRole}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Department"/></f:facet>
+                                <h:outputText value="#{account.staff.department.departmentName}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Status"/></f:facet>
+                                <h:outputText value="#{account.status}"/>
+                            </p:column>
+                            <p:column >
+                                <f:facet name="header"><h:outputLabel class="datatable-header" value="Edit"/></f:facet>
+                                <h:commandLink immediate="true"  action="#{generalUserAccountController.selectButton()}"  style="color:#2BA6CB;font-style: italic;font-family:monospace ;font-size: small;display:#{userAccessPageController.writeProgram}" value="SELECT" />
+                            </p:column>
+
+                        </p:dataTable>
+
+                </div>
+                    </p:panel>
+
+                <!--</p:scrollPanel>-->
+            </div>
+
+        </div>
+    </h:form>
+</html>
+

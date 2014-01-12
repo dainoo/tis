@@ -1,0 +1,96 @@
+  //<editor-fold desc=" Sample CRUD ">
+    public String sampleCreate(Sample sample) {
+        try {
+            em.persist(sample);
+            em.flush();
+            return sample.getSampleId();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+
+        }
+    }
+
+    public boolean sampleUpdate(Sample sample) {
+        try {
+            em.merge(sample);
+            em.flush();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public Sample sampleFind(String sampleId) {
+        try {
+            Sample sample = em.find(Sample.class, sampleId);
+            return sample;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public List<Sample> sampleGetAll() {
+        List<Sample> listOfSample = null;
+
+        String qryString = "";
+
+        try {
+
+            qryString = "SELECT e FROM Sample e";
+
+
+            listOfSample = (List<Sample>) em.createQuery(qryString).getResultList();
+
+            return listOfSample;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Sample> sampleFindByAttribute(String sampleAttribute, Object attributeValue, String fieldType) {
+        List<Sample> listOfSample = null;
+
+        String qryString = "";
+
+        qryString = "SELECT e FROM Sample e ";
+        if (fieldType.equalsIgnoreCase("String")) {
+            qryString += "WHERE e." + sampleAttribute + " LIKE '%" + attributeValue.toString() + "%'";
+        } else {
+            qryString += "WHERE e." + sampleAttribute + " =:sampleAttribute ";
+        }
+        try {
+
+
+            if (fieldType.equalsIgnoreCase("NUMBER")) {
+                listOfSample = (List<Sample>) em.createQuery(qryString).setParameter("sampleAttribute", attributeValue).getResultList();
+            } else if (fieldType.equalsIgnoreCase("STRING")) {
+                listOfSample = (List<Sample>) em.createQuery(qryString).getResultList();
+            } else if (fieldType.equalsIgnoreCase("DATE")) {
+                listOfSample = (List<Sample>) em.createQuery(qryString).setParameter("sampleAttribute", (Date) attributeValue, TemporalType.DATE).getResultList();
+            }
+
+            return listOfSample;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean sampleDelete(Sample sample) {
+        try {
+            em.remove(em.merge(sample));
+            em.flush();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    //</editor-fold>

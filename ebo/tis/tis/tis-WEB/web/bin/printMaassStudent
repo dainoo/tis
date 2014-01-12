@@ -1,0 +1,137 @@
+ public void printMassStudents() {
+
+        try {
+
+            List<Student> listOfStudents = TisEjbSource.getExamsProcessingInstance().getSelectedProgramAndLevelStudents(selectedItemHelper.getSelectedProgram(), selectedItemHelper.getSelectedAcademicLevel(),
+                    userSessionData.getCurrentAcademicYear().getAcademicYear());
+            System.out.println("THE SIZE OF THE STUDENTS IS " + listOfStudents.size());
+            Program program = TisEjbSource.getCrudInstance().programFind(selectedItemHelper.getSelectedProgram());
+            student = TisEjbSource.getBasicQuariesInstance().findStudentByIndexNumber(selectedItemHelper.getSelectedStudent());
+            if (listOfStudents.isEmpty()) {
+                JSFMessages.warnMessage("No  Students Reading " + program.getProgramName() + " In " + selectedItemHelper.getSelectedAcademicLevel());
+                return;
+
+            } else {
+
+                listOfCoursesMarksDetailses = new ArrayList<CoursesMarksDetails>();
+                List<StudentMark> listOfCurrentSemesterStudentMarks = null;
+                for (Student eachStudent : listOfStudents) {
+                    listOfCurrentSemesterStudentMarks = TisEjbSource.getExamsProcessingInstance().getSemStdtCourseMarks(eachStudent, selectedItemHelper.getSelectedAcademicLevel(), userSessionData.getCurrentAcademicYear().getAcademicYearId());
+                    if (listOfCurrentSemesterStudentMarks.isEmpty()) {
+                        JSFMessages.errorMessage("No Marks Uploaded Yet");
+                        System.out.println("THE NUMBER OF STUDENT MARKS IS " + listOfCurrentSemesterStudentMarks.size());
+                        return;
+                    } else {
+                        resultsSummary = new ResultsSummary();
+                        summaryResultseList = null;
+                        //              Processing  Current semester marks and credit hours of  the student
+                        for (StudentMark eachMark : listOfCurrentSemesterStudentMarks) {
+
+                            if (eachStudent.getProgram().getGradingSystem().equalsIgnoreCase(ExamsGrader.getCWA())) {
+                                coursesMarksDetails.setMarks(eachMark.getTotalMark());
+                                if (eachMark.getTotalMark() >= 40) {
+                                    resultsSummary.setSemCrdtObt(resultsSummary.getSemCrdtObt() + eachMark.getCourse().getCreditHours());
+                                }
+                                resultsSummary.setSemWtdMark(resultsSummary.getSemWtdMark() + (eachMark.getExamMark() * eachMark.getCourse().getCreditHours()));
+                                coursesMarksDetails.setMarks(eachMark.getTotalMark());
+                            } else if (eachStudent.getProgram().getGradingSystem().equalsIgnoreCase(ExamsGrader.getGPA())) {
+                                if (eachMark.getTotalMark() >= 50) {
+                                    resultsSummary.setSemCrdtObt(resultsSummary.getSemCrdtObt() + eachMark.getCourse().getCreditHours());
+                                }
+                                resultsSummary.setSemWtdMark(resultsSummary.getSemWtdMark() + (eachMark.getExamMark() * eachMark.getCourse().getCreditHours()));
+                                coursesMarksDetails.setMarks(eachMark.getTotalMark());
+                            }
+
+                            resultsSummary.setSemCrdtReg(resultsSummary.getSemCrdtReg() + eachMark.getCourse().getCreditHours());
+                            coursesMarksDetails.setCourseName(eachMark.getCourse().getCourseInitials() + " " + eachMark.getCourse().getCourseCode());
+                            coursesMarksDetails.setCreditHours(String.valueOf(eachMark.getCourse().getCreditHours()));
+                            coursesMarksDetails.setGradePoint(eachMark.getGradePoint());
+                            coursesMarksDetails.setGrade(eachMark.getGrade());
+                            coursesMarksDetails.setMarkStyle(eachMark.getMarkStyle());
+                            listOfCoursesMarksDetailses.add(coursesMarksDetails);
+                        }
+
+                        System.out.println("THE STUDENT IS >>>>>>>> " + eachStudent.getSurname() + " " + eachStudent.getOtherNames());
+                        System.out.println("THE STUDENT IS >>>>>>>> NUMBER OF COURSES " + listOfCurrentSemesterStudentMarks.size());
+                        for (StudentMark studentMark : listOfCurrentSemesterStudentMarks) {
+                            System.out.println(" COURES >>> " + studentMark.getCourse().getCourseName() + " COURSE >>>>>>>>>> " + studentMark.getTotalMark());
+                        }
+                        System.out.println("");
+                        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<NEXT STUDENT >>>>>>>>>>>>>>>>>>>");
+                        System.out.println("");
+
+                        coursesMarksDetails = new CoursesMarksDetails();
+
+                        //Processing Cummulative Marks and Credit Hours
+
+                        List<StudentMark> listOfCummulativeStudentMarks = eachStudent.getStudentMarkList();
+
+                        if (student.getProgram().getGradingSystem().equalsIgnoreCase(ExamsGrader.getGPA())) {
+                            for (StudentMark eachCummMark : listOfCummulativeStudentMarks) {
+                                if (eachCummMark.getTotalMark() >= 50) {
+                                    resultsSummary.setCummCrdtObt(resultsSummary.getCummCrdtObt() + eachCummMark.getCourse().getCreditHours());
+                                }
+                                resultsSummary.setCummWtdMark(resultsSummary.getCummWtdMark() + (eachCummMark.getExamMark() * eachCummMark.getCourse().getCreditHours()));
+                                resultsSummary.setCummCrdtReg(resultsSummary.getCummCrdtReg() + eachCummMark.getCourse().getCreditHours());
+
+                            }
+
+                        } else if (student.getProgram().getGradingSystem().equalsIgnoreCase(ExamsGrader.getCWA())) {
+                            for (StudentMark eachCummMark : listOfCummulativeStudentMarks) {
+                                if (eachCummMark.getTotalMark() >= 40) {
+                                    resultsSummary.setCummCrdtObt(resultsSummary.getCummCrdtObt() + resultsSummary.getCummCrdtObt());
+                                }
+                                resultsSummary.setCummWtdMark(resultsSummary.getCummWtdMark() + (eachCummMark.getExamMark() * eachCummMark.getCourse().getCreditHours()));
+                                resultsSummary.setCummCrdtReg(resultsSummary.getCummCrdtReg() + eachCummMark.getCourse().getCreditHours());
+                            }
+                        }
+
+                    }
+
+
+
+                    resultsSummary.setSemAvg(resultsSummary.getSemWtdMark() / resultsSummary.getSemCrdtReg());
+                    resultsSummary.setCummAvg(resultsSummary.getCummWtdMark() / resultsSummary.getCummCrdtReg());
+
+                }
+
+                //Gives the results summary of the student
+                SummaryResults rs = new SummaryResults();
+                rs.setBreadDown("Credit Registered");
+                rs.setSemesterSummary(String.valueOf(resultsSummary.getSemCrdtReg()));
+                rs.setCummulativeSummary(String.valueOf(resultsSummary.getCummCrdtReg()));
+
+                SummaryResults rs1 = new SummaryResults();
+                rs1.setBreadDown("Credit Obtained");
+                rs1.setSemesterSummary(String.valueOf(resultsSummary.getSemCrdtObt()));
+                rs1.setCummulativeSummary(String.valueOf(resultsSummary.getCummCrdtObt()));
+
+                SummaryResults rs2 = new SummaryResults();
+                rs2.setBreadDown("Weighted Marks");
+                rs2.setSemesterSummary(String.valueOf(resultsSummary.getSemWtdMark()));
+                rs2.setCummulativeSummary(String.valueOf(resultsSummary.getCummWtdMark()));
+
+                SummaryResults rs3 = new SummaryResults();
+                rs3.setBreadDown("Weighted Average");
+                rs3.setSemesterSummary(String.valueOf(DecimalPlace.getTwoDecimalPlaces(resultsSummary.getSemAvg())));
+                rs3.setCummulativeSummary(String.valueOf(DecimalPlace.getTwoDecimalPlaces(resultsSummary.getCummAvg())));
+
+                summaryResultseList = new ArrayList<SummaryResults>();
+                summaryResultseList.add(rs);
+                summaryResultseList.add(rs1);
+                summaryResultseList.add(rs2);
+                summaryResultseList.add(rs3);
+
+                listOfCoursesMarksDetailses.add(coursesMarksDetails);//print twice on a page
+                coursesMarksDetails = new CoursesMarksDetails();
+                summaryResultseList = null;
+                listOfCoursesMarksDetailses = null;
+                resultsSlipCommonsesDataModel = new ListDataModel<CoursesMarksDetails>(listOfCoursesMarksDetailses);
+
+
+            }
+
+        } catch (Exception e) {
+            appLogger(e);
+        }
+    }

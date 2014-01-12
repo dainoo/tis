@@ -1,0 +1,193 @@
+/***************************** primefaces overrides ***************************************/
+
+.ui-widget-header{background: #ececec;}
+
+.ui-panel{
+    box-shadow: 0 0 3px 1px rgba(0,0,0,.15);
+}
+.ui-panel-title{
+    /*background: red;*/
+    /*font-size: small;*/
+      /*font-family:"Adobe Caslon Pro" , "Hoefler Text" , Georgia ,Garamond,Times ,serif ;*/
+/*font-variant: small-caps;*/
+}
+.ui-datatable-header{
+        /*font-variant: small-caps;font-weight: bolder;font-size:small;text-spacing: trim-start;float: left;*/
+
+}
+.ui-datatable-data{
+    color: red;
+}
+/***************************** End of primefaces overrides **********************************/
+.row-selecter{
+   /*color:#2BA6CB;font-style: italic;font-family:monospace ;font-size: small;font-variant: small-caps;*/
+   color:#2BA6CB;font-style: italic;font-family:monospace ;font-size: small;
+}
+
+label{
+    font-weight: bolder;font-size: small;
+}
+.asterisk{font-size: larger;color: red;font-weight: bolder;}
+.message{color: red;font-weight: bolder;}
+.total-count{
+    color:#2BA6CB;font-family: sans-serif;font-weight: bold;float: left;
+}
+/*ui-panel-titlebar*/ 
+
+.datatable-header{
+    font-variant: small-caps;font-weight: bolder;font-size:small;text-spacing: trim-start;float: left;
+
+}
+/*.panel-header{
+    box-shadow: 0 0 3px 1px rgba(0,0,0,.15);
+    background-image: radial-gradient(center 0, circle farthest-corner, rgba(255,255,255,0.4), rgba(255,255,255,0));
+}*/
+#header , .app-menus-design{
+    /*height: 80px!important;*/
+    background: red;
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+
+}
+#breadcrumbs-style{
+    margin-top: 104px;width:fit-content;margin-left: 225px;
+}
+ul.breadcrumbs li.current a { cursor: default; color: red; }
+
+.row{ width: 2000px;}
+
+/* Contain width to .row width */ /* First <ul> for branding, title, name, etc */ /* topbar global <ul> styles */
+.top-bar { background: #ccc; height: 45px; line-height: 45px; margin: 0; padding: 0; width: 100%;
+           background: rgb(44,83,158); /* Old browsers */
+           background: -moz-linear-gradient(top,  rgba(44,83,158,1) 0%, rgba(44,83,158,1) 100%); /* FF3.6+ */
+           background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(44,83,158,1)), color-stop(100%,rgba(44,83,158,1))); /* Chrome,Safari4+ */
+           background: -webkit-linear-gradient(top,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* Chrome10+,Safari5.1+ */
+           background: -o-linear-gradient(top,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* Opera 11.10+ */
+           background: -ms-linear-gradient(top,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* IE10+ */
+           background: linear-gradient(to bottom,  rgba(44,83,158,1) 0%,rgba(44,83,158,1) 100%); /* W3C */
+           filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#2c539e', endColorstr='#2c539e',GradientType=0 ); /* IE6-9 */
+           background: #0000CC;
+}
+/*give background color to active main menu after hover down submenus*/
+/*.top-bar ul > li:hover, .top-bar ul > li.active { background:#F5821F;color: #2C539E; }*/
+.top-bar ul > li:hover, .top-bar ul > li.active { background:inherit;color: #2C539E;cursor: default }
+
+.top-bar ul > li:hover a[href="#"]:hover{
+    background: inherit;
+
+}
+.error-message{
+    color: red;
+    text-decoration: blink;
+}
+.span-style{
+    color: red;font-size: large;
+}
+.label-style{
+    margin-top: 10px;margin-bottom: 10px;
+}
+.selected-row{
+    font-style: italic;font-family: cursive;font-size: small;color: #2C539E!important;text-align: center;
+}
+.fixed , #idFixed{ width: 100%; left: 0; position: fixed; top: 0; z-index: 99; }
+.special-fixed{ left: 0; position: fixed; top: 0; z-index: 99;
+}
+.message-design{
+
+}
+.special-fieldset  , #fset{
+
+    /*background: red;*/
+    -moz-box-shadow: inset 0 0 2px #888;
+    -webkit-box-shadow: inset 0 0 2px #888;
+    box-shadow: inset 0 0 2px #888;
+}
+.custom-button{ background: #1237EB;color: #fff;}
+
+.app-menu-bar{
+    cursor: default;
+}
+.current-page-design a{
+    color: #ff9900;
+    font-weight: bolder;
+}
+#current-user{background-color:#FFE24F;color: #2C539E;}
+.current-user:hover{background-color: #FAB810;color: #2C539E;}
+
+/*fieldset:hover{
+    background: #E9E9E9;
+    color: red;
+}*/
+.ui-accordion-header{
+    color: red!important;
+}
+.app-menus-design{
+    padding-bottom: 15px;
+    padding-top: 15px;
+    z-index: 20;
+    position: fixed;
+    margin-right: 50px;
+    color: green;
+    height: 700px;
+    /*background: #ccc;*/
+    border-right: #2C539E thin dotted;
+}
+.ui-accordion-header .ui-accordion-header a{
+    background: orange;
+}
+.menu-links{
+    font-weight: 200;
+    font-size: small;
+    color: #000 !important;
+    border-bottom: #2284a1 dotted thin;
+    padding-bottom: 5px;
+}
+.menu-links:hover{
+    /*font-weight: bolder;*/
+    color:   #2C539E !important;
+    border-left: #2284a1 double thick;padding-bottom: 5px;padding-left: 5px;
+}
+.copy-right{
+    font-weight: bolder;
+    margin: 0 80px 0 80px;
+}
+.dashboard-title a{
+    color:#E4C335 ;font-weight: bolder; font-family: cursive;
+}
+.dashboard-title a:hover{
+    color:#ff9900 ;font-weight: bolder; font-family: cursive;
+}
+.dash-label a,.dash-label {
+    color: #2C539E ;font-weight: bolder; font-family: cursive;
+}
+.dash-label a:hover ,.dash-label:hover{
+    color: #ff9900;font-weight: bolder;
+}
+#accord-title-design{
+    color: red;
+
+}
+.church-name-design{
+    color: rgb(44,83,158);
+    /*    text-shadow: 1px 5px 6px rgba(0,0,0,0.2),
+            0px -3px 30px rgba(255,255,255,0.3);*/
+    font-family:"Adobe Caslon Pro" , "Hoefler Text" , Georgia ,Garamond,Times ,serif ;
+    /*font-style:italic;*/
+    color:#0000CC;
+    color: green;
+    word-spacing: 20px;
+    font-weight: bold;
+}
+
+.app-name{
+    font-weight: bolder;
+    color: #E4C335;
+    font-size: medium;
+    font-style: italic;
+}

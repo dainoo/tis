@@ -1,0 +1,250 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../template/main_temp.xhtml">
+            <ui:define name="page-title">
+                Programs'  Courses
+            </ui:define>
+
+            <ui:define name="current-page">
+                <a href="#">Current Location : Settings &#926; Programs' Courses</a>
+            </ui:define>
+
+            <ui:define name="user-menus">
+                               <ui:include src="../includes/user-main-menus.xhtml"/>
+
+            </ui:define>
+
+            <ui:define name="bread-crumb">
+                <ui:include src="../includes/settings-bread-crumbs.xhtml"/>
+            </ui:define>
+            <ui:define name="main-content">
+                <div class="twelve columns">
+                    <div class="row">
+                        <div class="twelve columns "><p:messages id="pageGlobalMessages" globalOnly="true"/></div>
+                    </div>
+
+                    <div class="row">
+
+                        <h:form id="programCourses"  style="#{programCoursesController.pageCommonInputs.showDataInputPanel}">
+                            <div class="row">
+                                <div class="three columns">
+                                    <h:outputLabel value="Fields marked with * are required" style="color: red;font-size: small;margin-left: 15px;"/>
+                                </div>
+                                <div class="offset-by-three six columns">
+                                    <div class="row">
+                                        <div class="two columns" style="display:#{userAccessPageController.writeProgram}">
+                                            <h:commandLink rendered="#{programCoursesController.pageCommonInputs.showEditButtons}" action="#{programCoursesController.saveButton()}">
+                                                &#160;<img src="../resources/images/toolbar/icon-32-save.png" width="32" height="32" alt="icon-32-save"/>
+                                                <h:outputLabel value="Save"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two  columns" style="#{userAccessPageController.readProgram}">
+                                            <h:commandLink  immediate="true" action="#{programCoursesController.cancelButton()}">
+                                                &#160; <img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Cancel" />
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two  columns" style="display:#{userAccessPageController.writeProgram}">
+                                            <h:commandLink rendered="#{!programCoursesController.pageCommonInputs.showEditButtons}" action="#{programCoursesController.updateButton()}" >
+                                                &#160; <img src="../resources/images/toolbar/icon-32-edit.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                <h:outputLabel value="Update"/>
+                                            </h:commandLink>
+                                        </div>
+                                        <div class="two end columns" style="display:#{userAccessPageController.writeProgram}">
+                                            <h:commandLink rendered="#{!programCoursesController.pageCommonInputs.showEditButtons}"
+                                                           action="#{programCoursesController.deleteButton()}"
+                                                           onclick="return  confirm('Do You Really Want to Delete #{programCoursesController.programCourse.program.programName}');">
+                                                &#160; <img src="../resources/images/toolbar/icon-32-delete.png" width="32" height="32" alt="icon-32-delete"/>
+                                                <h:outputLabel value="Delete"/>
+
+                                            </h:commandLink>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="six columns">
+                                <div class="row">
+                                    <div class="twelve columns">
+                                        <p:panel header="Programs Courses" >
+                                            <div class="row">
+                                                <div class="twelve columns" >
+                                                    <h:outputLabel value="Program" for="courseInitials" style="margin-top: 15px;margin-bottom: 15px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="courseInitials" style="color: red;"/>
+                                                    </h:outputLabel>
+                                                    <h:selectOneMenu class="twelve" id="courseInitials" value="#{programCoursesController.selectedItemHelper.selectedProgram}"
+                                                                     required="true"  requiredMessage=" required "  >
+                                                        <f:selectItems value="#{programCoursesController.selectedItemHelper.programSelectItems}"/>
+
+                                                    </h:selectOneMenu>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="six columns" >
+                                                    <h:outputLabel value="Academic Level" for="academicLevel" style="margin-top: 15px;margin-bottom: 15px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="academicLevel" style="color: red;"/>
+                                                    </h:outputLabel>
+                                                    <h:selectOneMenu  class="twelve" id="academicLevel" value="#{programCoursesController.selectedItemHelper.selectedAcademicLevel}"
+                                                                      required="true" requiredMessage=" required ">
+                                                        <f:selectItems value="#{programCoursesController.selectedItemHelper.academicLevelSelectItems}"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+                                                <div class="six columns ">
+                                                    <h:outputLabel value="Semester" for="semester" style="margin-top: 15px;margin-bottom: 15px;">
+                                                        <span style="color: red;font-size: large">*</span><h:message for="semester" style="color: red;"/>
+                                                    </h:outputLabel>
+                                                    <h:selectOneMenu  class="twelve" id="semester" value="#{programCoursesController.selectedItemHelper.selectedSemester}"
+                                                                      required="true" requiredMessage=" required ">
+                                                        <f:selectItem itemLabel="PLEASE SELECT" />
+                                                        <f:selectItem itemLabel="1" itemValue="1"/>
+                                                        <f:selectItem itemLabel="2" itemValue="2"/>
+                                                    </h:selectOneMenu>
+                                                </div>
+
+                                            </div>
+                                        </p:panel>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 15px;">
+                                    <div class="twelve columns">
+                                        <p:panel header="Selected Courses "  >
+                                            <div class="row" style="margin-top: 20px;">
+                                                <div class="twelve columns">
+
+                                                    <div style="overflow: scroll;height: 200px;">
+                                                        <p:dataTable value="#{programCoursesController.selectedCoursesDataModel}" var="semcourse" 
+                                                                     id="selectedCourses" emptyMessage="No Courses Selected Yet">
+                                                            <p:column>
+                                                                <f:facet name="header"><h:outputLabel value="SN" class="datatable-header"/></f:facet>
+                                                                <h:outputText style="font-size: smaller;" value="#{programCoursesController.selectedCoursesDataModel.rowIndex+1}" />
+                                                            </p:column>
+
+                                                            <p:column >
+                                                                <f:facet name="header"><h:outputLabel value="Courses" class="datatable-header"/></f:facet>
+                                                                <h:outputText style="font-size: smaller;" value="#{semcourse.courseInitials} #{semcourse.courseCode} #{semcourse.courseName}"/>
+                                                            </p:column>
+                                                            <p:column >
+                                                                <f:facet name="header"><h:outputLabel value="Credit" class="datatable-header"/></f:facet>
+                                                                <h:outputText style="font-size: smaller;" value="#{semcourse.creditHours}"/>
+                                                            </p:column>
+                                                            <p:column >
+                                                                <f:facet name="header"><h:outputLabel value="Edit" class="datatable-header"/></f:facet>
+                                                                <h:commandLink style="font-family: cursive;color: #0000CC;font-size: smaller;" action="#{programCoursesController.removeCourse()}">
+                                                                    <img style="margin-left: 10px;"  src="../resources/images/toolbar/icon-32-cancel.png" width="16" height="16" alt="icon-32-new"/>
+                                                                    <f:ajax execute="@this" render="selectedCourses"/>
+                                                                </h:commandLink>
+                                                            </p:column>
+                                                        </p:dataTable>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </p:panel>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </h:form>
+
+                        <h:form id="schoolCourses"  style="#{programCoursesController.pageCommonInputs.showDataInputPanel}">
+                            <div class="six columns">
+                                <p:panel header="School Courses "  >
+                                    <div class="row">
+                                        <div class="three mobile-four columns">
+                                            <h:outputLabel value="Quick Find" class="right inline" for="course-code"/>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="three mobile-four columns">
+                                            <h:selectOneMenu id="course-initials" value="#{programCoursesController.selectedItemHelper.selectedCourseInitials}" class="custom twelve  dropdown selector"
+                                                             >
+                                                <f:selectItem itemLabel="I N I T I A L S"/>
+                                                <f:selectItems value="#{programCoursesController.selectedItemHelper.courseInitialsSelectItems}"/>
+                                                <p:ajax event="change" listener="#{programCoursesController.quickFindCourseInitialsListener()}" update="schoolCoursesTable"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <div class="three mobile-four columns">
+                                            <h:selectOneMenu id="course-code" value="#{programCoursesController.selectedItemHelper.selectedCourseCode}" class="custom twelve  dropdown selector"
+                                                             >
+                                                <f:selectItem itemLabel="C O D E S"/>
+                                                <f:selectItems value="#{programCoursesController.selectedItemHelper.courseCodeSelectItems}"/>
+                                                <p:ajax event="change" listener="#{programCoursesController.quickFindCourseCodeListener()}" update="schoolCoursesTable"/>
+                                            </h:selectOneMenu>
+                                        </div>
+                                        <p:watermark for="hours" value="C R E D I T S"/>
+                                        <div class="three mobile-four  columns">
+                                            <h:inputText id="hours"  maxlength="1" value="#{programCoursesController.selectedItemHelper.selectedCourseCreditHours}" >
+                                                <p:ajax event="keyup"  listener="#{programCoursesController.quickFindCourseCreditHoursListener()}" update="schoolCoursesTable"/>
+                                            </h:inputText>
+                                        </div>
+                                        <div class="three mobile-four  columns">
+                                            <h:commandButton class="button radius small custom-button" value="RESET COURSES" action="#{programCoursesController.loadAllSchoolCourses()}"/>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div style="overflow: scroll;height: 300px;">
+                                            <div class="twelve columns">
+                                                <p:dataTable value="#{programCoursesController.coursesDataModel}" var="cos"
+                                                             id="schoolCoursesTable" >
+                                                    <p:column>
+                                                        <f:facet name="header"><h:outputLabel value="SN"/></f:facet>
+                                                        <h:outputText value="#{programCoursesController.coursesDataModel.rowIndex+1}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <center>
+                                                            <f:facet name="header">
+                                                                <h:commandLink action="#{programCoursesController.addBulkCourses()}" value="ADD" style="color: #0000CC;font-family: cursive;font-weight: bolder;">
+                                                                    <f:ajax execute="@form"  render=":programCourses:selectedCourses :pageGlobalMessages" />
+                                                                </h:commandLink>
+                                                            </f:facet>
+                                                        </center>
+                                                        <h:selectBooleanCheckbox value="#{cos.selected}"/>
+                                                    </p:column>
+                                                    <p:column>
+                                                        <f:facet name="header"><h:outputLabel value="Courses"/></f:facet>
+                                                        <h:commandLink style="font-size: smaller;" value="#{cos.courseInitials} #{cos.courseCode} #{cos.courseName}" action="#{programCoursesController.addSelectedCourse()}">
+                                                            <f:ajax execute="@form"  render=":programCourses:selectedCourses :pageGlobalMessages" />
+                                                        </h:commandLink>
+                                                    </p:column>
+
+                                                    <p:column>
+                                                        <f:facet name="header"><h:outputLabel value="Credit"/></f:facet>
+                                                        <h:commandLink style="font-size: smaller;" value="#{cos.creditHours}"  action="#{programCoursesController.addSelectedCourse()}">
+                                                            <f:ajax execute="@form"  render=":programCourses:selectedCourses :pageGlobalMessages" />
+                                                        </h:commandLink>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </p:panel>
+                            </div>                    
+                        </h:form>
+
+                    </div>
+
+
+                    <ui:include src="../data-records/program-course-records.xhtml"/>
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,223 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.noad.solutions.tis.web.controllers;
+
+import com.noad.solutions.common.classes.utils.PageCommonInputs;
+import com.noad.solutions.common.classes.utils.SearchInputs;
+import com.noad.solutions.common.classes.utils.SelectedItemHelper;
+import com.noad.solutions.common.classes.utils.UserSessionData;
+import com.noad.solutions.common.jsf.utils.JSFMessages;
+import com.noad.solutions.common.jsf.utils.JSFUtility;
+import com.noad.solutions.tis.ejb.entities.AcademicLevel;
+import com.noad.solutions.tis.ejb.entities.Program;
+import com.noad.solutions.tis.ejb.entities.Student;
+import com.noad.solutions.tis.web.ejbSource.TisEjbSource;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
+
+/**
+ *
+ * @author Daud
+ */
+@Named(value = "promotionController")
+@SessionScoped
+public class PromotionController implements Serializable {
+
+    private UserSessionData userSessionData = new UserSessionData();
+    private Student student = new Student();
+    private List<Student> listOfStudents = null;
+    private SelectedItemHelper selectedItemHelper = new SelectedItemHelper();
+    private PageCommonInputs pageCommonInputs = new PageCommonInputs();
+    private Program program = new Program();
+    private AcademicLevel academicLevel = new AcademicLevel();
+    private DataModel<Student> studentDataModel;
+    private SearchInputs searchInputs = new SearchInputs();
+    private String selectedPromotionType = null;
+
+    public PromotionController() {
+        userSessionData = JSFUtility.getUserSession(JSFUtility.SESSION_NAME);
+
+    }
+
+    public void massSearch() {
+        try {
+            program = TisEjbSource.getCrudInstance().programFind(selectedItemHelper.getSelectedProgram());
+            pageCommonInputs.checkAllData = false;
+            academicLevel = TisEjbSource.getCrudInstance().academicLevelFind(selectedItemHelper.getSelectedAcademicLevel());
+            listOfStudents = new ArrayList<Student>();
+            studentDataModel = new ListDataModel<Student>();
+            listOfStudents = TisEjbSource.getBasicQuariesInstance().getStudentsUnderSelectedProgram(selectedItemHelper.getSelectedProgram(), selectedItemHelper.getSelectedAcademicLevel());
+            if (listOfStudents.isEmpty()) {
+                JSFMessages.errorMessage("No Students Found For " + program.getProgramName() + "\t" + academicLevel.getAcademicLevel());
+                return;
+            }
+            studentDataModel = new ListDataModel<Student>(listOfStudents);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void singleSearch() {
+        try {
+            pageCommonInputs.checkAllData = false;
+            listOfStudents = new ArrayList<Student>();
+            studentDataModel = new ListDataModel<Student>();
+            listOfStudents = TisEjbSource.getCrudInstance().studentFindByAttribute(searchInputs.getSearchParameter(), searchInputs.getSearchValue(), "STRING", false);
+            if (listOfStudents.isEmpty()) {
+                JSFMessages.errorMessage("No Student Found With " + searchInputs.getSearchValue());
+            } else {
+                studentDataModel = new ListDataModel<Student>(listOfStudents);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void selectAllListener() {
+        try {
+            if (listOfStudents.isEmpty()) {
+                JSFMessages.warnMessage("No Students to Select");
+            } else {
+                if (pageCommonInputs.isCheckAllData()) {
+                    for (Student eachStd : listOfStudents) {
+                        eachStd.setSelected(true);
+                    }
+                } else {
+                    for (Student eachStd : listOfStudents) {
+                        eachStd.setSelected(false);
+                    }
+
+                }
+            }
+            studentDataModel = new ListDataModel<Student>(listOfStudents);
+        } catch (Exception e) {
+        }
+    }
+
+    public void effectPromotionOrDemotion() {
+        System.out.println("INSIDE PROMOTION");
+        try {
+            int counter = 0;
+            if (listOfStudents.isEmpty()) {
+                JSFMessages.errorMessage("Please Select Students");
+                return;
+            }
+            for (Student eachStudent : listOfStudents) {
+                if (eachStudent.isSelected()) {
+                    counter++;
+                    if (selectedPromotionType.equalsIgnoreCase("COMPLETED")) {
+                        eachStudent.setAcademicStatus(selectedPromotionType);
+                    } else {
+                        eachStudent.setCurrentLevel(TisEjbSource.getCrudInstance().academicLevelFind(selectedItemHelper.getSelectedAcademicLevel()));
+                    }
+                    TisEjbSource.getCrudInstance().studentUpdate(eachStudent);
+                }
+            }
+            JSFMessages.infoMessage(counter + " Students " + selectedPromotionType);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void resetButton() {
+        try {
+            student = new Student();
+            listOfStudents = new ArrayList<Student>();
+            studentDataModel = new ListDataModel<Student>(listOfStudents);
+            searchInputs = new SearchInputs();
+            selectedItemHelper=new SelectedItemHelper();
+            pageCommonInputs=new PageCommonInputs();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public UserSessionData getUserSessionData() {
+        return userSessionData;
+    }
+
+    public void setUserSessionData(UserSessionData userSessionData) {
+        this.userSessionData = userSessionData;
+    }
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public List<Student> getListOfStudents() {
+        return listOfStudents;
+    }
+
+    public void setListOfStudents(List<Student> listOfStudents) {
+        this.listOfStudents = listOfStudents;
+    }
+
+    public SelectedItemHelper getSelectedItemHelper() {
+        return selectedItemHelper;
+    }
+
+    public void setSelectedItemHelper(SelectedItemHelper selectedItemHelper) {
+        this.selectedItemHelper = selectedItemHelper;
+    }
+
+    public PageCommonInputs getPageCommonInputs() {
+        return pageCommonInputs;
+    }
+
+    public void setPageCommonInputs(PageCommonInputs pageCommonInputs) {
+        this.pageCommonInputs = pageCommonInputs;
+    }
+
+    public Program getProgram() {
+        return program;
+    }
+
+    public void setProgram(Program program) {
+        this.program = program;
+    }
+
+    public AcademicLevel getAcademicLevel() {
+        return academicLevel;
+    }
+
+    public void setAcademicLevel(AcademicLevel academicLevel) {
+        this.academicLevel = academicLevel;
+    }
+
+    public DataModel<Student> getStudentDataModel() {
+        return studentDataModel;
+    }
+
+    public void setStudentDataModel(DataModel<Student> studentDataModel) {
+        this.studentDataModel = studentDataModel;
+    }
+
+    public String getSelectedPromotionType() {
+        return selectedPromotionType;
+    }
+
+    public void setSelectedPromotionType(String selectedPromotionType) {
+        this.selectedPromotionType = selectedPromotionType;
+    }
+
+    public SearchInputs getSearchInputs() {
+        return searchInputs;
+    }
+
+    public void setSearchInputs(SearchInputs searchInputs) {
+        this.searchInputs = searchInputs;
+    }
+}

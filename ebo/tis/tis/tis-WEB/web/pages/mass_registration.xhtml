@@ -1,0 +1,198 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <body>
+
+        <ui:composition template="./../template/gen_temp.xhtml">
+
+            <ui:define name="page-title">
+                Mass Registration
+            </ui:define>
+
+            <ui:define name="user-menus">
+                <ui:include src="../includes/examiner_includes/examiner_menus.xhtml"/>
+            </ui:define>
+
+            <ui:define name="current-page-name">
+                <div class="row">
+
+                    <div class="one columns"><img src="../resources/images/header/icon-48-user-add.png" width="48" height="48" alt="icon-48-user-add"/> </div>
+                    <div class="ten columns end" id="page-title">
+                        <h5>Current Page :  <span class="current-page-name"> Registrations &#187; #{massRegistrationController.searchInputs.editNewTitle}</span></h5>
+                    </div>
+
+                </div>
+            </ui:define>
+
+            <ui:define name="sub-title-division">
+                <ui:include src="../includes/examiner_includes/registration_submenus.xhtml"/>
+            </ui:define>
+
+            <ui:define name="page-content">
+                <div class="row">
+
+                    <h:form id="program-details" >
+                        <div class="six columns">
+                            <fieldset class="special-fieldset">
+                                <legend>Registration Details</legend>
+
+                                <div class="row" style="margin-bottom: 20px;">
+                                    <div class="eight columns">
+                                        <h:outputLabel class="mobile-four" value="Program " for="program"><span style="color: red;"> * </span><h:message for="program" style="color: red;"/></h:outputLabel>
+                                        <h:selectOneMenu class="mobile-four twelve"  id="program"  value="#{massRegistrationController.caucSelectItemsController.selectedProgram}"
+                                                         required="true" requiredMessage="required ">
+                                            <f:selectItems value="#{massRegistrationController.programSelectItem}"/>
+                                            <p:ajax event="change" update="aca-level" listener="#{massRegistrationController.academicLevelListener()}" />
+                                        </h:selectOneMenu>
+                                    </div>
+                                    <div class="four columns">
+                                        <h:outputLabel value="Academic Level" for="aca-level"><span style="color: red;"> * </span><h:message for="aca-level" style="color: red;"/></h:outputLabel>
+                                        <h:selectOneMenu  id="aca-level" class="twelve"  value="#{massRegistrationController.caucSelectItemsController.selectedAcademicLevel}"
+                                                          required="true" requiredMessage=" required ">
+                                            <f:selectItems value="#{massRegistrationController.academicLevelSelectItems}"/>
+                                        </h:selectOneMenu>
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="four columns">
+                                        <h:outputLabel value="Academic Year"></h:outputLabel>
+                                        <h:inputText value="#{massRegistrationController.academicYear.academicPeriod}" disabled="true"/>
+                                        <ui:remove>
+                                        <h:selectOneMenu value="#{massRegistrationController.caucSelectItemsController.selectedAcademicYear}" class="twelve"
+                                                         required="true" requiredMessage="* required - Academic Year" id="aca-year">
+                                            <f:selectItems value="#{massRegistrationController.caucSelectItemsController.academicYearSelectItem}"/>
+                                        </h:selectOneMenu>
+                                        </ui:remove>
+                                    </div>
+                                    <div class="four columns">
+                                        <h:outputLabel value="Semester"></h:outputLabel>
+                                        <h:inputText value="#{massRegistrationController.academicYear.semester}" disabled="true"/>
+                                        <ui:remove>
+                                            
+                                        <h:selectOneMenu value="#{massRegistrationController.caucSelectItemsController.selectedSemester}" class="twelve"
+                                                         required="true" requiredMessage="* required - Semester" id="semes">
+                                            <f:selectItem itemLabel="--Please Select--"/>
+                                            <f:selectItem itemLabel="1" itemValue="1"/>
+                                            <f:selectItem itemLabel="2" itemValue="2"/>
+                                        </h:selectOneMenu>
+                                        </ui:remove>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px">
+                                    <div class="two end columns"><h:commandButton value="Search" class="button medium radius" action="#{massRegistrationController.searchProgramCourses()}"/></div>
+                                </div>
+                                <!--<h:form>-->
+                                <div class="row" style="margin-top: 20px;">
+                                    <div class="twelve columns">
+
+                                        <div >
+                                            <h:dataTable value="#{massRegistrationController.programCourseDataModel}" var="semcourse" rules="all"
+                                                         class="twelve responsive" id="selected-table">
+                                                <h:column>
+                                                    <f:facet name="header">No</f:facet>
+                                                    <h:outputLabel value="#{massRegistrationController.programCourseDataModel.rowIndex+1}" />
+                                                </h:column>
+                                                <h:column >
+                                                    <f:facet name="header">Courses</f:facet>
+                                                    <h:outputLabel value="#{semcourse.course.courseInitials} #{semcourse.course.courseCode} #{semcourse.course.courseName}"/>
+                                                    <f:facet name="footer">Total Credit Hours</f:facet>
+                                                </h:column>
+                                                <h:column >
+                                                    <f:facet name="header">Credit Hours</f:facet>
+                                                    <f:facet name="footer"><span style="color: red">#{massRegistrationController.totalCreditHours}</span> </f:facet>
+                                                    <h:outputLabel value="#{semcourse.course.creditHours}"/>
+                                                </h:column>
+                                            </h:dataTable>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </fieldset>
+                        </div>
+                    </h:form>
+
+                    <div class="six columns" style="margin-top: -20px;">
+                        <fieldset class="special-fieldset">
+                            <legend>Students</legend>
+                            <h:form>
+                                <div class="row">
+                                    <div class="six columns"></div>
+                                    <div class="six columns">
+                                        <div class="button-bar right">
+                                            <ul class="button-group">
+                                                <li class="toolbar-buttons">
+                                                    <h:commandLink action="#{massRegistrationController.saveButton()}">
+                                                        &#160;<img src="../resources/images/toolbar/icon-32-save.png" width="32" height="32" alt="icon-32-save"/>
+                                                        <h:outputLabel value="Register"/>
+                                                    </h:commandLink>
+                                                </li>
+                                            </ul>
+                                            <ul class="button-group">
+                                                <li>
+                                                    <h:commandLink >
+                                                        <img src="../resources/images/toolbar/icon-32-print.png" width="32" height="64" alt="icon-32-new"/><br/>
+                                                        <h:outputLabel value="Print"/>
+                                                    </h:commandLink>
+                                                </li>
+                                            </ul>
+                                            <ul class="button-group">
+                                                <li>
+                                                    <h:commandLink action="#{massRegistrationController.cancelButton()}" immediate="true">
+                                                        &#160; <img src="../resources/images/toolbar/icon-32-cancel.png" width="32" height="32" alt="icon-32-cancel"/>
+                                                        <h:outputLabel value="Cancel"/>
+                                                    </h:commandLink>
+
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div> 
+                                <div class="row">
+                                    <div class="scroll-datatable">
+                                        <div class="twelve columns">
+                                            <h:dataTable value="#{massRegistrationController.studentDataModel}" var="cos"
+                                                         rules="all" class="responsive twelve " id="course-table" >
+                                                <h:column>
+                                                    <f:facet name="header">No</f:facet>
+                                                    <h:outputLabel value="#{massRegistrationController.studentDataModel.rowIndex+1}"/>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header"> 
+                                                    </f:facet>
+                                                    <h:selectBooleanCheckbox value="#{cos.selected}">
+                                                    </h:selectBooleanCheckbox>
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Index Number</f:facet>
+                                                    <h:commandLink style="cursor:default"  value="#{cos.indexNumber}" />
+                                                </h:column>
+                                                <h:column>
+                                                    <f:facet name="header">Student</f:facet>
+                                                    <h:commandLink style="cursor:default"  value="#{cos.title} #{cos.surname} #{cos.firstName} #{cos.otherNames} "/>
+                                                </h:column>
+                                            </h:dataTable> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </h:form>
+                        </fieldset>
+
+                    </div>
+
+                </div>
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
